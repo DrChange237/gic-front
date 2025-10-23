@@ -1,0 +1,18 @@
+@use "../../themes/themes" as theme;
+
+.app-footer {
+    margin-top: 2rem;
+    background: theme.$gray-100;
+    padding: 1.25rem;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    .footer-bottom {
+        width: 100%;
+        .logo {
+            height: 3rem;
+            width: auto;
+            margin: 4px;
+            margin-right: 1rem;
+        }
+    }
+}
