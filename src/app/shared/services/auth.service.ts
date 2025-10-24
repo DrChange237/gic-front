@@ -16,7 +16,7 @@ export class AuthService {
   }
 
   checkAuth() {
-    // this.authenticated = this.store.getItem("demo_login_status");
+    this.authenticated = this.store.getItem("demo_login_status");
   }
 
   getuser() {

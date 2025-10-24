@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation.service';
 import { SearchService } from '../../../../services/search.service';
 import { AuthService } from '../../../../services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
+import { INotifications } from 'src/app/shared/models';
+import { Language } from 'src/app/shared/enums';
 
 @Component({
     selector: 'app-header-sidebar-large',
@@ -11,59 +14,15 @@ import { AuthService } from '../../../../services/auth.service';
 })
 export class HeaderSidebarLargeComponent implements OnInit {
 
-    notifications: any[];
+    notifications: INotifications[] = [];
+    languages: string[] = Object.values(Language);
 
     constructor(
-      private navService: NavigationService,
+      public navService: NavigationService,
       public searchService: SearchService,
+      public translate: TranslateService,
       private auth: AuthService
-    ) {
-      this.notifications = [
-        {
-          icon: 'i-Speach-Bubble-6',
-          title: 'New message',
-          badge: '3',
-          text: 'James: Hey! are you busy?',
-          time: new Date(),
-          status: 'primary',
-          link: '/chat'
-        },
-        {
-          icon: 'i-Receipt-3',
-          title: 'New order received',
-          badge: '$4036',
-          text: '1 Headphone, 3 iPhone x',
-          time: new Date('11/11/2023'),
-          status: 'success',
-          link: '/tables/full'
-        },
-        {
-          icon: 'i-Empty-Box',
-          title: 'Product out of stock',
-          text: 'Headphone E67, R98, XL90, Q77',
-          time: new Date('11/10/2023'),
-          status: 'danger',
-          link: '/tables/list'
-        },
-        {
-          icon: 'i-Data-Power',
-          title: 'Server up!',
-          text: 'Server rebooted successfully',
-          time: new Date('11/08/2023'),
-          status: 'success',
-          link: '/dashboard/v2'
-        },
-        {
-          icon: 'i-Data-Block',
-          title: 'Server down!',
-          badge: 'Resolved',
-          text: 'Region 1: Server crashed!',
-          time: new Date('11/06/2023'),
-          status: 'danger',
-          link: '/dashboard/v3'
-        }
-      ];
-    }
+    ) { }
   
     ngOnInit() {
     }
@@ -92,6 +51,11 @@ export class HeaderSidebarLargeComponent implements OnInit {
   
     signout() {
       this.auth.signout();
+    }
+
+    changeLanguage(code: string) {
+        this.translate.use(code);
+        window.location.reload();
     }
 
 }

@@ -1,10 +1,17 @@
 .auth-layout-wrap {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     background-size: cover;
+    
+    .auth-background {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #2f3ea0bb, #ae332dbb);
+    }
+
     .auth-content {
         max-width: 660px;
         margin: auto;
@@ -21,7 +28,7 @@
 
 .auth-logo {
     img {
-        height: 100px;
+        height: 80px;
         width: auto;
     }
 }

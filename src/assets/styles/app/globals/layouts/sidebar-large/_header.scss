@@ -58,7 +58,7 @@
         .logo {
             width: $sidebar-left-width;
             img {
-                width: 60px;
+                width: auto;
                 height: 60px;
                 margin: 0 auto;
                 display: block;
@@ -84,13 +84,33 @@
         .header-part-right {
             display: flex;
             align-items: center;
+            gap: 0.5rem;
             .user {
                 cursor: pointer;
                 margin-right: 2rem;
+                margin-left: 1rem;
                 img {
                     width: 36px;
                     height: 36px;
                     border-radius: 50%;
+                }
+            }
+            .language {
+                .language-rounded {
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 50%;
+                }
+
+                .dropdown-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    img {
+                        width: auto;
+                        height: 14px;
+                    }
                 }
             }
         }

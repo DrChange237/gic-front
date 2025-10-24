@@ -1,6 +1,6 @@
 <div class="card o-hidden" [@animate]="{value:'*',params:{y:'120px',opacity:'0',delay:'100ms', duration: '400ms'}}">
   <div class="row me-0">
-    <div class="col-md-6">
+    <div class="col-md-7">
       <div class="p-4">
         <div class="auth-logo text-center mb-4">
           <img src="assets/images/logo-text.png" alt="">
@@ -15,7 +15,7 @@
             <label for="password">Password</label>
             <input id="password" class="form-control form-control-rounded" formControlName="password" type="password">
           </div>
-          <!-- <button class="btn btn-rounded btn-primary w-100 mt-2">Sign In</button> -->
+<!--           <button class="btn btn-rounded btn-primary w-100 mt-2">Sign In</button>-->
           <btn-loading btnClass="btn-primary btn-rounded w-100 mt-3" [loadingText]="loadingText" [loading]="loading">
             Sign In
           </btn-loading>
@@ -26,21 +26,6 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6 text-center " style="background-size: cover;background-image: url(./assets/images/photo-long-3.jpg)">
-      <div class="pr-3 auth-right">
-        <button class="btn btn-rounded btn-outline-primary btn-outline-email w-100 mb-2 btn-icon-text" routerLink="/sessions/signup">
-          <i class="i-Mail-with-At-Sign"></i>
-          Sign up with Email
-        </button>
-        <button class="btn btn-rounded btn-outline-primary btn-outline-google w-100 mb-2 btn-icon-text">
-          <i class="i-Google-Plus"></i>
-          Sign up with Google
-        </button>
-        <button class="btn btn-rounded btn-outline-primary w-100 btn-icon-text btn-outline-facebook">
-          <i class="i-Facebook-2"></i>
-          Sign up with Facebook
-        </button>
-      </div>
-    </div>
+    <div class="col-md-5 text-center " style="background-size: cover;background-image: url(./assets/images/photo-long-3.jpg)"></div>
   </div>
 </div>
