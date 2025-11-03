@@ -1,1 +1,17 @@
-{}
+{
+  "app": {
+    "language_en": "Anglais",
+    "language_fr": "Français"
+  },
+  "navigation": {
+    "agencies": "Agences",
+    "agents": "Agents",
+    "dashboard": "Dashboard",
+    "history": "Historique",
+    "management": "Management",
+    "reporting": "Reporting",
+    "role_profile": "Rôle & Profil",
+    "services": "Services",
+    "templates": "Templates"
+  }
+}

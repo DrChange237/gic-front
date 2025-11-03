@@ -7,7 +7,7 @@ import { DashboardV4Component } from './dashboard-v4/dashboard-v4.component';
 
 const routes: Routes = [
   {
-    path: 'v1',
+    path: '',
     component: DashboadDefaultComponent
   },
   {

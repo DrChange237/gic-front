@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { NavigationService } from "../../services/navigation.service";
-import { CustomizerService } from "../../services/customizer.service";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { CustomizerService } from "src/app/core/services/customizer.service";
+import { NavigationService } from "src/app/core/services/navigation.service";
 
 @Component({
     selector: "app-customizer",

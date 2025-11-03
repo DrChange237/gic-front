@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationService } from '../../../../services/navigation.service';
-import { SearchService } from '../../../../services/search.service';
-import { AuthService } from '../../../../services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
-import { INotifications } from 'src/app/shared/models';
+//
 import { Language } from 'src/app/shared/enums';
+import { INotifications } from 'src/app/shared/models';
+import { NavigationService } from 'src/app/core/services/navigation.service';
+import { SearchService } from 'src/app/core/services/search.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
     selector: 'app-header-sidebar-large',

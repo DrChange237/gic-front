@@ -5,28 +5,28 @@ import { FeatherIconComponent } from './feather-icon/feather-icon.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { SharedPipesModule } from '../pipes/shared-pipes.module';
-import { SearchModule } from './search/search.module';
 import { SharedDirectivesModule } from '../directives/shared-directives.module';
-import { LayoutsModule } from './layouts/layouts.module';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import {FooterComponent} from "./footer/footer.component";
+import {CustomizerComponent} from "./customizer/customizer.component";
 
 const components = [
   BtnLoadingComponent,
   FeatherIconComponent,
+  FooterComponent,
+  CustomizerComponent,
 ];
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    LayoutsModule,
     SharedPipesModule,
     SharedDirectivesModule,
     NgScrollbarModule,
-    SearchModule,
     NgbModule
   ],
   declarations: components,
-  exports: components
+  exports: [components]
 })
 export class SharedComponentsModule { }
