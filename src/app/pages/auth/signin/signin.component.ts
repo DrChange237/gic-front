@@ -44,7 +44,7 @@ export class SigninComponent implements OnInit {
         this.loadingText = 'Sigining in...';
         this.auth.signin(this.signinForm.value)
             .subscribe(res => {
-                this.router.navigateByUrl('/dashboard/v1');
+                this.router.navigateByUrl('/dashboard');
                 this.loading = false;
             });
     }

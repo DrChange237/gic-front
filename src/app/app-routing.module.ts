@@ -4,7 +4,6 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 import { AuthGaurd } from './core/guards/auth.gaurd';
 import { BlankLayoutComponent } from './layouts/blank-layout/blank-layout.component';
 import { AdminLayoutSidebarLargeComponent } from './layouts/admin-layout-sidebar-large/admin-layout-sidebar-large.component';
-import {pagesRoutes} from "./pages/pages.routes";
 
 const routes: Routes = [
   {
@@ -36,7 +35,7 @@ const routes: Routes = [
     path: '',
     component: AdminLayoutSidebarLargeComponent,
     canActivate: [AuthGaurd],
-    children: pagesRoutes
+    loadChildren:  () => import('./pages/pages-routing.module').then(m => m.PagesRoutingModule)
   },
   {
     path: '**',
