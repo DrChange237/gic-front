@@ -4,22 +4,22 @@
     <div class="col-md-12">
 
         <form-wizard>
-            <wizard-step [title]="'Basic Info'" [isValid]="basicForm.form.valid" (onNext)="onStep1Next($event)">
+            <wizard-step [title]="'transactions.service_type' | translate" [isValid]="basicForm.form.valid" (onNext)="onStep1Next($event)">
                 <form #basicForm="ngForm">
                 </form>
             </wizard-step>
 
-            <wizard-step [title]="'Company info'" [isValid]="step2Form.valid" (onNext)="onStep2Next($event)">
+            <wizard-step [title]="'transactions.service' | translate" [isValid]="step2Form.valid" (onNext)="onStep2Next($event)">
                 <form [formGroup]="step2Form">
                 </form>
             </wizard-step>
 
-            <wizard-step [title]="'Payment Info'" (onNext)="onStep3Next($event)">
+            <wizard-step [title]="'transactions.payment_info' | translate" (onNext)="onStep3Next($event)">
                 <form #paymentForm="ngForm">
                 </form>
             </wizard-step>
 
-            <wizard-step [title]="'Final'" (onComplete)="onComplete($event)">
+            <wizard-step [title]="'transactions.payment_confirm' | translate" (onComplete)="onComplete($event)">
 
             </wizard-step>
         </form-wizard>

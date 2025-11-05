@@ -75,6 +75,13 @@
               "sourceMap": false,
               "namedChunks": false,
               "extractLicenses": true
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
           "defaultConfiguration": ""
@@ -87,6 +94,9 @@
           "configurations": {
             "production": {
               "buildTarget": "agency-banking:build:production"
+            },
+            "development": {
+              "buildTarget": "agency-banking:build:development"
             }
           }
         },
@@ -132,6 +142,9 @@
           "configurations": {
             "production": {
               "devServerTarget": "agency-banking:serve:production"
+            },
+            "development": {
+              "devServerTarget": "agency-banking:serve:development"
             }
           }
         }

@@ -48,5 +48,11 @@
     "info": "Info",
     "success": "Success",
     "warning": "Attention"
+  },
+  "transactions": {
+    "payment_confirm": "Confirmation",
+    "payment_info": "Payment Information",
+    "service": "Service",
+    "service_type": "Service Type"
   }
 }

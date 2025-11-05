@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { SharedComponentsModule } from "src/app/shared/components/shared-components.module";
 import {FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup} from "@angular/forms";
 import {FormWizardModule} from "../../../shared/components/form-wizard/form-wizard.module";
+import {TranslatePipe} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-trx-services',
   templateUrl: './trx-services.component.html',
   styleUrls: ['./trx-services.component.scss'],
-  imports: [SharedComponentsModule, FormWizardModule, FormsModule, ReactiveFormsModule],
+  imports: [SharedComponentsModule, FormWizardModule, FormsModule, ReactiveFormsModule, TranslatePipe],
   standalone: true,
 })
 export class TrxServicesComponent implements OnInit {
