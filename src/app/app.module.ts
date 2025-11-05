@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './shared/inmemory-db/inmemory-db.service';
-import {HttpClientModule, provideHttpClient} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient} from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {provideTranslateHttpLoader} from "@ngx-translate/http-loader";
 import {provideTranslateService} from "@ngx-translate/core";
@@ -15,6 +15,8 @@ import {Language} from "./shared/enums";
 import {registerLocaleData} from "@angular/common";
 import localeFr from '@angular/common/locales/fr';
 import {LayoutsModule} from "./layouts/layouts.module";
+import {LoadingInterceptor} from "./core/interceptors/loader.interceptor";
+import {AuthInterceptor} from "./core/interceptors/auth.interceptor";
 
 let lang = navigator.language.split('-')?.[0];
 lang = Object.values(Language).includes(lang as Language) ? lang : 'fr';
@@ -36,7 +38,6 @@ registerLocaleData(localeFr, 'fr');
     NgbModule,
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'fr' },
     provideHttpClient(),
     provideTranslateService({
       lang: lang,
@@ -46,6 +47,9 @@ registerLocaleData(localeFr, 'fr');
         suffix: '.json'
       })
     }),
+    { provide: LOCALE_ID, useValue: 'fr' },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import { AuthGaurd } from './core/guards/auth.gaurd';
+import { AuthGuard } from './core/guards/auth-guard.service';
 import { BlankLayoutComponent } from './layouts/blank-layout/blank-layout.component';
 import { AdminLayoutSidebarLargeComponent } from './layouts/admin-layout-sidebar-large/admin-layout-sidebar-large.component';
 
@@ -16,7 +16,7 @@ const routes: Routes = [
     component: AuthLayoutComponent,
     children: [
       {
-        path: 'auth',
+        path: 'sessions',
         loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
       }
     ]
@@ -34,8 +34,8 @@ const routes: Routes = [
   {
     path: '',
     component: AdminLayoutSidebarLargeComponent,
-    canActivate: [AuthGaurd],
-    loadChildren:  () => import('./pages/pages-routing.module').then(m => m.PagesRoutingModule)
+    canActivate: [AuthGuard],
+    loadChildren:  () => import('./pages/pages.module').then(m => m.PagesModule)
   },
   {
     path: '**',

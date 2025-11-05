@@ -16,13 +16,14 @@ export class LocalStoreService {
 
   public getItem(key) {
     const value = this.ls.getItem(key);
-    try {
-      return JSON.parse(value);
-    } catch (e) {
-      // console.log(e)
-      return null;
-    }
+    try { return JSON.parse(value); }
+    catch (e) { return null; }
   }
+
+  public removeItem(key) {
+    this.ls.removeItem(key);
+  }
+
   public clear() {
     this.ls.clear();
   }

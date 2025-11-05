@@ -4,8 +4,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { Language } from 'src/app/shared/enums';
 import { INotifications } from 'src/app/shared/models';
 import { NavigationService } from 'src/app/core/services/navigation.service';
-import { SearchService } from 'src/app/core/services/search.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import {CommonService} from "../../../core/services/common.service";
+import {Cashier} from "../../../shared/interfaces";
+import {AccountService} from "../../../core/services/account.service";
 
 @Component({
     selector: 'app-header-sidebar-large',
@@ -15,20 +17,23 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class HeaderSidebarLargeComponent implements OnInit {
 
+    user: Cashier;
     notifications: INotifications[] = [];
     languages: string[] = Object.values(Language);
 
     constructor(
       public navService: NavigationService,
-      public searchService: SearchService,
       public translate: TranslateService,
-      private auth: AuthService
+      public accountSrv: AccountService,
+      private auth: AuthService,
+      private commonSrv: CommonService,
     ) { }
   
     ngOnInit() {
+      this.user = this.auth.getUser();
     }
   
-    toggelSidebar() {
+    toggleSidebar() {
       const state = this.navService.sidebarState;
       if (state.childnavOpen && state.sidenavOpen) {
         return state.childnavOpen = false;
@@ -50,12 +55,15 @@ export class HeaderSidebarLargeComponent implements OnInit {
       }
     }
   
-    signout() {
-      this.auth.signout();
+    signOut() {
+      this.auth.signOut().subscribe({
+        next: () => this.commonSrv.alert('success', 'sessions.sign_out_success', 'sessions.session'),
+        error: () => this.commonSrv.alert('error', 'sessions.sign_out_failed', 'sessions.session')
+      });
     }
 
     changeLanguage(code: string) {
-        this.translate.use(code);
+        this.commonSrv.toggleLanguage(code);
         window.location.reload();
     }
 

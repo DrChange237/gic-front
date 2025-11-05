@@ -4,16 +4,18 @@
     <img src="assets/images/logo.png" alt="Exemple d'image responsive">
   </picture>
 
-  <div class="menu-toggle" (click)="toggelSidebar()">
+  <div class="menu-toggle" (click)="toggleSidebar()">
     <div></div>
     <div></div>
     <div></div>
   </div>
 
-  <div class="d-flex align-items-center">
+  <div class="d-none d-md-inline-flex align-items-center">
     <h3 class="bg-body-secondary rounded-5 py-2 px-3 m-0 fw-bold text-primary" style="line-height: 1">
       <i class="i-Coins pe-3"></i>
-      <span class="">{{ 0 | currency: 'XAF' }}</span>
+      <span class="">
+        {{ (accountSrv.accountOperation?.balance || 0) | currency: accountSrv.accountOperation?.currency?.code || 'XAF' }}
+      </span>
     </h3>
   </div>
 
@@ -21,8 +23,6 @@
 
   <div class="header-part-right">
     <i fullScreenWindow class="i-Full-Screen header-icon d-none d-sm-inline-block" role="button"></i>
-
-    <i class="i-Speach-Bubble-3 header-icon" role="button" (click)="searchService.searchOpen = true"></i>
 
     <div ngbDropdown [placement]="'bottom-right'">
       <div class="badge-top-container">
@@ -59,7 +59,8 @@
         <img [src]="'assets/images/flags/' + translate.getCurrentLang() + '.png'" alt="" class="language-rounded">
       </div>
       <div ngbDropdownMenu aria-labelledby="languageDropdown" class="header-account-dropdown">
-        <button class="dropdown-item" *ngFor="let lang of languages; first as isFirst" [ngClass]="{'border-top border-light-subtle': !isFirst}">
+        <button class="dropdown-item" *ngFor="let lang of languages; first as isFirst" (click)="changeLanguage(lang)"
+                [ngClass]="{'border-top border-light-subtle': !isFirst}">
           <img [src]="'assets/images/flags/' + lang + '.png'" alt="">
           <span>{{('app.language_' + lang) | translate}}</span>
         </button>
@@ -67,15 +68,26 @@
     </div>
 
     <div ngbDropdown [placement]="'bottom-right'" class="user col align-self-end pl-2">
-      <img src="./assets/images/faces/1.jpg" id="userDropdown" ngbDropdownToggle alt="">
+      <div class="rounded-5 d-inline-flex align-items-center" id="userDropdown" role="button" ngbDropdownToggle style="line-height: 0">
+        <span>{{ user.name || user.username }}</span>
+        <span class="text-35 ms-2 bg-body-secondary rounded-5">
+          <i class="i-Male-21"></i>
+        </span>
+      </div>
 
       <div ngbDropdownMenu aria-labelledby="userDropdown" class="header-account-dropdown">
         <div class="dropdown-header">
-          <i class="i-Lock-User me-1"></i> Timothy Carlson
+          <i class="i-Administrator me-1"></i> {{ user.username }}
         </div>
-        <button class="dropdown-item">Account settings</button>
-        <button class="dropdown-item">Billing history</button>
-        <button class="dropdown-item" (click)="signout()">Sign out</button>
+        <button class="dropdown-item border-top border-light-subtle" routerLink="account-settings">
+          {{ 'navigation.profile' | translate }}
+        </button>
+        <button class="dropdown-item border-top border-light-subtle" routerLink="transactions/history">
+          {{ 'navigation.transaction_history' | translate }}
+        </button>
+        <button class="dropdown-item border-top border-light-subtle" (click)="signOut()">
+          {{ 'sessions.sign_out' | translate }}
+        </button>
       </div>
     </div>
 

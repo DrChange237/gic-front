@@ -3,7 +3,7 @@ import { Component, QueryList, ViewChildren } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Country } from '../../../shared/models/country.model';
-import { CountryService } from '../../../shared/services/country.service';
+import { CountryService } from '../../../shared/trx-services/country.service';
 import { NgbdSortableHeader, SortEvent } from '../../../shared/directives/sortable.directive';
 import { FormsModule } from '@angular/forms';
 import { NgbHighlight, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';

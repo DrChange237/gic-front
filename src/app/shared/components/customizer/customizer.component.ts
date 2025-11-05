@@ -27,8 +27,6 @@ export class CustomizerComponent implements OnInit, OnDestroy {
     this.nav = [...this.navService.defaultMenu];
     this.layouts = this.customizer.layouts;
     this.colors = this.customizer.colors;
-    // console.log(this.customizer.selectedLayout)
-    // console.log(this.router.url)
     if (!this.customizer.selectedLayout) {
       this.layouts.forEach(layout => {
         if (this.router.url?.includes(layout.name)) {

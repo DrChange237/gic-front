@@ -1,0 +1,16 @@
+<div class="breadcrumb text-capitalize" *ngIf="breadcrumbs$ | async as breadcrumbs">
+    <h1>{{breadcrumbs[breadcrumbs.length - 1].label | translate}}</h1>
+    @if (breadcrumbs.length > 1) {
+        <ul>
+            @for (bc of breadcrumbs; track bc; let isFirst = $first; let isLast = $last) {
+                @if (!isLast) {
+                    <li><a [routerLink]="bc.url">{{ bc.label | translate}}</a></li>
+                } @else {
+                    <li>{{ bc.label | translate}}</li>
+                }
+            }
+        </ul>
+    }
+</div>
+
+<div class="separator-breadcrumb border-top"></div>

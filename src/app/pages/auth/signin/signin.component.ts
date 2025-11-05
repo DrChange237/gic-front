@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, RouteConfigLoadStart, ResolveStart, RouteConfigLoadEnd, ResolveEnd } from '@angular/router';
+//
+import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
+import {CommonService} from "../../../core/services/common.service";
 import {AuthService} from "../../../core/services/auth.service";
 
 @Component({
@@ -15,10 +17,17 @@ export class SigninComponent implements OnInit {
     loading: boolean;
     loadingText: string;
     signinForm: UntypedFormGroup;
+    alert: { show: boolean, message: string, type: string } = {
+        show: false,
+        message: '',
+        type: ''
+    };
+
     constructor(
         private fb: UntypedFormBuilder,
         private auth: AuthService,
-        private router: Router
+        private router: Router,
+        private commonSrv: CommonService
     ) { }
 
     ngOnInit() {
@@ -34,19 +43,36 @@ export class SigninComponent implements OnInit {
         });
 
         this.signinForm = this.fb.group({
-            email: ['test@example.com', Validators.required],
-            password: ['1234', Validators.required]
+            email: ['admin@cca-bank.com', Validators.required],
+            password: ['12345', Validators.required]
         });
     }
 
     signin() {
+        if (this.signinForm.invalid) {
+            this.alert = { show: true, message: 'form.bad_credentials', type: 'danger' }
+            return;
+        }
+
         this.loading = true;
-        this.loadingText = 'Sigining in...';
-        this.auth.signin(this.signinForm.value)
-            .subscribe(res => {
+        this.loadingText = this.commonSrv.translate.instant('sessions.signing_in');
+        const data = {
+            username: this.signinForm.value?.email as string,
+            password: this.commonSrv.secureSrv.hashMD5(this.signinForm.value?.password || '')
+        };
+
+        this.auth.signIn(data).subscribe({
+            next: () => {
+                this.alert = { show: true, message: 'sessions.sign_in_success', type: 'success' };
+                this.commonSrv.alert('success', 'sessions.sign_in_success', 'sessions.session')
                 this.router.navigateByUrl('/dashboard');
-                this.loading = false;
-            });
+            },
+            error: err => {
+                this.alert = { show: true, message: err?.error?.message || 'sessions.sign_in_failed', type: 'danger' };
+                this.commonSrv.errorHandle(err, 'sessions.sign_in_failed', 'sessions.session');
+            },
+        });
+        this.loading = false;
     }
 
 }

@@ -3,15 +3,50 @@
     "language_en": "English",
     "language_fr": "French"
   },
+  "btn": {
+    "back_to_home": "Go back to home"
+  },
+  "error": {
+    "404_text": "Sorry! The page you were looking for doesn't exist.",
+    "404_title": "Error!"
+  },
+  "form": {
+    "bad_credentials": "Bad credentials",
+    "email_label": "Email ",
+    "email_plh": "Agent's e-mail address",
+    "password_label": "Password",
+    "required_fields": "Please fill all required fields",
+    "username_label": "Username"
+  },
   "navigation": {
+    "account_settings": "Account settings",
     "agencies": "Agencies",
     "agents": "Agents",
     "dashboard": "Dashboard",
     "history": "History",
     "management": "Management",
+    "profile": "Profile",
     "reporting": "Reporting",
     "role_profile": "Role & Profile",
     "services": "Services",
-    "templates": "Templates"
+    "templates": "Templates",
+    "transaction_history": "Transaction History"
+  },
+  "sessions": {
+    "forgot_password": "Forgot Password",
+    "session": "Session",
+    "sign_in": "Sign In",
+    "sign_in_failed": "Connexion failed",
+    "sign_in_success": "Successful login",
+    "sign_out": "Sign out",
+    "sign_out_failed": "Disconnection failed",
+    "signing_in": "Sigining in...",
+    "welcome": "Enter your email and password to login"
+  },
+  "toast": {
+    "error": "Error",
+    "info": "Info",
+    "success": "Success",
+    "warning": "Attention"
   }
 }

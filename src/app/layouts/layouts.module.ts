@@ -13,6 +13,8 @@ import { AdminLayoutSidebarLargeComponent } from './admin-layout-sidebar-large/a
 import { HeaderSidebarLargeComponent } from './admin-layout-sidebar-large/header-sidebar-large/header-sidebar-large.component';
 import { SidebarLargeComponent } from './admin-layout-sidebar-large/sidebar-large/sidebar-large.component';
 import {SharedComponentsModule} from "../shared/components/shared-components.module";
+import {SharedPipesModule} from "../shared/pipes/shared-pipes.module";
+import {SharedDirectivesModule} from "../shared/directives/shared-directives.module";
 
 // Regular layouts for declaration
 const components = [
@@ -35,6 +37,8 @@ const components = [
         CommonModule,
         TranslatePipe,
         SharedComponentsModule,
+        SharedPipesModule,
+        SharedDirectivesModule,
         // Import standalone layouts
     ],
   declarations: components,

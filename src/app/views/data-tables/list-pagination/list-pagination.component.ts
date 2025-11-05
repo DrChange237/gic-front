@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataLayerService } from 'src/app/shared/services/data-layer.service';
+import { DataLayerService } from 'src/app/shared/trx-services/data-layer.service';
 import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
 
 @Component({

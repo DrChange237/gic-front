@@ -60,13 +60,19 @@ export class NavigationService {
             name: 'services',
             type: 'link',
             icon: 'i-Shop-4',
-            state: '/services'
+            state: 'transactions/services'
         },
         {
             name: 'history',
             type: 'link',
             icon: 'i-Money-2',
-            state: 'history'
+            state: 'transactions/history'
+        },
+        {
+            name: 'reporting',
+            type: 'link',
+            icon: 'i-Statistic',
+            state: 'transactions/reporting',
         },
         {
             name: 'management',
@@ -77,12 +83,6 @@ export class NavigationService {
                 { icon: 'i-University1', name: 'agencies', state: 'management/agencies', type: 'link' },
                 { icon: 'i-Business-ManWoman', name: 'agents', state: 'management/agents', type: 'link' },
             ]
-        },
-        {
-            name: 'reporting',
-            type: 'link',
-            icon: 'i-Statistic',
-            state: 'reporting',
         },
         // {
         //     name: 'templates',

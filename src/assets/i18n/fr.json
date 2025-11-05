@@ -3,15 +3,50 @@
     "language_en": "Anglais",
     "language_fr": "Français"
   },
+  "btn": {
+    "back_to_home": "Retourner à l'accueil"
+  },
+  "error": {
+    "404_text": "Désolé, la page que vous demandé n'existe pas.",
+    "404_title": "Erreur!"
+  },
+  "form": {
+    "bad_credentials": "Identifiants incorrects",
+    "email_label": "Email ",
+    "email_plh": "Adresse e-mail de l'agent",
+    "password_label": "Mot de passe",
+    "required_fields": "Veuillez renseigner tous les champs obligatoire",
+    "username_label": "Nom d'utilisateur"
+  },
   "navigation": {
+    "account_settings": "Paramètres de compte",
     "agencies": "Agences",
     "agents": "Agents",
-    "dashboard": "Dashboard",
+    "dashboard": "Tableau de bord",
     "history": "Historique",
     "management": "Management",
+    "profile": "Profil",
     "reporting": "Reporting",
     "role_profile": "Rôle & Profil",
     "services": "Services",
-    "templates": "Templates"
+    "templates": "Templates",
+    "transaction_history": "Historiques de Transaction"
+  },
+  "sessions": {
+    "forgot_password": "Mot de Passe Oublié",
+    "session": "Session",
+    "sign_in": "Se Connecter",
+    "sign_in_failed": "Connexion échoué",
+    "sign_in_success": "Connexion réussie",
+    "sign_out": "Se Déconnecter",
+    "sign_out_failed": "Déconnexion échouée",
+    "signing_in": "Connexion...",
+    "welcome": "Entrez votre e-mail et votre mot de passe pour vous connecter"
+  },
+  "toast": {
+    "error": "Erreur",
+    "info": "Info",
+    "success": "Succès",
+    "warning": "Attention"
   }
 }

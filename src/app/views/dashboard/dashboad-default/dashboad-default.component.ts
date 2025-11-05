@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { echartStyles } from '../../../shared/echart-styles';
 
 @Component({
-    selector: 'app-dashboad-default',
+    selector: 'app-dashboard-agent',
     templateUrl: './dashboad-default.component.html',
     styleUrls: ['./dashboad-default.component.css'],
     standalone: false

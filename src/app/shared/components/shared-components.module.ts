@@ -9,12 +9,15 @@ import { SharedDirectivesModule } from '../directives/shared-directives.module';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import {FooterComponent} from "./footer/footer.component";
 import {CustomizerComponent} from "./customizer/customizer.component";
+import {BreadcrumbComponent} from "./breadcrumb/breadcrumb.component";
+import {TranslatePipe} from "@ngx-translate/core";
 
 const components = [
   BtnLoadingComponent,
   FeatherIconComponent,
   FooterComponent,
   CustomizerComponent,
+  BreadcrumbComponent,
 ];
 
 @NgModule({
@@ -24,7 +27,8 @@ const components = [
     SharedPipesModule,
     SharedDirectivesModule,
     NgScrollbarModule,
-    NgbModule
+    NgbModule,
+    TranslatePipe
   ],
   declarations: components,
   exports: [components]
