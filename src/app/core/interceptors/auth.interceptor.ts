@@ -1,7 +1,7 @@
 import type {HttpEvent, HttpInterceptor} from '@angular/common/http';
 import {Injectable} from "@angular/core";
-import {HttpHandler, HttpRequest} from "@angular/common/http";
-import {finalize, Observable} from "rxjs";
+import {HttpErrorResponse, HttpHandler, HttpRequest} from "@angular/common/http";
+import {catchError, Observable, throwError} from "rxjs";
 import {AuthService} from "../services/auth.service";
 
 @Injectable()
@@ -28,6 +28,12 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
 
-    return next.handle(clonedRequest);
+    return next.handle(clonedRequest).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) { this.authService.signOutLocal() }
+
+        return throwError(() => error);
+      })
+    );
   }
 }

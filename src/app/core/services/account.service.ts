@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {BaseApiService} from "./base-api.service";
 import {HttpClient} from "@angular/common/http";
 import {AccountBalance} from "../../shared/interfaces";
-import {tap} from "rxjs";
+import {catchError, of, tap} from "rxjs";
+import {CommonService} from "./common.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class AccountService extends BaseApiService {
   accountCommission: AccountBalance;
 
   constructor(
+      private commonSrv: CommonService,
       protected http: HttpClient
   ) {
     super(http)
@@ -25,7 +27,11 @@ export class AccountService extends BaseApiService {
 
   getAccountCommission() {
     return this.get<AccountBalance>('cashier/balance').pipe(
-        tap(res => this.accountCommission = res)
+        tap(res => this.accountCommission = res),
+        catchError(error => {
+          this.commonSrv.errorHandle(error, 'transactions.get_balance_trx_failed', 'transactions.balance')
+          return of(null);
+        })
     );
   }
 

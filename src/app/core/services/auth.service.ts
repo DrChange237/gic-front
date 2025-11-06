@@ -46,11 +46,13 @@ export class AuthService extends BaseApiService {
 
   signOut() {
     return this.post<AuthResponse>('cashier/logout', {}).pipe(
-      tap(() => {
-        this.authenticated = false;
-        this.store.clear();
-        this.router.navigateByUrl("/sessions/signin");
-      })
+      tap(() => this.signOutLocal())
     )
+  }
+
+  signOutLocal() {
+      this.authenticated = false;
+      this.store.clear();
+      this.router.navigateByUrl("/sessions/signin");
   }
 }

@@ -36,10 +36,11 @@
     "forgot_password": "Forgot Password",
     "session": "Session",
     "sign_in": "Sign In",
-    "sign_in_failed": "Connexion failed",
-    "sign_in_success": "Successful login",
+    "sign_in_failed": "Connection failed",
+    "sign_in_success": "Successful connection",
     "sign_out": "Sign out",
     "sign_out_failed": "Disconnection failed",
+    "sign_out_success": "Successful disconnection",
     "signing_in": "Sigining in...",
     "welcome": "Enter your email and password to login"
   },
@@ -50,6 +51,8 @@
     "warning": "Attention"
   },
   "transactions": {
+    "balance": "Balance",
+    "get_balance_trx_failed": "Error retrieving transaction account",
     "payment_confirm": "Confirmation",
     "payment_info": "Payment Information",
     "service": "Service",

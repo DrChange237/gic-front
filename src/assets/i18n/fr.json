@@ -40,6 +40,7 @@
     "sign_in_success": "Connexion réussie",
     "sign_out": "Se Déconnecter",
     "sign_out_failed": "Déconnexion échouée",
+    "sign_out_success": "Déconnexion réussie",
     "signing_in": "Connexion...",
     "welcome": "Entrez votre e-mail et votre mot de passe pour vous connecter"
   },
@@ -50,6 +51,8 @@
     "warning": "Attention"
   },
   "transactions": {
+    "balance": "Solde",
+    "get_balance_trx_failed": "Erreur lors de la récupération du compte d'opération",
     "payment_confirm": "Confirmation",
     "payment_info": "Informations de Paiement",
     "service": "Service",

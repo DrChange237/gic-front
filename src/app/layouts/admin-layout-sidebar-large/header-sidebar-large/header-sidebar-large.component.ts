@@ -57,7 +57,7 @@ export class HeaderSidebarLargeComponent implements OnInit {
   
     signOut() {
       this.auth.signOut().subscribe({
-        next: () => this.commonSrv.alert('success', 'sessions.sign_out_success', 'sessions.session'),
+        next: () => this.commonSrv.alert('info', 'sessions.sign_out_success', 'sessions.session'),
         error: () => this.commonSrv.alert('error', 'sessions.sign_out_failed', 'sessions.session')
       });
     }
@@ -67,4 +67,7 @@ export class HeaderSidebarLargeComponent implements OnInit {
         window.location.reload();
     }
 
+    getAccount() {
+        this.accountSrv.getAccountOperation().subscribe();
+    }
 }
