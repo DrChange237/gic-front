@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { Router, RouteConfigLoadStart, ResolveStart, RouteConfigLoadEnd, ResolveEnd } from '@angular/router';
 import { NavigationService } from 'src/app/core/services/navigation.service';
 import {LoaderService} from "../../core/services/loader.service";
@@ -18,7 +18,8 @@ export class AdminLayoutSidebarLargeComponent implements OnInit {
     constructor(
       public navService: NavigationService,
       private loaderService: LoaderService,
-      private router: Router
+      private router: Router,
+      private cdr: ChangeDetectorRef,
     ) { }
 
     ngOnInit() {
@@ -39,5 +40,6 @@ export class AdminLayoutSidebarLargeComponent implements OnInit {
 
     private updateLoadingState() {
         this.moduleLoading = this.routeLoading || this.httpLoading;
+        this.cdr.detectChanges();
     }
 }

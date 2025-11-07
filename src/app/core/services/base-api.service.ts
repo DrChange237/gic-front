@@ -21,6 +21,10 @@ export abstract class BaseApiService {
     return environment.API_URL;
   }
 
+  resolveImgUrl(): string {
+    return this.resolveBaseUrl().replace('2030', '8080')
+  }
+
   private buildOptions(options?: {
     headers?: Record<string, string>;
     params?: Record<string, string | number | boolean>;

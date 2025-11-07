@@ -11,13 +11,13 @@
   </div>
 
   <div class="d-none d-md-inline-flex align-items-center">
-    <h3 class="bg-body-secondary rounded-5 m-0 px-3 py-1 d-inline-flex align-items-center fw-bold text-primary">
+    <h3 class="balance-bar m-0 px-3 py-1 fw-bold">
       <i class="i-Coins pe-3"></i>
-      <span class="" style="line-height: unset">
+      <span>
         {{ (accountSrv.accountOperation?.balance | currency: accountSrv.accountOperation?.currency?.code) || 'N/A' }}
       </span>
       @if (!accountSrv.accountOperation?.balance) {
-          <span class="ms-3 p-1 bg-white rounded-5" style="line-height: 0" (click)="getAccount()">
+          <span class="ms-3 p-1 icon-refresh" (click)="getAccount()">
             <i class="i-Reload fw-bold" role="button"></i>
           </span>
       }
@@ -73,9 +73,9 @@
     </div>
 
     <div ngbDropdown [placement]="'bottom-right'" class="user col align-self-end pl-2">
-      <div class="rounded-5 d-inline-flex align-items-center" id="userDropdown" role="button" ngbDropdownToggle style="line-height: 0">
+      <div class="d-inline-flex align-items-center" id="userDropdown" role="button" ngbDropdownToggle style="line-height: 0">
         <span>{{ user.name || user.username }}</span>
-        <span class="text-35 ms-2 bg-body-secondary rounded-5">
+        <span class="text-35 ms-2 bg-user-img">
           <i class="i-Male-21"></i>
         </span>
       </div>

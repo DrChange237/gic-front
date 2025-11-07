@@ -1,4 +1,4 @@
-import { Component, AfterContentInit, ContentChildren, QueryList, EventEmitter, Output } from '@angular/core';
+import {Component, AfterContentInit, ContentChildren, QueryList, EventEmitter, Output, Input} from '@angular/core';
 import { WizardStepComponent } from '../wizard-step/wizard-step.component';
 
 @Component({
@@ -14,6 +14,8 @@ export class WizardComponent implements AfterContentInit {
 
   private _steps: Array<WizardStepComponent> = [];
   private _isCompleted = false;
+
+  @Input() isCustomNav = false;
 
   @Output()
   onStepChanged: EventEmitter<WizardStepComponent> = new EventEmitter<WizardStepComponent>();
@@ -57,8 +59,8 @@ export class WizardComponent implements AfterContentInit {
     return this.activeStepIndex > 0;
   }
 
-  public goToStep(step: WizardStepComponent): void {
-    if (!this.isCompleted) {
+  public goToStep(step: WizardStepComponent, index: number): void {
+    if (!this.isCompleted && index < this.activeStepIndex) {
       this.activeStep = step;
     }
   }

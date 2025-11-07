@@ -1,4 +1,37 @@
 @use "../../themes/themes" as theme;
+.rounded-table {
+    border: 1px solid theme.$gray-400;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+.table {
+    th {
+        height: 40px;
+        vertical-align: middle;
+        color: theme.$dark;
+    }
+    td {
+        height: 50px;
+        color: theme.$dark;
+        vertical-align: middle;
+
+        &.col-status {
+            width: 10%;
+        }
+    }
+
+    tbody {
+        tr:last-child {
+            border-bottom: transparent;
+        }
+
+        tr:hover > * {
+            background: theme.$gray-100;
+        }
+    }
+}
+
 .list-horizontal {
     .list-item {
         .list-thumb {

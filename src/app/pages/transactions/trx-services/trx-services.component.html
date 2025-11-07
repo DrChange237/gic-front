@@ -3,20 +3,84 @@
 <div class="row">
     <div class="col-md-12">
 
-        <form-wizard>
-            <wizard-step [title]="'transactions.service_type' | translate" [isValid]="basicForm.form.valid" (onNext)="onStep1Next($event)">
-                <form #basicForm="ngForm">
-                </form>
+        <form-wizard [isCustomNav]="true">
+            <wizard-step [title]="'transactions.service_type' | translate" [isValid]="" (onNext)="onStep1Next($event)">
+                <div class="row my-4 justify-content-center">
+                    @for (type of servicesType$; track type.code) {
+                        <div class="col-3">
+                            <div class="card card-profile-1 card-zoom mb-4" (click)="loadServices(type.code)">
+                                <div class="card-body text-center">
+                                    <div class="avatar rounded-1 mb-3 border p-1">
+                                        <img [src]="imageBaseUrl + type.logo" [alt]="type.name">
+                                    </div>
+                                    <h5 class="m-0 py-2 text-14">{{ type.name }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
             </wizard-step>
 
-            <wizard-step [title]="'transactions.service' | translate" [isValid]="step2Form.valid" (onNext)="onStep2Next($event)">
-                <form [formGroup]="step2Form">
-                </form>
+            <wizard-step [title]="'transactions.service' | translate" (onNext)="onStep2Next($event)">
+                <div class="row my-4 justify-content-center">
+                    @for (service of services$; track service.code) {
+                        <div class="col-3">
+                            <div class="card card-profile-1 card-zoom mb-4" (click)="initializeForm(service)">
+                                <div class="card-body text-center">
+                                    <div class="avatar rounded-1 mb-3 border p-1">
+                                        <img [src]="imageBaseUrl + service.logo" [alt]="service.name">
+                                    </div>
+                                    <h5 class="m-0 text-14">{{ service.name }}</h5>
+                                    <p class="m-0 py-2">{{ service.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
             </wizard-step>
 
-            <wizard-step [title]="'transactions.payment_info' | translate" (onNext)="onStep3Next($event)">
-                <form #paymentForm="ngForm">
-                </form>
+            <wizard-step [title]="'transactions.payment_info' | translate" [isValid]="serviceForm?.valid" (onNext)="onStep3Next($event)">
+                @if (serviceForm) {
+                    <form [formGroup]="serviceForm" (ngSubmit)="initPayment()">
+                        @if (currService.withRef) {
+                            <div class="form-group">
+                                <label>{{currService.labelRef}}</label>
+                                <input class="form-control" formControlName="reference" [type]="currService.typeRef">
+                            </div>
+                        }
+
+                        @if (currService.withAmount) {
+                            <div class="form-group">
+                                <label>{{ 'form.amount_label' | translate }}</label>
+                                <input class="form-control" formControlName="amount" type="number">
+                            </div>
+                        }
+
+                        @if (currService.withForm && currService.initForm?.formItems) {
+                            @for (item of currService.initForm.formItems; track item) {
+                                <div class="form-group">
+                                    <label>{{ item.label }}</label>
+
+                                    @switch (item.type) {
+                                        @case ('text') {
+                                            <input class="form-control" formControlName="{{item.name}}" type="text">
+                                        }
+                                        @case ('number') {
+                                            <input class="form-control" formControlName="{{item.name}}" type="number">
+                                        }
+                                        @case ('select') {
+                                            <ng-select class="custom" [appendTo]="'body'" [clearable]="false" formControlName="{{item.name}}">
+                                                @for (opt of item.options; track opt) {
+                                                    <ng-option [value]="opt.id"> {{ opt.label }}</ng-option>
+                                                }
+                                            </ng-select>
+                                        }
+                                    }
+                                </div>
+                            }
+                        }
+                    </form>
+                }
             </wizard-step>
 
             <wizard-step [title]="'transactions.payment_confirm' | translate" (onComplete)="onComplete($event)">

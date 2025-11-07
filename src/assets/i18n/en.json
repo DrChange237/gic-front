@@ -11,6 +11,7 @@
     "404_title": "Error!"
   },
   "form": {
+    "amount_label": "Amount",
     "bad_credentials": "Bad credentials",
     "email_label": "Email ",
     "email_plh": "Agent's e-mail address",
@@ -44,6 +45,10 @@
     "signing_in": "Sigining in...",
     "welcome": "Enter your email and password to login"
   },
+  "table": {
+    "empty_data": "No data available",
+    "item_per_page": "{{size}} items per page"
+  },
   "toast": {
     "error": "Error",
     "info": "Info",
@@ -53,6 +58,8 @@
   "transactions": {
     "balance": "Balance",
     "get_balance_trx_failed": "Error retrieving transaction account",
+    "get_service_failed": "Service detail failed to load",
+    "get_service_types_failed": "Service type list failed to load",
     "payment_confirm": "Confirmation",
     "payment_info": "Payment Information",
     "service": "Service",

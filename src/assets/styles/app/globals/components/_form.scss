@@ -1,5 +1,55 @@
 @use "../../themes/themes" as theme;
 
+.ng-select.custom {
+    .ng-select-container {
+        border: 1px solid theme.$gray-400;
+        color: theme.$foreground;
+        border-radius: 6px;
+        min-height: 42px;
+        transition: all 0.2s ease;
+    }
+
+    &.ng-select-focused .ng-select-container {
+        border-color: rgb(182.5, 156.5, 202.5);
+        outline: 0;
+        box-shadow: 0 0 0 0.25rem rgba(110, 58, 150, 0.25);
+    }
+    .ng-dropdown-panel {
+        border-radius: 6px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+        .ng-option:hover,
+        .ng-option.ng-option-marked {
+            background-color: #7B4BA0;
+            color: white;
+        }
+
+        .ng-option.ng-option-selected {
+            background-color: theme.$primary !important;
+            color: #fff !important;
+            font-weight: 600;
+        }
+    }
+}
+
+.ng-dropdown-panel.custom {
+    z-index: 50 !important;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+    .ng-option:hover,
+    .ng-option.ng-option-marked {
+        background-color: #7B4BA0;
+        color: white;
+    }
+
+    .ng-option.ng-option-selected {
+        background-color: theme.$primary !important;
+        color: #fff !important;
+        font-weight: 600;
+    }
+}
+
 .form-group {
     position: relative;
     margin-bottom: 10px;

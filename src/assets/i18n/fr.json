@@ -11,6 +11,7 @@
     "404_title": "Erreur!"
   },
   "form": {
+    "amount_label": "Montant",
     "bad_credentials": "Identifiants incorrects",
     "email_label": "Email ",
     "email_plh": "Adresse e-mail de l'agent",
@@ -44,6 +45,10 @@
     "signing_in": "Connexion...",
     "welcome": "Entrez votre e-mail et votre mot de passe pour vous connecter"
   },
+  "table": {
+    "empty_data": "Aucune donnée disponible",
+    "item_per_page": "{{size}} élément par page"
+  },
   "toast": {
     "error": "Erreur",
     "info": "Info",
@@ -53,6 +58,8 @@
   "transactions": {
     "balance": "Solde",
     "get_balance_trx_failed": "Erreur lors de la récupération du compte d'opération",
+    "get_service_failed": "Détails du service non chargées",
+    "get_service_types_failed": "Liste des types de services non chargée",
     "payment_confirm": "Confirmation",
     "payment_info": "Informations de Paiement",
     "service": "Service",

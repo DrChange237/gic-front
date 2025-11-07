@@ -7,12 +7,13 @@ import {NgbHighlight, NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule} from "@angular/forms";
 import {AsyncPipe, DecimalPipe} from "@angular/common";
 import {CountryService} from "../../../core/services/country.service";
+import {NgSelectModule} from "@ng-select/ng-select";
 
 @Component({
   selector: 'app-trx-history',
   templateUrl: './trx-history.component.html',
   styleUrls: ['./trx-history.component.scss'],
-  imports: [SharedComponentsModule, NgbPagination, FormsModule, NgbHighlight, DecimalPipe, AsyncPipe],
+  imports: [SharedComponentsModule, NgbPagination, FormsModule, NgbHighlight, DecimalPipe, AsyncPipe, NgbdSortableHeader, NgSelectModule],
   standalone: true,
   providers: [CountryService, DecimalPipe],
 })
