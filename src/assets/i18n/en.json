@@ -5,7 +5,9 @@
   },
   "btn": {
     "back_to_home": "Go back to home",
+    "cancel": "Cancel",
     "close": "Close",
+    "confirm": "Confirm",
     "next": "Next",
     "previous": "Previous",
     "return": "Return"
@@ -64,6 +66,7 @@
   "transactions": {
     "balance": "Balance",
     "choose_payment_option_failed": "Choice of service payment option failed",
+    "detail_transaction": "Transaction details",
     "get_balance_trx_failed": "Error retrieving transaction account",
     "get_service_failed": "Service detail failed to load",
     "get_service_types_failed": "Service type list failed to load",

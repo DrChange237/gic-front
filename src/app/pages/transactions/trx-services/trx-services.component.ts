@@ -76,6 +76,9 @@ export class TrxServicesComponent implements OnInit {
   initializeForm(service: ServiceModel) {
     this.currService = service;
     this.addStyleOnInstruction(service.instructions);
+    this.isFormCompleted = false;
+    this.paymentInitiate = null;
+
     this.buildForm(service);
 
     this.wizard.next();
@@ -104,8 +107,10 @@ export class TrxServicesComponent implements OnInit {
     this.factorySrv.initPayment(data).subscribe({
       next: res => {
         this.paymentInitiate = res
-        if (this.currService.withOptions) { this.wizard.next(); }
-        else { this.isFormCompleted = true; }
+        if (!this.currService.withOptions) {
+          this.isFormCompleted = true;
+          this.wizard.next();
+        }
       },
       error: err => this.commonSrv.errorHandle(err, 'transactions.init_payment_failed', 'transactions.service')
     });
@@ -113,7 +118,7 @@ export class TrxServicesComponent implements OnInit {
   }
 
   choosePaymentOption() {
-    if (this.optionPayment) {
+    if (!this.optionPayment) {
       return this.commonSrv.alert('warning', 'form.required_fields', 'transactions.service');
     }
 
@@ -126,6 +131,7 @@ export class TrxServicesComponent implements OnInit {
     this.factorySrv.selectOptionPayment(data).subscribe({
       next: res => {
         this.paymentInitiate = res
+        this.isFormCompleted = true;
         this.wizard.next();
       },
       error: err => this.commonSrv.errorHandle(err, 'transactions.choose_payment_option_failed', 'transactions.service')
@@ -155,7 +161,7 @@ export class TrxServicesComponent implements OnInit {
   private buildForm(service: ServiceModel) {
     const group: any = {}
     this.sizeOfForm = 0;
-    this.isFormCompleted = false;
+    this.isSubmitted = false;
 
     if (service.withRef) {
       const validators = service.regex ? [Validators.pattern(service.regex)] : [];

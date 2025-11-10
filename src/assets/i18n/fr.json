@@ -5,7 +5,9 @@
   },
   "btn": {
     "back_to_home": "Retourner à l'accueil",
+    "cancel": "Annuler",
     "close": "Fermer",
+    "confirm": "Confirmer",
     "next": "Suivant",
     "previous": "Précédent",
     "return": "Retour"
@@ -64,6 +66,7 @@
   "transactions": {
     "balance": "Solde",
     "choose_payment_option_failed": "Choix de l'option de paiement de service échoué",
+    "detail_transaction": "Détails de la transaction",
     "get_balance_trx_failed": "Erreur lors de la récupération du compte d'opération",
     "get_service_failed": "Détails du service non chargées",
     "get_service_types_failed": "Liste des types de services non chargée",
