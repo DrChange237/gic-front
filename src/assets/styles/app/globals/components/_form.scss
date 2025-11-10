@@ -1,11 +1,13 @@
 @use "../../themes/themes" as theme;
 
+.ng-select.ng-select-single .ng-select-container { height: 34px }
 .ng-select.custom {
     .ng-select-container {
         border: 1px solid theme.$gray-400;
         color: theme.$foreground;
         border-radius: 6px;
-        min-height: 42px;
+        min-height: 34px;
+        background: theme.$gray-100;
         transition: all 0.2s ease;
     }
 
@@ -81,6 +83,12 @@ select.form-control {
         height: 34px;
         border-color: theme.$gray-400;
     }
+}
+
+.input-group > .form-control,
+.input-group > .form-select,
+.input-group > .form-floating, {
+    margin-right: -4px;
 }
 
 [ngbdatepicker] {

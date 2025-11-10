@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { SharedComponentsModule } from "src/app/shared/components/shared-components.module";
 import {FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import {FormWizardModule} from "../../../shared/components/form-wizard/form-wizard.module";
@@ -9,12 +9,14 @@ import {CommonService} from "../../../core/services/common.service";
 import {BaseApiService} from "../../../core/services/base-api.service";
 import {WizardComponent} from "../../../shared/components/form-wizard/wizard/wizard.component";
 import {NgSelectModule} from "@ng-select/ng-select";
+import {NgbInputDatepicker, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-trx-services',
   templateUrl: './trx-services.component.html',
   styleUrls: ['./trx-services.component.scss'],
-  imports: [SharedComponentsModule, FormWizardModule, FormsModule, ReactiveFormsModule, TranslatePipe, NgSelectModule],
+  imports: [SharedComponentsModule, FormWizardModule, FormsModule, ReactiveFormsModule, TranslatePipe, NgSelectModule, NgbInputDatepicker, NgClass],
   standalone: true,
 })
 export class TrxServicesComponent implements OnInit {
@@ -27,9 +29,12 @@ export class TrxServicesComponent implements OnInit {
   services$: ServiceModel[] = [];
   currService: ServiceModel;
 
+  sizeOfForm: number = 0;
+  loadingForm: boolean = false;
   serviceForm: UntypedFormGroup;
 
   constructor(
+      private modalService: NgbModal,
       private baseSrv: BaseApiService,
       private fb: UntypedFormBuilder,
       private commonSrv: CommonService,
@@ -78,15 +83,18 @@ export class TrxServicesComponent implements OnInit {
   onComplete(e) {}
 
   buildForm(service: ServiceModel) {
-    const group: any = {};
+    const group: any = {}
+    this.sizeOfForm = 0;
 
     if (service.withRef) {
       const validators = service.regex ? [Validators.pattern(service.regex)] : [];
       group['reference'] = ['', [Validators.required, ...validators]];
+      this.sizeOfForm++;
     }
 
     if (service.withAmount) {
       group['amount'] = [0, Validators.required];
+      this.sizeOfForm++;
     }
 
     if (service.withForm && service.initForm?.formItems) {
@@ -97,10 +105,19 @@ export class TrxServicesComponent implements OnInit {
             if (item.required) validators.push(Validators.required);
             if (item.regex) validators.push(Validators.pattern(item.regex));
             group[item.name] = ['', validators];
+            this.sizeOfForm++;
           });
     }
 
+    console.log(this.sizeOfForm)
     this.serviceForm = this.fb.group(group);
-    console.log(this.serviceForm)
+  }
+
+  openModal(content: TemplateRef<never>) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true });
+  }
+
+  get isOddForm(): boolean {
+    return this.sizeOfForm % 2 !== 0;
   }
 }

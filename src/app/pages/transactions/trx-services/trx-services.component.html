@@ -3,17 +3,17 @@
 <div class="row">
     <div class="col-md-12">
 
-        <form-wizard [isCustomNav]="true">
+        <form-wizard #wizard [isCustomNav]="true">
             <wizard-step [title]="'transactions.service_type' | translate" [isValid]="" (onNext)="onStep1Next($event)">
-                <div class="row my-4 justify-content-center">
+                <div class="row my-4 justify-content-around">
                     @for (type of servicesType$; track type.code) {
-                        <div class="col-3">
+                        <div class="col-sm-6 col-lg-4 col-xl-3">
                             <div class="card card-profile-1 card-zoom mb-4" (click)="loadServices(type.code)">
                                 <div class="card-body text-center">
                                     <div class="avatar rounded-1 mb-3 border p-1">
                                         <img [src]="imageBaseUrl + type.logo" [alt]="type.name">
                                     </div>
-                                    <h5 class="m-0 py-2 text-14">{{ type.name }}</h5>
+                                    <h5 class="m-0 fw-semibold py-2 text-14 text-truncate">{{ type.name }}</h5>
                                 </div>
                             </div>
                         </div>
@@ -22,64 +22,99 @@
             </wizard-step>
 
             <wizard-step [title]="'transactions.service' | translate" (onNext)="onStep2Next($event)">
-                <div class="row my-4 justify-content-center">
+                <div class="row my-4 justify-content-around">
                     @for (service of services$; track service.code) {
-                        <div class="col-3">
+                        <div class="col-sm-6 col-lg-4 col-xl-3">
                             <div class="card card-profile-1 card-zoom mb-4" (click)="initializeForm(service)">
                                 <div class="card-body text-center">
                                     <div class="avatar rounded-1 mb-3 border p-1">
                                         <img [src]="imageBaseUrl + service.logo" [alt]="service.name">
                                     </div>
-                                    <h5 class="m-0 text-14">{{ service.name }}</h5>
-                                    <p class="m-0 py-2">{{ service.description }}</p>
+                                    <h5 class="m-0 fw-semibold text-14 text-truncate">{{ service.name }}</h5>
+                                    <p class="m-0 py-2 text-truncate">{{ service.description }}</p>
                                 </div>
                             </div>
                         </div>
                     }
                 </div>
+
+                <div class="col-md-12 text-start mb-4">
+                    <button class="btn btn-light" (click)="wizard.previous()">{{ 'btn.previous' | translate }}</button>
+                </div>
             </wizard-step>
 
             <wizard-step [title]="'transactions.payment_info' | translate" [isValid]="serviceForm?.valid" (onNext)="onStep3Next($event)">
                 @if (serviceForm) {
-                    <form [formGroup]="serviceForm" (ngSubmit)="initPayment()">
-                        @if (currService.withRef) {
-                            <div class="form-group">
-                                <label>{{currService.labelRef}}</label>
-                                <input class="form-control" formControlName="reference" [type]="currService.typeRef">
+                    <div class="my-3">
+                        <div class="d-flex flex-wrap mb-2">
+                            <div class="d-inline-flex flex-grow-1 gap-3">
+                                <div class="avatar-lg center rounded-1 mb-3 border p-1">
+                                    <img [src]="imageBaseUrl + currService.logo" [alt]="currService.name">
+                                </div>
+                                <div class="mt-1">
+                                    <h5 class="m-0 fw-semibold text-14">{{ currService.name }}</h5>
+                                    <p class="m-0 py-2">{{ currService.description }}</p>
+                                </div>
                             </div>
-                        }
 
-                        @if (currService.withAmount) {
-                            <div class="form-group">
-                                <label>{{ 'form.amount_label' | translate }}</label>
-                                <input class="form-control" formControlName="amount" type="number">
-                            </div>
-                        }
+                            @if (currService.instructions) {
+                                <div>
+                                    <a role="button" class="link-offset-2-hover" (click)="openModal(instructionService)">
+                                        <i class="i-Information pe-1"></i>
+                                        <span>{{ 'transactions.service_instructions' | translate }}</span>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                        <form [formGroup]="serviceForm" (ngSubmit)="initPayment()" class="row">
+                            @if (currService.withRef) {
+                                <div class="form-group" [ngClass]="sizeOfForm === 1 ? 'col-12' : 'col-sm-6'">
+                                    <label>{{currService.labelRef}}</label>
+                                    <input class="form-control" formControlName="reference" [type]="currService.typeRef">
+                                </div>
+                            }
 
-                        @if (currService.withForm && currService.initForm?.formItems) {
-                            @for (item of currService.initForm.formItems; track item) {
-                                <div class="form-group">
-                                    <label>{{ item.label }}</label>
+                            @if (currService.withAmount) {
+                                <div class="form-group" [ngClass]="sizeOfForm === 1 ? 'col-12' : 'col-sm-6'">
+                                    <label>{{ 'form.amount_label' | translate }}</label>
+                                    <input class="form-control" formControlName="amount" type="number" [min]="0" [step]="5000">
+                                </div>
+                            }
 
-                                    @switch (item.type) {
-                                        @case ('text') {
-                                            <input class="form-control" formControlName="{{item.name}}" type="text">
-                                        }
-                                        @case ('number') {
-                                            <input class="form-control" formControlName="{{item.name}}" type="number">
-                                        }
-                                        @case ('select') {
+                            @if (currService.withForm && currService.initForm?.formItems) {
+                                @for (item of currService.initForm.formItems; track item; let isLast = $last) {
+                                    <div class="form-group" [ngClass]="isLast && isOddForm ? 'col-12': 'col-sm-6'">
+                                        <label>{{ item.label }}</label>
+
+                                        @if (['text', 'tel', 'email', 'number'].includes(item.type.toLowerCase())) {
+                                            <input class="form-control" formControlName="{{item.name}}" [type]="item.type.toLowerCase()">
+                                        } @else if (item.type.toLowerCase() === 'date') {
+                                            <div class="input-group">
+                                                <input class="form-control" type="" formControlName="{{item.name}}" placeholder="yyyy-mm-dd" name="dp"
+                                                       ngbDatepicker #dp="ngbDatepicker" (click)="dp.toggle()">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
+                                                        <i class="icon-regular i-Calendar-4"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        } @else if (item.type.toLowerCase() === 'select') {
                                             <ng-select class="custom" [appendTo]="'body'" [clearable]="false" formControlName="{{item.name}}">
                                                 @for (opt of item.options; track opt) {
                                                     <ng-option [value]="opt.id"> {{ opt.label }}</ng-option>
                                                 }
                                             </ng-select>
                                         }
-                                    }
-                                </div>
+                                    </div>
+                                }
                             }
-                        }
-                    </form>
+
+                            <div class="col-md-12 d-inline-flex justify-content-between py-4">
+                                <button class="btn btn-light" type="button" (click)="wizard.previous()">{{ 'btn.previous' | translate }}</button>
+                                <button class="btn btn-primary" type="submit">{{ 'btn.next' | translate }}</button>
+                            </div>
+                        </form>
+                    </div>
                 }
             </wizard-step>
 
@@ -90,3 +125,16 @@
 
     </div>
 </div>
+
+<ng-template #instructionService let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{ 'transactions.service_instructions' | translate }}</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="list-group" [innerHTML]="currService.instructions"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">{{ 'btn.close' | translate }}</button>
+    </div>
+</ng-template>

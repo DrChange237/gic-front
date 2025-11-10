@@ -4,7 +4,11 @@
     "language_fr": "French"
   },
   "btn": {
-    "back_to_home": "Go back to home"
+    "back_to_home": "Go back to home",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous",
+    "return": "Return"
   },
   "error": {
     "404_text": "Sorry! The page you were looking for doesn't exist.",
@@ -50,6 +54,7 @@
     "item_per_page": "{{size}} items per page"
   },
   "toast": {
+    "default_error": "An error occurred during your request",
     "error": "Error",
     "info": "Info",
     "success": "Success",
@@ -63,6 +68,7 @@
     "payment_confirm": "Confirmation",
     "payment_info": "Payment Information",
     "service": "Service",
+    "service_instructions": "Service instructions",
     "service_type": "Service Type"
   }
 }

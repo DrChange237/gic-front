@@ -4,6 +4,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {LocalStoreService} from "./local-store.service";
 import {SecureDataService} from "./secure-data.service";
 import {ToastOptions} from "../../shared/interfaces";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +19,15 @@ export class CommonService {
   ) {}
 
   errorHandle(err: any, message: string, title: string = 'toast.error', override?: Partial<ToastOptions>) {
-    this.toastSrv.error(
-        err?.error?.error_description || this.translate.instant(message),
-        err?.error?.error || this.translate.instant(title),
-        override
-    )
+    let messageTr = err?.error?.error_description || this.translate.instant(message);
+    let titleTr = err?.error?.error || this.translate.instant(title);
+
+    if (err instanceof HttpErrorResponse && err.status === 500) {
+      messageTr = this.translate.instant('toast.default_error');
+      titleTr = this.translate.instant(title || 'toast.error');
+    }
+
+    this.toastSrv.error(messageTr, titleTr, override);
   }
 
   alert(toast: string, message: string, title?: string, override: Partial<ToastOptions> = { closeButton: true }) {
