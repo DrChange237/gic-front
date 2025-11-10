@@ -3,7 +3,7 @@ import {BaseApiService} from "./base-api.service";
 import {LocalStoreService} from "./local-store.service";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {ServiceModel, ServiceType} from "../../shared/interfaces";
+import {InitPaymentData, InitPaymentResponse, ServiceModel, ServiceType} from "../../shared/interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,14 @@ export class FactoryService extends BaseApiService {
 
   getServices(type: string) {
     return this.get<ServiceModel[]>('bill/billers', { params: { type } });
+  }
+
+  initPayment(data: InitPaymentData) {
+    return this.post<InitPaymentResponse>('pay/init', data)
+  }
+
+  selectOptionPayment(data: { id: string, amount: number, optionId: string }) {
+    return this.post<InitPaymentResponse>('pay/selectOption', data)
   }
 
 }

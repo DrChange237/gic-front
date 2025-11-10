@@ -40,6 +40,7 @@
   "sessions": {
     "forgot_password": "Mot de Passe Oublié",
     "session": "Session",
+    "session_expired": "Session expirée",
     "sign_in": "Se Connecter",
     "sign_in_failed": "Connexion échoué",
     "sign_in_success": "Connexion réussie",
@@ -62,9 +63,11 @@
   },
   "transactions": {
     "balance": "Solde",
+    "choose_payment_option_failed": "Choix de l'option de paiement de service échoué",
     "get_balance_trx_failed": "Erreur lors de la récupération du compte d'opération",
     "get_service_failed": "Détails du service non chargées",
     "get_service_types_failed": "Liste des types de services non chargée",
+    "init_payment_failed": "Initiation du paiement de service échoué",
     "payment_confirm": "Confirmation",
     "payment_info": "Informations de Paiement",
     "service": "Service",

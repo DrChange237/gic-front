@@ -40,6 +40,7 @@
   "sessions": {
     "forgot_password": "Forgot Password",
     "session": "Session",
+    "session_expired": "Session expired",
     "sign_in": "Sign In",
     "sign_in_failed": "Connection failed",
     "sign_in_success": "Successful connection",
@@ -62,9 +63,11 @@
   },
   "transactions": {
     "balance": "Balance",
+    "choose_payment_option_failed": "Choice of service payment option failed",
     "get_balance_trx_failed": "Error retrieving transaction account",
     "get_service_failed": "Service detail failed to load",
     "get_service_types_failed": "Service type list failed to load",
+    "init_payment_failed": "Service payment initiation failed",
     "payment_confirm": "Confirmation",
     "payment_info": "Payment Information",
     "service": "Service",

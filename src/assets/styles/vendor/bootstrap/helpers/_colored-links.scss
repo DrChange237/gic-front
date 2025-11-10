@@ -15,7 +15,7 @@
   }
 }
 
-// One-off special link helper as a bridge until v6
+// One-off special link date-picker as a bridge until v6
 .link-body-emphasis {
   color: RGBA(var(--#{$prefix}emphasis-color-rgb), var(--#{$prefix}link-opacity, 1)) if($enable-important-utilities, !important, null);
   text-decoration-color: RGBA(var(--#{$prefix}emphasis-color-rgb), var(--#{$prefix}link-underline-opacity, 1)) if($enable-important-utilities, !important, null);

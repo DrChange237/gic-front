@@ -1,3 +1,43 @@
+import {PaymentStatus} from "../enums";
+
+export interface InitPaymentData {
+    service: string;
+    reference?: string;
+    amount?: number;
+    form: { id: string, name?: string, value?: any }[]
+}
+
+export interface InitPaymentResponse {
+    id: string;
+    service: ServiceModel;
+    username: string,
+    status: PaymentStatus,
+    options: { label: string, amount: number, id: string, description: string }[],
+    information: { key: string, name: string, value: string }[],
+    reference: string,
+    event: string,
+    clearId: string,
+    choice: string,
+    countryCode: string,
+    agencyCode: string,
+    agencyName: string,
+    description: string,
+    info: string,
+    post: { additionalProp1: string, additionalProp2: string, additionalProp3: string },
+    trxid: string,
+    amount: number,
+    clientFees: number,
+    form: FormItem,
+    flow: string,
+    signatory: { name: string, function: string, signature: string },
+    sourceAgencyCode: string,
+    sourceAccountNumber: string,
+    sourceAccountKey: string,
+    depositor: string,
+    narration: string,
+    totalAmount: number
+}
+
 export interface FormItemOptions {
     label: string;
     amount: number;

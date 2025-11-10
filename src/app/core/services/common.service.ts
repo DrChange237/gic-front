@@ -19,12 +19,19 @@ export class CommonService {
   ) {}
 
   errorHandle(err: any, message: string, title: string = 'toast.error', override?: Partial<ToastOptions>) {
-    let messageTr = err?.error?.error_description || this.translate.instant(message);
+    let messageTr = err?.error?.error_description || err?.error?.message || this.translate.instant(message);
     let titleTr = err?.error?.error || this.translate.instant(title);
 
-    if (err instanceof HttpErrorResponse && err.status === 500) {
-      messageTr = this.translate.instant('toast.default_error');
-      titleTr = this.translate.instant(title || 'toast.error');
+    if (err instanceof HttpErrorResponse) {
+      switch (err.status) {
+        case 500:
+          messageTr = this.translate.instant('toast.default_error');
+          titleTr = this.translate.instant(title || 'toast.error');
+          break;
+
+        case 401:
+          messageTr = this.translate.instant('sessions.session_expired');
+      }
     }
 
     this.toastSrv.error(messageTr, titleTr, override);

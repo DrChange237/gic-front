@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {CommonService} from "./core/services/common.service";
 import {Language} from "./shared/enums";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-root',
@@ -13,7 +14,9 @@ export class AppComponent {
 
   constructor(
       private commonSrv: CommonService,
+      private modalService: NgbModal,
   ) {
+      modalService.dismissAll();
       this.setLanguage();
   }
 

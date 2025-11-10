@@ -1,37 +1,47 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { SharedComponentsModule } from "src/app/shared/components/shared-components.module";
 import {FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
-import {FormWizardModule} from "../../../shared/components/form-wizard/form-wizard.module";
+import {NgbDateAdapter, NgbInputDatepicker, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {NgSelectModule} from "@ng-select/ng-select";
 import {TranslatePipe} from "@ngx-translate/core";
+import {CurrencyPipe, NgClass} from "@angular/common";
+//
+import {WizardComponent} from "../../../shared/components/form-wizard/wizard/wizard.component";
+import {FormWizardModule} from "../../../shared/components/form-wizard/form-wizard.module";
 import {FactoryService} from "../../../core/services/factory.service";
-import {ServiceModel, ServiceType} from "../../../shared/interfaces";
+import {InitPaymentResponse, ServiceModel, ServiceType} from "../../../shared/interfaces";
 import {CommonService} from "../../../core/services/common.service";
 import {BaseApiService} from "../../../core/services/base-api.service";
-import {WizardComponent} from "../../../shared/components/form-wizard/wizard/wizard.component";
-import {NgSelectModule} from "@ng-select/ng-select";
-import {NgbInputDatepicker, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {NgClass} from "@angular/common";
+import {CustomDateAdapter} from "../../../core/utils/date-picker/custom-date-adapter";
 
 @Component({
   selector: 'app-trx-services',
   templateUrl: './trx-services.component.html',
   styleUrls: ['./trx-services.component.scss'],
-  imports: [SharedComponentsModule, FormWizardModule, FormsModule, ReactiveFormsModule, TranslatePipe, NgSelectModule, NgbInputDatepicker, NgClass],
+  imports: [SharedComponentsModule, FormWizardModule, FormsModule, ReactiveFormsModule, TranslatePipe, NgSelectModule, NgbInputDatepicker, NgClass, CurrencyPipe],
   standalone: true,
+  providers: [{ provide: NgbDateAdapter, useClass: CustomDateAdapter }]
 })
 export class TrxServicesComponent implements OnInit {
   @ViewChild(WizardComponent) wizard!: WizardComponent;
 
-  isCompleted: boolean;
+  loadingForm: boolean = false;
+  isSubmitted: boolean;
+  isFormCompleted: boolean = false;
 
   imageBaseUrl: string = this.baseSrv.resolveImgUrl() + '/files/';
+
   servicesType$: ServiceType[] = [];
   services$: ServiceModel[] = [];
   currService: ServiceModel;
 
   sizeOfForm: number = 0;
-  loadingForm: boolean = false;
+  safeInstructions: SafeHtml = '';
   serviceForm: UntypedFormGroup;
+  optionPayment: { label: string, amount: number, id: string, description: string };
+
+  paymentInitiate: InitPaymentResponse;
 
   constructor(
       private modalService: NgbModal,
@@ -39,6 +49,7 @@ export class TrxServicesComponent implements OnInit {
       private fb: UntypedFormBuilder,
       private commonSrv: CommonService,
       private factorySrv: FactoryService,
+      private sanitizer: DomSanitizer,
   ) { }
 
   ngOnInit() {
@@ -63,15 +74,62 @@ export class TrxServicesComponent implements OnInit {
   }
 
   initializeForm(service: ServiceModel) {
-    console.log(service)
     this.currService = service;
+    this.addStyleOnInstruction(service.instructions);
     this.buildForm(service);
 
     this.wizard.next();
   }
 
   initPayment() {
-    this.wizard.next();
+    this.isSubmitted = true;
+
+    if (this.serviceForm.invalid) {
+      return this.commonSrv.alert('warning', 'form.required_fields', 'transactions.service');
+    }
+
+    const formData = this.serviceForm.getRawValue();
+    const form = this.currService.withForm
+        ? this.currService.initForm.formItems.map(item => ({
+            id: item.id, name: item.name, value: formData[item.name]
+          }))
+        : [];
+    const data = {
+      service: this.currService.name,
+      reference: formData['reference'] + '' || '',
+      amount: +(formData['amount'] || 0),
+      form
+    }
+
+    this.factorySrv.initPayment(data).subscribe({
+      next: res => {
+        this.paymentInitiate = res
+        if (this.currService.withOptions) { this.wizard.next(); }
+        else { this.isFormCompleted = true; }
+      },
+      error: err => this.commonSrv.errorHandle(err, 'transactions.init_payment_failed', 'transactions.service')
+    });
+    this.isSubmitted = false;
+  }
+
+  choosePaymentOption() {
+    if (this.optionPayment) {
+      return this.commonSrv.alert('warning', 'form.required_fields', 'transactions.service');
+    }
+
+    const data = {
+      id: this.paymentInitiate.id,
+      amount: this.optionPayment.amount,
+      optionId: this.optionPayment.id
+    }
+
+    this.factorySrv.selectOptionPayment(data).subscribe({
+      next: res => {
+        this.paymentInitiate = res
+        this.wizard.next();
+      },
+      error: err => this.commonSrv.errorHandle(err, 'transactions.choose_payment_option_failed', 'transactions.service')
+    });
   }
 
   onStep1Next(e) {}
@@ -82,9 +140,22 @@ export class TrxServicesComponent implements OnInit {
 
   onComplete(e) {}
 
-  buildForm(service: ServiceModel) {
+  openModal(content: TemplateRef<never>) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true });
+  }
+
+  get isOddForm(): boolean {
+    return this.sizeOfForm % 2 !== 0;
+  }
+
+  get sf() {
+    return this.serviceForm.controls;
+  }
+
+  private buildForm(service: ServiceModel) {
     const group: any = {}
     this.sizeOfForm = 0;
+    this.isFormCompleted = false;
 
     if (service.withRef) {
       const validators = service.regex ? [Validators.pattern(service.regex)] : [];
@@ -109,15 +180,28 @@ export class TrxServicesComponent implements OnInit {
           });
     }
 
-    console.log(this.sizeOfForm)
     this.serviceForm = this.fb.group(group);
   }
 
-  openModal(content: TemplateRef<never>) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true });
-  }
+  private addStyleOnInstruction(htmlContent: string) {
+    if (!htmlContent) return;
 
-  get isOddForm(): boolean {
-    return this.sizeOfForm % 2 !== 0;
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = htmlContent;
+
+    tempDiv.querySelectorAll('ol').forEach((el) => {
+      el.classList.add('list-group');
+    });
+    tempDiv.querySelectorAll('ul').forEach((el) => {
+      el.classList.add('list-group');
+    });
+    tempDiv.querySelectorAll('li').forEach((el) => {
+      el.classList.add('list-group-item');
+    });
+    tempDiv.querySelectorAll('img').forEach((el) => {
+      el.classList.add('rounded-md', 'shadow', 'my-4');
+    });
+
+    this.safeInstructions = this.sanitizer.bypassSecurityTrustHtml(tempDiv.innerHTML);
   }
 }

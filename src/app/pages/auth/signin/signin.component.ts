@@ -50,7 +50,7 @@ export class SigninComponent implements OnInit {
         });
     }
 
-    signin() {
+    signIn() {
         if (this.signinForm.invalid) {
             this.alert = { show: true, message: 'form.bad_credentials', type: 'danger' }
             return;

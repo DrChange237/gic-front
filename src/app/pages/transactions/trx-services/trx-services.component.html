@@ -5,7 +5,7 @@
 
         <form-wizard #wizard [isCustomNav]="true">
             <wizard-step [title]="'transactions.service_type' | translate" [isValid]="" (onNext)="onStep1Next($event)">
-                <div class="row my-4 justify-content-around">
+                <div class="row my-3 justify-content-around">
                     @for (type of servicesType$; track type.code) {
                         <div class="col-sm-6 col-lg-4 col-xl-3">
                             <div class="card card-profile-1 card-zoom mb-4" (click)="loadServices(type.code)">
@@ -22,7 +22,7 @@
             </wizard-step>
 
             <wizard-step [title]="'transactions.service' | translate" (onNext)="onStep2Next($event)">
-                <div class="row my-4 justify-content-around">
+                <div class="row my-3 justify-content-around">
                     @for (service of services$; track service.code) {
                         <div class="col-sm-6 col-lg-4 col-xl-3">
                             <div class="card card-profile-1 card-zoom mb-4" (click)="initializeForm(service)">
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="col-md-12 text-start mb-4">
-                    <button class="btn btn-light" (click)="wizard.previous()">{{ 'btn.previous' | translate }}</button>
+                    <button class="btn btn-outline-dark" (click)="wizard.previous()">{{ 'btn.previous' | translate }}</button>
                 </div>
             </wizard-step>
 
@@ -66,51 +66,84 @@
                                 </div>
                             }
                         </div>
-                        <form [formGroup]="serviceForm" (ngSubmit)="initPayment()" class="row">
-                            @if (currService.withRef) {
-                                <div class="form-group" [ngClass]="sizeOfForm === 1 ? 'col-12' : 'col-sm-6'">
-                                    <label>{{currService.labelRef}}</label>
-                                    <input class="form-control" formControlName="reference" [type]="currService.typeRef">
-                                </div>
-                            }
-
-                            @if (currService.withAmount) {
-                                <div class="form-group" [ngClass]="sizeOfForm === 1 ? 'col-12' : 'col-sm-6'">
-                                    <label>{{ 'form.amount_label' | translate }}</label>
-                                    <input class="form-control" formControlName="amount" type="number" [min]="0" [step]="5000">
-                                </div>
-                            }
-
-                            @if (currService.withForm && currService.initForm?.formItems) {
-                                @for (item of currService.initForm.formItems; track item; let isLast = $last) {
-                                    <div class="form-group" [ngClass]="isLast && isOddForm ? 'col-12': 'col-sm-6'">
-                                        <label>{{ item.label }}</label>
-
-                                        @if (['text', 'tel', 'email', 'number'].includes(item.type.toLowerCase())) {
-                                            <input class="form-control" formControlName="{{item.name}}" [type]="item.type.toLowerCase()">
-                                        } @else if (item.type.toLowerCase() === 'date') {
-                                            <div class="input-group">
-                                                <input class="form-control" type="" formControlName="{{item.name}}" placeholder="yyyy-mm-dd" name="dp"
-                                                       ngbDatepicker #dp="ngbDatepicker" (click)="dp.toggle()">
-                                                <div class="input-group-append">
-                                                    <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
-                                                        <i class="icon-regular i-Calendar-4"></i>
-                                                    </button>
-                                                </div>
+                        <form [formGroup]="serviceForm" (ngSubmit)="!isFormCompleted ? initPayment() : choosePaymentOption()">
+                            @if (currService.withOptions && isFormCompleted) {
+                                <div>
+                                    <div class="form-group">
+                                        <label>
+                                            {{ currService.labelOption }} <span class="text-danger"> *</span>
+                                        </label>
+                                        @for (option of paymentInitiate.options; track option) {
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="optionPayment" [(ngModel)]="optionPayment"
+                                                       id="option-radio-{{option.id}}" [value]="option" [ngModelOptions]="{standalone: true}">
+                                                <label class="form-check-label" for="option-radio-{{option.id}}">
+                                                    {{option.label}} - {{option.amount | currency: 'XAF'}}
+                                                </label>
                                             </div>
-                                        } @else if (item.type.toLowerCase() === 'select') {
-                                            <ng-select class="custom" [appendTo]="'body'" [clearable]="false" formControlName="{{item.name}}">
-                                                @for (opt of item.options; track opt) {
-                                                    <ng-option [value]="opt.id"> {{ opt.label }}</ng-option>
-                                                }
-                                            </ng-select>
                                         }
                                     </div>
+                                </div>
+                            } @else {
+                            <div class="row">
+                                @if (currService.withRef) {
+                                    <div class="form-group" [ngClass]="sizeOfForm === 1 ? 'col-12' : 'col-sm-6'">
+                                        <label>
+                                            {{currService.labelRef}} <span class="text-danger"> *</span>
+                                        </label>
+                                        <input class="form-control" formControlName="reference" [type]="currService.typeRef"
+                                               [ngClass]="{ 'is-invalid': isSubmitted && sf?.reference?.invalid}">
+                                    </div>
                                 }
+
+                                @if (currService.withAmount) {
+                                    <div class="form-group" [ngClass]="sizeOfForm === 1 ? 'col-12' : 'col-sm-6'">
+                                        <label>
+                                            {{ 'form.amount_label' | translate }} <span class="text-danger"> *</span>
+                                        </label>
+                                        <input class="form-control" formControlName="amount" type="number" [min]="0" [step]="5000"
+                                               [ngClass]="{ 'is-invalid': isSubmitted && sf?.amount?.invalid}">
+                                    </div>
+                                }
+
+                                @if (currService.withForm && currService.initForm?.formItems) {
+                                    @for (item of currService.initForm.formItems; track item; let isLast = $last) {
+                                        <div class="form-group" [ngClass]="isLast && isOddForm ? 'col-12': 'col-sm-6'">
+                                            <label>
+                                                {{ item.label }}
+                                                @if (item.required) {<span class="text-danger"> *</span>}
+                                            </label>
+
+                                            @if (['text', 'tel', 'email', 'number'].includes(item.type.toLowerCase())) {
+                                                <input class="form-control" formControlName="{{item.name}}" [type]="item.type.toLowerCase()"
+                                                       [ngClass]="{ 'is-invalid': isSubmitted && sf?.[item.name]?.invalid}">
+                                            } @else if (item.type.toLowerCase() === 'date') {
+                                                <div class="input-group">
+                                                    <input ngbDatepicker name="dp" #dp="ngbDatepicker" class="form-control"
+                                                           formControlName="{{item.name}}" placeholder="yyyy-mm-dd" (click)="dp.toggle()"
+                                                           [ngClass]="{ 'is-invalid': isSubmitted && sf?.[item.name]?.invalid}">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn-secondary" (click)="dp.toggle()" type="button">
+                                                            <i class="icon-regular i-Calendar-4"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            } @else if (item.type.toLowerCase() === 'select') {
+                                                <ng-select class="custom" [clearable]="false" formControlName="{{item.name}}"
+                                                           [ngClass]="{'is-invalid' : isSubmitted && sf?.[item.name]?.invalid}">
+                                                    @for (opt of item.options; track opt) {
+                                                        <ng-option [value]="opt.id"> {{ opt.label }}</ng-option>
+                                                    }
+                                                </ng-select>
+                                            }
+                                        </div>
+                                    }
+                                }
+                            </div>
                             }
 
                             <div class="col-md-12 d-inline-flex justify-content-between py-4">
-                                <button class="btn btn-light" type="button" (click)="wizard.previous()">{{ 'btn.previous' | translate }}</button>
+                                <button class="btn btn-outline-dark" type="button" (click)="wizard.previous()">{{ 'btn.previous' | translate }}</button>
                                 <button class="btn btn-primary" type="submit">{{ 'btn.next' | translate }}</button>
                             </div>
                         </form>
@@ -129,12 +162,12 @@
 <ng-template #instructionService let-modal>
     <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">{{ 'transactions.service_instructions' | translate }}</h4>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        <a role="button" class="btn btn-close" (click)="modal.close()"></a>
     </div>
     <div class="modal-body">
-        <div class="list-group" [innerHTML]="currService.instructions"></div>
+        <div class="my-3" [innerHTML]="safeInstructions"></div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">{{ 'btn.close' | translate }}</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close()">{{ 'btn.close' | translate }}</button>
     </div>
 </ng-template>
