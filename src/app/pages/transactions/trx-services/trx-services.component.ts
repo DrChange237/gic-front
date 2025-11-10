@@ -95,7 +95,7 @@ export class TrxServicesComponent implements OnInit {
           }))
         : [];
     const data = {
-      service: this.currService.name,
+      service: this.currService.code,
       reference: formData['reference'] + '' || '',
       amount: +(formData['amount'] || 0),
       form

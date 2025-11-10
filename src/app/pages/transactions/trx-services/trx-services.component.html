@@ -5,7 +5,7 @@
 
         <form-wizard #wizard [isCustomNav]="true">
             <wizard-step [title]="'transactions.service_type' | translate" [isValid]="" (onNext)="onStep1Next($event)">
-                <div class="row my-3 justify-content-around">
+                <div class="row my-3">
                     @for (type of servicesType$; track type.code) {
                         <div class="col-sm-6 col-lg-4 col-xl-3">
                             <div class="card card-profile-1 card-zoom mb-4" (click)="loadServices(type.code)">
@@ -22,7 +22,7 @@
             </wizard-step>
 
             <wizard-step [title]="'transactions.service' | translate" (onNext)="onStep2Next($event)">
-                <div class="row my-3 justify-content-around">
+                <div class="row my-3">
                     @for (service of services$; track service.code) {
                         <div class="col-sm-6 col-lg-4 col-xl-3">
                             <div class="card card-profile-1 card-zoom mb-4" (click)="initializeForm(service)">
