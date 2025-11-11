@@ -3,3 +3,14 @@
     animation-duration: 0.3s;
     animation-timing-function: ease-in-out;
 }
+
+.modal-body {
+    .avatar {
+        height: 76px;
+        width: 76px;
+
+        &.rounded-full {
+            border-radius: 50%;
+        }
+    }
+}

@@ -28,6 +28,7 @@ export abstract class BaseApiService {
   private buildOptions(options?: {
     headers?: Record<string, string>;
     params?: Record<string, string | number | boolean>;
+    responseType?: string;
   }) {
     let httpHeaders = new HttpHeaders(options?.headers || {});
     let httpParams = new HttpParams();
@@ -38,7 +39,11 @@ export abstract class BaseApiService {
       });
     }
 
-    return { headers: httpHeaders, params: httpParams };
+    const optionsFormatted = { headers: httpHeaders, params: httpParams };
+
+    if (options?.responseType) optionsFormatted['responseType'] = options.responseType;
+
+    return optionsFormatted;
   }
 
   // GET

@@ -11,6 +11,9 @@ import {FooterComponent} from "./footer/footer.component";
 import {CustomizerComponent} from "./customizer/customizer.component";
 import {BreadcrumbComponent} from "./breadcrumb/breadcrumb.component";
 import {TranslatePipe} from "@ngx-translate/core";
+import {ConfirmActionModalComponent} from "./confirm-action-modal/confirm-action-modal.component";
+import {FormsModule} from "@angular/forms";
+import {ActionResultModalComponent} from "./action-result-modal/action-result-modal.component";
 
 const components = [
   BtnLoadingComponent,
@@ -18,6 +21,8 @@ const components = [
   FooterComponent,
   CustomizerComponent,
   BreadcrumbComponent,
+  ConfirmActionModalComponent,
+  ActionResultModalComponent,
 ];
 
 @NgModule({
@@ -28,7 +33,8 @@ const components = [
     SharedDirectivesModule,
     NgScrollbarModule,
     NgbModule,
-    TranslatePipe
+    TranslatePipe,
+    FormsModule
   ],
   declarations: components,
   exports: [components]

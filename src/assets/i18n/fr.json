@@ -8,6 +8,8 @@
     "cancel": "Annuler",
     "close": "Fermer",
     "confirm": "Confirmer",
+    "download_receipt": "Télécharger le reçu",
+    "go_to_history": "Aller a l'historique",
     "next": "Suivant",
     "previous": "Précédent",
     "return": "Retour"
@@ -22,8 +24,19 @@
     "email_label": "Email ",
     "email_plh": "Adresse e-mail de l'agent",
     "password_label": "Mot de passe",
+    "password_plh": "Entrez votre mot de passe",
+    "pin_code_label": "Code PIN",
+    "pin_code_plh": "Entrez votre code PIN",
     "required_fields": "Veuillez renseigner tous les champs obligatoire",
     "username_label": "Nom d'utilisateur"
+  },
+  "modal": {
+    "action_performed": "Action éffectuée",
+    "action_performed_message": "Votre action a été exécutée avec succès",
+    "confirm_action": "Confirmer l'action",
+    "confirm_action_message": "Saisissez votre mot de passe ou code PIN pour exécuter :",
+    "confirm_payment_service": "Confirmez le paiement du service en saisissant votre mot de passe",
+    "invalid_code": "Veuillez entrer un code valide (au moins 4 caractères)"
   },
   "navigation": {
     "account_settings": "Paramètres de compte",
@@ -31,6 +44,9 @@
     "agents": "Agents",
     "dashboard": "Tableau de bord",
     "history": "Historique",
+    "history_agency": "Historique agence",
+    "history_agent": "Mon Historique",
+    "history_global": "Historique générale",
     "management": "Management",
     "profile": "Profil",
     "reporting": "Reporting",
@@ -66,6 +82,7 @@
   "transactions": {
     "balance": "Solde",
     "choose_payment_option_failed": "Choix de l'option de paiement de service échoué",
+    "confirm_payment_failed": "Confirmation de l'exécution de l'opération échouée",
     "detail_transaction": "Détails de la transaction",
     "get_balance_trx_failed": "Erreur lors de la récupération du compte d'opération",
     "get_service_failed": "Détails du service non chargées",
@@ -73,6 +90,8 @@
     "init_payment_failed": "Initiation du paiement de service échoué",
     "payment_confirm": "Confirmation",
     "payment_info": "Informations de Paiement",
+    "payment_service": "Paiement de service",
+    "payment_successful": "Votre transaction a été effectuée avec succès",
     "service": "Service",
     "service_instructions": "Instructions sur le service",
     "service_type": "Type de Service"

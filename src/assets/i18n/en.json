@@ -8,6 +8,8 @@
     "cancel": "Cancel",
     "close": "Close",
     "confirm": "Confirm",
+    "download_receipt": "Download receipt",
+    "go_to_history": "Go to histo",
     "next": "Next",
     "previous": "Previous",
     "return": "Return"
@@ -22,8 +24,19 @@
     "email_label": "Email ",
     "email_plh": "Agent's e-mail address",
     "password_label": "Password",
+    "password_plh": "Enter your password",
+    "pin_code_label": "PIN Code",
+    "pin_code_plh": "Enter your PIN code",
     "required_fields": "Please fill all required fields",
     "username_label": "Username"
+  },
+  "modal": {
+    "action_performed": "Action performed",
+    "action_performed_message": "Your action has been carried out successfully",
+    "confirm_action": "Confirm action",
+    "confirm_action_message": "Enter your password or PIN code to execute:",
+    "confirm_payment_service": "Confirm payment by entering your password:",
+    "invalid_code": "Please enter a valid code (at least 4 characters)"
   },
   "navigation": {
     "account_settings": "Account settings",
@@ -31,6 +44,9 @@
     "agents": "Agents",
     "dashboard": "Dashboard",
     "history": "History",
+    "history_agency": "Agency history",
+    "history_agent": "My history",
+    "history_global": "General history",
     "management": "Management",
     "profile": "Profile",
     "reporting": "Reporting",
@@ -66,6 +82,7 @@
   "transactions": {
     "balance": "Balance",
     "choose_payment_option_failed": "Choice of service payment option failed",
+    "confirm_payment_failed": "Confirmation of failed transaction execution",
     "detail_transaction": "Transaction details",
     "get_balance_trx_failed": "Error retrieving transaction account",
     "get_service_failed": "Service detail failed to load",
@@ -73,6 +90,8 @@
     "init_payment_failed": "Service payment initiation failed",
     "payment_confirm": "Confirmation",
     "payment_info": "Payment Information",
+    "payment_service": "Service payment",
+    "payment_successful": "Your transaction has been successfully completed",
     "service": "Service",
     "service_instructions": "Service instructions",
     "service_type": "Service Type"

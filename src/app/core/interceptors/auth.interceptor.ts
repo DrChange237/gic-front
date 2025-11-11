@@ -1,7 +1,7 @@
 import type {HttpEvent, HttpInterceptor} from '@angular/common/http';
-import {Injectable} from "@angular/core";
 import {HttpErrorResponse, HttpHandler, HttpRequest} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
+import {Injectable} from "@angular/core";
 import {AuthService} from "../services/auth.service";
 
 @Injectable()
@@ -16,6 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     const token = this.authService.getAccessToken();
+    const lang = this.authService.getLanguage();
     const isWhitelisted = this.whiteList.some(item =>
         req.url.includes(item.url) && req.method.toUpperCase() === item.method.toUpperCase()
     );
@@ -24,7 +25,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     if (token && !isWhitelisted) {
       clonedRequest = req.clone({
-        setHeaders: { Authorization: `${token}` }
+        setHeaders: { Authorization: `${token}`, lang: lang || 'fr' }
       });
     }
 

@@ -34,4 +34,14 @@ export class FactoryService extends BaseApiService {
     return this.post<InitPaymentResponse>('pay/selectOption', data)
   }
 
+  confirmPayment(data: { id: string, pin?: number, password?: string }) {
+    return this.post<InitPaymentResponse>('pay/confirm', data)
+  }
+
+  downloadReceipt(transactionId: string) {
+    return this.get<Blob>(`history/receipt`, {
+      params: { transactionId: transactionId }, responseType: 'blob'
+    });
+  }
+
 }

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {PagesRoutingModule} from "./pages-routing.module";
+import { TrxHistoryRoutingModule } from './trx-history-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    PagesRoutingModule,
+    TrxHistoryRoutingModule,
   ],
   declarations: []
 })
-export class PagesModule { }
+export class TrxHistoryModule { }

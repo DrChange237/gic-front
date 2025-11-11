@@ -2,9 +2,8 @@
 
 <div class="row">
     <div class="col-md-12">
-
         <form-wizard #wizard [isCustomNav]="true">
-            <wizard-step [title]="'transactions.service_type' | translate" [isValid]="" (onNext)="onStep1Next($event)">
+            <wizard-step [title]="'transactions.service_type' | translate" [isValid]="">
                 <div class="row my-3">
                     @for (type of servicesType$; track type.code) {
                         <div class="col-sm-6 col-lg-4 col-xl-3">
@@ -21,7 +20,7 @@
                 </div>
             </wizard-step>
 
-            <wizard-step #serviceStepWizard [title]="'transactions.service' | translate" (onNext)="onStep2Next($event)">
+            <wizard-step #serviceStepWizard [title]="'transactions.service' | translate">
                 <div class="row my-3">
                     @for (service of services$; track service.code) {
                         <div class="col-sm-6 col-lg-4 col-xl-3">
@@ -31,7 +30,7 @@
                                         <img [src]="imageBaseUrl + service.logo" [alt]="service.name">
                                     </div>
                                     <h5 class="m-0 fw-semibold text-14 text-truncate">{{ service.name }}</h5>
-                                    <p class="m-0 py-2 text-truncate">{{ service.description }}</p>
+                                    <p class="m-0 py-2 fw-medium text-truncate">{{ service.description }}</p>
                                 </div>
                             </div>
                         </div>
@@ -39,13 +38,13 @@
                 </div>
 
                 <div class="col-md-12 text-start mb-4">
-                    <button class="btn btn-outline-dark" (click)="wizard.previous()">{{ 'btn.previous' | translate }}</button>
+                    <button class="btn btn-dark" (click)="wizard.previous()">{{ 'btn.previous' | translate }}</button>
                 </div>
             </wizard-step>
 
-            <wizard-step [title]="'transactions.payment_info' | translate" [isValid]="serviceForm?.valid" (onNext)="onStep3Next($event)">
+            <wizard-step [title]="'transactions.payment_info' | translate" [isValid]="serviceForm?.valid" (onNext)="onConfirmStep()">
                 @if (serviceForm) {
-                    <div class="my-3">
+                    <div class="my-3 mb-4">
                         <div class="d-flex flex-wrap mb-2">
                             <div class="d-inline-flex flex-grow-1 gap-3">
                                 <div class="avatar-lg center rounded-1 mb-3 border p-1">
@@ -53,13 +52,13 @@
                                 </div>
                                 <div class="mt-1">
                                     <h5 class="m-0 fw-semibold text-14">{{ currService.name }}</h5>
-                                    <p class="m-0 py-2">{{ currService.description }}</p>
+                                    <p class="m-0 py-2 fw-medium">{{ currService.description }}</p>
                                 </div>
                             </div>
 
                             @if (currService.instructions) {
                                 <div>
-                                    <a role="button" class="link-offset-2-hover" (click)="openModal(instructionService)">
+                                    <a role="button" class="link-offset-2-hover" (click)="openModal(modalPaymentInstructions)">
                                         <i class="i-Information pe-1"></i>
                                         <span>{{ 'transactions.service_instructions' | translate }}</span>
                                     </a>
@@ -68,7 +67,7 @@
                         </div>
                         <form [formGroup]="serviceForm" (ngSubmit)="!paymentInitiate ? initPayment() : choosePaymentOption()">
                             @if (currService.withOptions && paymentInitiate) {
-                                <div>
+                                <div class="row">
                                     <div class="form-group">
                                         <p class="text-14 fw-semibold">
                                             {{ currService.labelOption }} <span class="text-danger"> *</span>
@@ -108,13 +107,13 @@
 
                                 @if (currService.withForm && currService.initForm?.formItems) {
                                     @for (item of currService.initForm.formItems; track item; let isLast = $last) {
-                                        <div class="form-group" [ngClass]="isLast && isOddForm ? 'col-12': 'col-sm-6'">
+                                        <div class="form-group" [ngClass]="item.size ? ('col-' + item.size) : isLast && isOddForm ? 'col-12': 'col-sm-6'">
                                             <label>
                                                 {{ item.label }}
                                                 @if (item.required) {<span class="text-danger"> *</span>}
                                             </label>
 
-                                            @if (['text', 'tel', 'email', 'number'].includes(item.type.toLowerCase())) {
+                                            @if (['text', 'tel', 'email', 'number', 'password'].includes(item.type.toLowerCase())) {
                                                 <input class="form-control" formControlName="{{item.name}}" [type]="item.type.toLowerCase()"
                                                        [ngClass]="{ 'is-invalid': isSubmitted && sf?.[item.name]?.invalid}">
                                             } @else if (item.type.toLowerCase() === 'date') {
@@ -142,8 +141,8 @@
                             </div>
                             }
 
-                            <div class="col-md-12 d-inline-flex justify-content-between py-4">
-                                <button class="btn btn-outline-dark" type="button" (click)="wizard.previous()">{{ 'btn.previous' | translate }}</button>
+                            <div class="col-md-12 d-flex justify-content-between mt-4">
+                                <button class="btn btn-dark" type="button" (click)="wizard.previous()">{{ 'btn.previous' | translate }}</button>
                                 <button class="btn btn-primary" type="submit">{{ 'btn.next' | translate }}</button>
                             </div>
                         </form>
@@ -151,9 +150,9 @@
                 }
             </wizard-step>
 
-            <wizard-step [title]="'transactions.payment_confirm' | translate" (onComplete)="onComplete($event)">
+            <wizard-step [title]="'transactions.payment_confirm' | translate">
                 @if (isFormCompleted) {
-                    <div class="my-3">
+                    <div class="my-3 mb-0">
                         <div class="d-flex flex-wrap mb-2">
                             <div class="d-inline-flex flex-grow-1 gap-3">
                                 <div class="avatar-lg center rounded-1 mb-3 border p-1">
@@ -161,13 +160,13 @@
                                 </div>
                                 <div class="mt-1">
                                     <h5 class="m-0 fw-semibold text-14">{{ currService.name }}</h5>
-                                    <p class="m-0 py-2">{{ currService.description }}</p>
+                                    <p class="m-0 py-2  fw-medium">{{ currService.description }}</p>
                                 </div>
                             </div>
 
                             @if (currService.instructions) {
                                 <div>
-                                    <a role="button" class="link-offset-2-hover" (click)="openModal(instructionService)">
+                                    <a role="button" class="link-offset-2-hover" (click)="openModal(modalPaymentInstructions)">
                                         <i class="i-Information pe-1"></i>
                                         <span>{{ 'transactions.service_instructions' | translate }}</span>
                                     </a>
@@ -186,29 +185,27 @@
                                 </div>
                             }
                         </div>
-
-                        <div class="col-md-12 d-inline-flex justify-content-between pb-4">
-                            <button class="btn btn-outline-dark" type="button" (click)="wizard.goToStep(serviceStepWizard, 2)">{{ 'btn.cancel' | translate }}</button>
-                            <button class="btn btn-primary" type="submit">{{ 'btn.confirm' | translate }}</button>
-                        </div>
+                    </div>
+                    <div class="col-md-12 d-inline-flex justify-content-between mb-4">
+                        <button class="btn btn-dark" type="button" (click)="wizard.goToStep(serviceStepWizard, 2)">{{ 'btn.cancel' | translate }}</button>
+                        <button class="btn btn-primary" type="button" (click)="openConfirmModal()">{{ 'btn.confirm' | translate }}</button>
                     </div>
                 }
-
             </wizard-step>
         </form-wizard>
 
     </div>
 </div>
 
-<ng-template #instructionService let-modal>
+<ng-template #modalPaymentInstructions let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">{{ 'transactions.service_instructions' | translate }}</h4>
-        <a role="button" class="btn btn-close" (click)="modal.close()"></a>
+        <h4 class="modal-title" id="modal-payment-instructions">{{ 'transactions.service_instructions' | translate }}</h4>
+        <a role="button" class="btn btn-close" aria-label="Close" (click)="modal.close()"></a>
     </div>
     <div class="modal-body">
         <div class="my-3" [innerHTML]="safeInstructions"></div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close()">{{ 'btn.close' | translate }}</button>
+        <button type="button" class="btn btn-dark" (click)="modal.close()">{{ 'btn.close' | translate }}</button>
     </div>
 </ng-template>

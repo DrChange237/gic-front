@@ -5,6 +5,7 @@ import {LocalStoreService} from "./local-store.service";
 import {SecureDataService} from "./secure-data.service";
 import {ToastOptions} from "../../shared/interfaces";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +17,27 @@ export class CommonService {
       public translate: TranslateService,
       public store: LocalStoreService,
       public secureSrv: SecureDataService,
+      public router: Router,
   ) {}
 
+  openFileOnBlank(file: Blob | string, download: boolean = false, name?: string) {
+    const url = typeof file === 'string'
+        ? file
+        : window.URL.createObjectURL(file);
+
+    if (download) {
+      window.open(url, '_blank');
+    } else {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name || 'file-' + +new Date();
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+  }
+
   errorHandle(err: any, message: string, title: string = 'toast.error', override?: Partial<ToastOptions>) {
-    let messageTr = err?.error?.error_description || err?.error?.message || this.translate.instant(message);
+    let messageTr = err?.error?.message || this.translate.instant(message);
     let titleTr = err?.error?.error || this.translate.instant(title);
 
     if (err instanceof HttpErrorResponse) {

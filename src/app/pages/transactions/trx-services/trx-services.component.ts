@@ -5,7 +5,7 @@ import {NgbDateAdapter, NgbInputDatepicker, NgbModal} from "@ng-bootstrap/ng-boo
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {TranslatePipe} from "@ngx-translate/core";
-import {CurrencyPipe, NgClass} from "@angular/common";
+import {CurrencyPipe, formatDate, NgClass} from "@angular/common";
 //
 import {WizardComponent} from "../../../shared/components/form-wizard/wizard/wizard.component";
 import {FormWizardModule} from "../../../shared/components/form-wizard/form-wizard.module";
@@ -14,19 +14,23 @@ import {InitPaymentResponse, ServiceModel, ServiceType} from "../../../shared/in
 import {CommonService} from "../../../core/services/common.service";
 import {BaseApiService} from "../../../core/services/base-api.service";
 import {CustomDateAdapter} from "../../../core/utils/date-picker/custom-date-adapter";
+import {
+  ConfirmActionModalComponent
+} from "../../../shared/components/confirm-action-modal/confirm-action-modal.component";
+import {ActionResultModalComponent} from "../../../shared/components/action-result-modal/action-result-modal.component";
 
 @Component({
   selector: 'app-trx-services',
   templateUrl: './trx-services.component.html',
   styleUrls: ['./trx-services.component.scss'],
-  imports: [SharedComponentsModule, FormWizardModule, FormsModule, ReactiveFormsModule, TranslatePipe, NgSelectModule, NgbInputDatepicker, NgClass, CurrencyPipe],
+  imports: [SharedComponentsModule, FormWizardModule, FormsModule, ReactiveFormsModule,
+    TranslatePipe, NgSelectModule, NgbInputDatepicker, NgClass, CurrencyPipe],
   standalone: true,
   providers: [{ provide: NgbDateAdapter, useClass: CustomDateAdapter }]
 })
 export class TrxServicesComponent implements OnInit {
   @ViewChild(WizardComponent) wizard!: WizardComponent;
 
-  loadingForm: boolean = false;
   isSubmitted: boolean;
   isFormCompleted: boolean = false;
 
@@ -112,7 +116,7 @@ export class TrxServicesComponent implements OnInit {
           this.wizard.next();
         }
       },
-      error: err => this.commonSrv.errorHandle(err, 'transactions.init_payment_failed', 'transactions.service')
+      error: err => this.commonSrv.errorHandle(err, 'transactions.init_payment_failed', 'transactions.payment_service')
     });
     this.isSubmitted = false;
   }
@@ -134,17 +138,62 @@ export class TrxServicesComponent implements OnInit {
         this.isFormCompleted = true;
         this.wizard.next();
       },
-      error: err => this.commonSrv.errorHandle(err, 'transactions.choose_payment_option_failed', 'transactions.service')
+      error: err => this.commonSrv.errorHandle(err, 'transactions.choose_payment_option_failed', 'transactions.payment_service')
     });
   }
 
-  onStep1Next(e) {}
+  openConfirmModal() {
+    const modalRef = this.modalService.open(ConfirmActionModalComponent, {
+      centered: true, backdrop: 'static',
+    });
 
-  onStep2Next(e) {}
+    modalRef.componentInstance.title = this.currService?.name;
+    modalRef.componentInstance.message = 'modal.confirm_payment_service';
+    modalRef.componentInstance.requirePin = false;
 
-  onStep3Next(e) {}
+    modalRef.result.then((res: string) => res && this.confirmPayment(res));
+  }
 
-  onComplete(e) {}
+  confirmPayment(code: string) {
+    const data = {
+      id: this.paymentInitiate.id,
+      password: this.commonSrv.secureSrv.hashMD5(code)
+    };
+
+    this.factorySrv.confirmPayment(data).subscribe({
+      next: () => {
+        const resultModal = this.modalService.open(ActionResultModalComponent, {
+          centered: true, backdrop: 'static',
+        });
+
+        resultModal.componentInstance.title = 'transactions.payment_service';
+        resultModal.componentInstance.message = 'transactions.payment_successful';
+        resultModal.componentInstance.actionButtonText = 'btn.download_receipt';
+        resultModal.componentInstance.closeButtonText = 'btn.go_to_history';
+        resultModal.componentInstance.isSuccess = true;
+
+        resultModal.result.then(res => {
+          if (res) { this.downloadReceipt() }
+          this.commonSrv.router.navigateByUrl('transactions/history/agent')
+        });
+      },
+      error: err => this.commonSrv.errorHandle(err, 'transactions.confirm_payment_failed', 'transactions.payment_service')
+    });
+  }
+
+  downloadReceipt() {
+    this.factorySrv.downloadReceipt(this.paymentInitiate.id).subscribe({
+      next: res => {
+        const name = this.paymentInitiate.service.name + '-' + formatDate(new Date(), 'yyyy-MM-dd_HH-mm', 'fr-FR');
+        this.commonSrv.openFileOnBlank(res, true, `'cca-receipt-${name}.pdf`)
+      },
+      error: err => this.commonSrv.errorHandle(err, 'transactions.choose_payment_option_failed', 'transactions.payment_service')
+    });
+  }
+
+  onConfirmStep() {
+    this.wizard.complete();
+  }
 
   openModal(content: TemplateRef<never>) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true });

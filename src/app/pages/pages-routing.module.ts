@@ -19,7 +19,7 @@ const routes: Routes = [
       {
         path: 'history',
         data: { title: 'navigation.history' },
-        loadComponent: () => import('./transactions/trx-history/trx-history.component').then(c => c.TrxHistoryComponent)
+        loadChildren:  () => import('./transactions/trx-history/trx-history.module').then(m => m.TrxHistoryModule)
       },
       {
         path: 'reporting',

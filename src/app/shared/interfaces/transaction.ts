@@ -55,6 +55,7 @@ export interface FormItem {
     optionString: string;
     removeBill: boolean;
     required: boolean;
+    size: boolean;
     options: FormItemOptions[];
 }
 

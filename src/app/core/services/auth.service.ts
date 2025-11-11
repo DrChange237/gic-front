@@ -34,6 +34,10 @@ export class AuthService extends BaseApiService {
     return this.store.getItem('access_token');
   }
 
+  getLanguage() {
+    return this.store.getItem('lang');
+  }
+
   signIn(credentials: Credentials) {
     return this.post<AuthResponse>('login', credentials).pipe(
       tap(res => {
