@@ -8,3 +8,10 @@ export enum PaymentStatus {
     FAILED = 'FAILED',
     REJECTED = 'REJECTED',
 }
+
+export enum TransactionStatus {
+    PENDING = 'PENDING',
+    DEBITED = 'DEBITED',
+    SUCCESS = 'SUCCESS',
+    FAILED = 'FAILED'
+}

@@ -22,6 +22,11 @@ const routes: Routes = [
         loadChildren:  () => import('./transactions/trx-history/trx-history.module').then(m => m.TrxHistoryModule)
       },
       {
+        path: 'history/agent',
+        data: { title: 'navigation.history_agent' },
+        loadComponent:  () => import('./transactions/trx-history/trx-history.component').then(c => c.TrxHistoryComponent)
+      },
+      {
         path: 'reporting',
         data: { title: 'navigation.reporting' },
         loadComponent: () => import('./transactions/reporting/reporting.component').then(c => c.ReportingComponent)

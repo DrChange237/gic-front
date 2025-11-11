@@ -1,46 +1,51 @@
 import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
-import { SharedComponentsModule } from "src/app/shared/components/shared-components.module";
-import {Observable} from "rxjs";
-import {NgbdSortableHeader, SortEvent} from "../../../shared/directives/sortable.directive";
-import {Country} from "../../../shared/models";
 import {NgbHighlight, NgbPagination} from "@ng-bootstrap/ng-bootstrap";
-import {FormsModule} from "@angular/forms";
-import {AsyncPipe, DecimalPipe} from "@angular/common";
-import {CountryService} from "../../../core/services/country.service";
+import {AsyncPipe, CurrencyPipe, DatePipe} from "@angular/common";
 import {NgSelectModule} from "@ng-select/ng-select";
+import {TranslatePipe} from "@ngx-translate/core";
+import {FormsModule} from "@angular/forms";
+//
+import { SharedComponentsModule } from "src/app/shared/components/shared-components.module";
+import {NgbdSortableHeader, SortEvent} from "../../../shared/directives/sortable.directive";
+import {BaseListComponent, ListQuery} from "../../../core/utils/base-list/base-list.component";
+import {FactoryService} from "../../../core/services/factory.service";
+import {Transaction} from "../../../shared/interfaces";
+import {SharedPipesModule} from "../../../shared/pipes/shared-pipes.module";
 
 @Component({
   selector: 'app-trx-history',
   templateUrl: './trx-history.component.html',
   styleUrls: ['./trx-history.component.scss'],
-  imports: [SharedComponentsModule, NgbPagination, FormsModule, NgbHighlight, DecimalPipe, AsyncPipe, NgbdSortableHeader, NgSelectModule],
+  imports: [SharedComponentsModule, NgbPagination, FormsModule, NgbHighlight, AsyncPipe, NgbdSortableHeader, NgSelectModule,
+    TranslatePipe, DatePipe, CurrencyPipe, SharedPipesModule],
   standalone: true,
-  providers: [CountryService, DecimalPipe],
 })
-export class TrxHistoryComponent implements OnInit {
-  countries$: Observable<Country[]>;
-  total$: Observable<number>;
-
+export class TrxHistoryComponent extends BaseListComponent<Transaction> implements OnInit {
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
-  constructor(public service: CountryService) {
-    this.countries$ = service.countries$;
-    this.total$ = service.total$;
+  constructor(
+      private factorySrv: FactoryService,
+  ) {
+    super();
   }
 
   ngOnInit(): void {
+    this.load();
+  }
+
+  override fetchData(query: ListQuery) {
+    return this.factorySrv.getTrxHistory(query);
   }
 
   onSort({ column, direction }: SortEvent) {
-    // resetting other headers
     this.headers.forEach((header) => {
       if (header.sortable !== column) {
         header.direction = '';
       }
     });
 
-    this.service.sortColumn = column;
-    this.service.sortDirection = direction;
+    this.sortColumn = column;
+    this.sortDirection = direction;
   }
 
 }

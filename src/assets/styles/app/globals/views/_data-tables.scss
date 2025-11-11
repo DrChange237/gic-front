@@ -10,6 +10,23 @@
         height: 40px;
         vertical-align: middle;
         color: theme.$dark;
+
+        &.sortable {
+            cursor: pointer;
+            user-select: none;
+
+            &:hover {
+                color: #0d6efd;
+            }
+
+            &.asc::after {
+                content: " ▲";
+            }
+
+            &.desc::after {
+                content: " ▼";
+            }
+        }
     }
     td {
         height: 50px;
@@ -18,6 +35,10 @@
 
         &.col-status {
             width: 10%;
+        }
+        &.col-reference {
+            width: 15%;
+            max-width: 100px;
         }
     }
 

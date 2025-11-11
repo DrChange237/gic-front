@@ -10,7 +10,7 @@
                             <div class="card card-profile-1 card-zoom mb-4" (click)="loadServices(type.code)">
                                 <div class="card-body text-center">
                                     <div class="avatar rounded-1 mb-3 border p-1">
-                                        <img [src]="imageBaseUrl + type.logo" [alt]="type.name">
+                                        <img [src]="type.logo | prefixImgUrl" [alt]="type.name">
                                     </div>
                                     <h5 class="m-0 fw-semibold py-2 text-14 text-truncate">{{ type.name }}</h5>
                                 </div>
@@ -27,7 +27,7 @@
                             <div class="card card-profile-1 card-zoom mb-4" (click)="initializeForm(service)">
                                 <div class="card-body text-center">
                                     <div class="avatar rounded-1 mb-3 border p-1">
-                                        <img [src]="imageBaseUrl + service.logo" [alt]="service.name">
+                                        <img [src]="service.logo | prefixImgUrl" [alt]="service.name">
                                     </div>
                                     <h5 class="m-0 fw-semibold text-14 text-truncate">{{ service.name }}</h5>
                                     <p class="m-0 py-2 fw-medium text-truncate">{{ service.description }}</p>
@@ -48,7 +48,7 @@
                         <div class="d-flex flex-wrap mb-2">
                             <div class="d-inline-flex flex-grow-1 gap-3">
                                 <div class="avatar-lg center rounded-1 mb-3 border p-1">
-                                    <img [src]="imageBaseUrl + currService.logo" [alt]="currService.name">
+                                    <img [src]="currService.logo | prefixImgUrl" [alt]="currService.name">
                                 </div>
                                 <div class="mt-1">
                                     <h5 class="m-0 fw-semibold text-14">{{ currService.name }}</h5>
@@ -156,7 +156,7 @@
                         <div class="d-flex flex-wrap mb-2">
                             <div class="d-inline-flex flex-grow-1 gap-3">
                                 <div class="avatar-lg center rounded-1 mb-3 border p-1">
-                                    <img [src]="imageBaseUrl + currService.logo" [alt]="currService.name">
+                                    <img [src]="currService.logo | prefixImgUrl" [alt]="currService.name">
                                 </div>
                                 <div class="mt-1">
                                     <h5 class="m-0 fw-semibold text-14">{{ currService.name }}</h5>

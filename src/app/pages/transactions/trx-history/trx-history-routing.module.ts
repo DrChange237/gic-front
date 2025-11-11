@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'agent',
+    path: 'user',
     data: { title: 'navigation.history_agent' },
     loadComponent: () => import('./user-history/user-history.component').then(c => c.UserHistoryComponent)
   },

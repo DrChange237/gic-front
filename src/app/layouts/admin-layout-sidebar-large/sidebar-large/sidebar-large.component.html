@@ -15,7 +15,7 @@
             </div>
           }
           @if (!item.disabled && item.type === 'dropDown') {
-            <div class="nav-item-hold" (mouseenter)="selectItem(item)">
+            <div class="nav-item-hold" (click)="selectItem(item)">
               <i [class]="'nav-icon ' + item.icon"></i>
               <span class="nav-text">{{ 'navigation.' + item.name | translate }}</span>
             </div>

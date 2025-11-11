@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ExcerptPipe } from './excerpt.pipe';
 import { GetValueByKeyPipe } from './get-value-by-key.pipe';
 import { RelativeTimePipe } from './relative-time.pipe';
+import {PrefixImgUrlPipe} from "./prefix-img-url.pipe";
 
 const pipes = [
   ExcerptPipe,
   GetValueByKeyPipe,
-  RelativeTimePipe
+  RelativeTimePipe,
+  PrefixImgUrlPipe,
 ];
 
 @NgModule({

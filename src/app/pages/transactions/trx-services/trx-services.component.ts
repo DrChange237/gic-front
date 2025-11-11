@@ -12,19 +12,20 @@ import {FormWizardModule} from "../../../shared/components/form-wizard/form-wiza
 import {FactoryService} from "../../../core/services/factory.service";
 import {InitPaymentResponse, ServiceModel, ServiceType} from "../../../shared/interfaces";
 import {CommonService} from "../../../core/services/common.service";
-import {BaseApiService} from "../../../core/services/base-api.service";
 import {CustomDateAdapter} from "../../../core/utils/date-picker/custom-date-adapter";
 import {
   ConfirmActionModalComponent
 } from "../../../shared/components/confirm-action-modal/confirm-action-modal.component";
 import {ActionResultModalComponent} from "../../../shared/components/action-result-modal/action-result-modal.component";
+import {SharedPipesModule} from "../../../shared/pipes/shared-pipes.module";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-trx-services',
   templateUrl: './trx-services.component.html',
   styleUrls: ['./trx-services.component.scss'],
   imports: [SharedComponentsModule, FormWizardModule, FormsModule, ReactiveFormsModule,
-    TranslatePipe, NgSelectModule, NgbInputDatepicker, NgClass, CurrencyPipe],
+    TranslatePipe, NgSelectModule, NgbInputDatepicker, NgClass, CurrencyPipe, SharedPipesModule],
   standalone: true,
   providers: [{ provide: NgbDateAdapter, useClass: CustomDateAdapter }]
 })
@@ -33,8 +34,6 @@ export class TrxServicesComponent implements OnInit {
 
   isSubmitted: boolean;
   isFormCompleted: boolean = false;
-
-  imageBaseUrl: string = this.baseSrv.resolveImgUrl() + '/files/';
 
   servicesType$: ServiceType[] = [];
   services$: ServiceModel[] = [];
@@ -47,9 +46,11 @@ export class TrxServicesComponent implements OnInit {
 
   paymentInitiate: InitPaymentResponse;
 
+  historyType: string = '';
+
   constructor(
+      private route: ActivatedRoute,
       private modalService: NgbModal,
-      private baseSrv: BaseApiService,
       private fb: UntypedFormBuilder,
       private commonSrv: CommonService,
       private factorySrv: FactoryService,
@@ -57,6 +58,7 @@ export class TrxServicesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.commonSrv.router.routerState.snapshot);
     this.loadServicesType();
   }
 

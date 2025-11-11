@@ -28,6 +28,8 @@
     "pin_code_label": "PIN Code",
     "pin_code_plh": "Enter your PIN code",
     "required_fields": "Please fill all required fields",
+    "search_label": "Search: ",
+    "search_plh": "Type in to search",
     "username_label": "Username"
   },
   "modal": {
@@ -69,8 +71,14 @@
     "welcome": "Enter your email and password to login"
   },
   "table": {
+    "action": "Action",
+    "amount": "Amount",
     "empty_data": "No data available",
-    "item_per_page": "{{size}} items per page"
+    "item_per_page": "Items per page",
+    "reference": "Reference",
+    "service": "Service",
+    "status": "Status",
+    "trx_date": "Date"
   },
   "toast": {
     "default_error": "An error occurred during your request",

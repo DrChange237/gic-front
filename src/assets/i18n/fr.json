@@ -28,6 +28,8 @@
     "pin_code_label": "Code PIN",
     "pin_code_plh": "Entrez votre code PIN",
     "required_fields": "Veuillez renseigner tous les champs obligatoire",
+    "search_label": "Rechercher :",
+    "search_plh": "Saisissez pour rechercher",
     "username_label": "Nom d'utilisateur"
   },
   "modal": {
@@ -49,7 +51,7 @@
     "history_global": "Historique générale",
     "management": "Management",
     "profile": "Profil",
-    "reporting": "Reporting",
+    "reporting": "Rapport",
     "role_profile": "Rôle & Profil",
     "services": "Services",
     "templates": "Templates",
@@ -69,8 +71,14 @@
     "welcome": "Entrez votre e-mail et votre mot de passe pour vous connecter"
   },
   "table": {
+    "action": "Action",
+    "amount": "Montant",
     "empty_data": "Aucune donnée disponible",
-    "item_per_page": "{{size}} élément par page"
+    "item_per_page": "Afficher par page",
+    "reference": "Référence",
+    "service": "Service",
+    "status": "Statut",
+    "trx_date": "Date"
   },
   "toast": {
     "default_error": "Une erreur s'est produite lors de votre demande",

@@ -3,7 +3,8 @@ import {BaseApiService} from "./base-api.service";
 import {LocalStoreService} from "./local-store.service";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {InitPaymentData, InitPaymentResponse, ServiceModel, ServiceType} from "../../shared/interfaces";
+import {InitPaymentData, InitPaymentResponse, ServiceModel, ServiceType, Transaction} from "../../shared/interfaces";
+import {ListResponse} from "../utils/base-list/base-list.component";
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,6 @@ import {InitPaymentData, InitPaymentResponse, ServiceModel, ServiceType} from ".
 export class FactoryService extends BaseApiService {
 
   constructor(
-      private store: LocalStoreService,
-      private router: Router,
       protected http: HttpClient
   ) {
     super(http)
@@ -42,6 +41,11 @@ export class FactoryService extends BaseApiService {
     return this.get<Blob>(`history/receipt`, {
       params: { transactionId: transactionId }, responseType: 'blob'
     });
+  }
+
+  getTrxHistory(filter: Record<string, string | number | boolean>, type?: string) {
+    const url = type ? `/${type}` : '';
+    return this.get<ListResponse<Transaction>>(`history${url}`, { params: filter })
   }
 
 }

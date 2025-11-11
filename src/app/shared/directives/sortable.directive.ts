@@ -1,12 +1,10 @@
 import { Directive, EventEmitter, Input, Output } from '@angular/core';
-import { Country } from '../models/country.model';
 
-export type SortColumn = keyof Country | '';
 export type SortDirection = 'asc' | 'desc' | '';
 const rotate: { [key: string]: SortDirection } = { asc: 'desc', desc: '', '': 'asc' };
 
 export interface SortEvent {
-	column: SortColumn;
+	column: string;
 	direction: SortDirection;
 }
 
@@ -20,7 +18,7 @@ export interface SortEvent {
 	},
 })
 export class NgbdSortableHeader {
-	@Input() sortable: SortColumn = '';
+	@Input() sortable: string = '';
 	@Input() direction: SortDirection = '';
 	@Output() sort = new EventEmitter<SortEvent>();
 

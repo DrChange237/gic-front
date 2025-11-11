@@ -17,7 +17,7 @@ export interface ListResponse<T> {
 }
 
 @Directive()
-export abstract class BaseListComponent<T> implements OnInit {
+export abstract class BaseListComponent<T> {
 
   protected _items$ = new BehaviorSubject<T[]>([]);
   protected _loading$ = new BehaviorSubject<boolean>(false);
@@ -28,21 +28,22 @@ export abstract class BaseListComponent<T> implements OnInit {
   });
   protected _query: ListQuery = {};
 
+  pageSizeOptions = [5, 10, 25, 50];
+  searchTerm: string = '';
+  sortColumn = '';
+  sortDirection: 'asc' | 'desc' | '' = 'asc';
+
   items$ = this._items$.asObservable();
   loading$ = this._loading$.asObservable();
   pagination$ = this._pagination$.asObservable();
 
   abstract fetchData(query: ListQuery): Observable<ListResponse<T>>;
 
-  ngOnInit() {
-    this.load();
-  }
-
   load(): void {
     this._loading$.next(true);
     const params = {
       page: this.pagination.page,
-      pageSize: this.pagination.pageSize,
+      size: this.pagination.pageSize,
       ...this._query,
     };
 

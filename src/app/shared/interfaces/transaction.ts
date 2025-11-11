@@ -1,4 +1,22 @@
-import {PaymentStatus} from "../enums";
+import {PaymentStatus, TransactionStatus} from "../enums";
+import {Cashier} from "./user.interface";
+
+export interface Transaction {
+    id: string,
+    date: string | Date,
+    cashier: Cashier,
+    status: TransactionStatus,
+    transactionId: string,
+    amount: number,
+    commission: number,
+    clientFees: number,
+    reference: string,
+    serviceName: string,
+    serviceLogo: string,
+    description: string,
+    info: string,
+    choice: string
+}
 
 export interface InitPaymentData {
     service: string;
