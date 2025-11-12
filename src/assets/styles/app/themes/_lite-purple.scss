@@ -1,6 +1,7 @@
 @use "sass:color";
 
 $blue:    #263db5 !default;
+
 $indigo:  #6610f2 !default;
 $purple:  #6E3A96 !default;
 $pink:    #e83e8c !default;
@@ -10,6 +11,7 @@ $yellow:  #FFC107 !default;
 $green:   #4CAF50 !default;
 $teal:    #20c997 !default;
 $cyan:    #9C27B0 !default;
+$cyan-100:    #058EFC !default;
 
 $primary-base: $purple;
 
@@ -28,7 +30,7 @@ $black:    color.adjust($primary-base, $lightness: -60%) !default;
 $primary:       $primary-base !default;
 $secondary:     $gray-800 !default;
 $success:       $green !default;
-$info:          $blue !default;
+$info:          $cyan-100 !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
 $light:         $gray-500 !default;

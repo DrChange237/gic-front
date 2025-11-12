@@ -7,7 +7,7 @@ import {
   debounceTime,
   combineLatest
 } from 'rxjs';
-import { Directive, OnInit } from '@angular/core';
+import { Directive } from '@angular/core';
 import {map} from "rxjs/operators";
 
 export interface Pagination {
@@ -63,7 +63,7 @@ export abstract class BaseListComponent<T> {
     };
 
     this.fetchData(params)
-      .pipe(finalize(() => this._loading$.next(false)))
+      .pipe(finalize(() => {this._loading$.next(false); }))
       .subscribe({
         next: (res) => {
           this._items$.next(res.content);

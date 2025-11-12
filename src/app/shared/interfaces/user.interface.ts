@@ -57,9 +57,28 @@ export interface Lang {
 export interface Cashier {
   id: string;
   agency: Agency;
-  authorities: Authority[];
+  role: Role;
   name: string;
   username: string;
   lastActivity: string; // ISO date string
   lang: Lang;
+}
+
+export interface Role {
+  id: string,
+  agent: {
+    id: string,
+    code: string,
+    name: string,
+    parent: string,
+    group: {
+      id: string,
+      name: string,
+      minCommission: number
+    },
+    enabled: boolean,
+    lastActivity: string | Date
+  },
+  name: string,
+  authorities: Authority[]
 }

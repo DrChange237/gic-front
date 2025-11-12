@@ -3,16 +3,30 @@
     "language_en": "English",
     "language_fr": "French"
   },
+  "badge": {
+    "DEBITED": "Debited",
+    "FAILED": "Failed",
+    "INIT": "Initialisé",
+    "PENDING": "Pending",
+    "QUOTE": "Quote generated",
+    "REJECTED": "Rejected",
+    "SUCCESS": "Successful",
+    "WAITING": "Processing"
+  },
   "btn": {
     "back_to_home": "Go back to home",
     "cancel": "Cancel",
     "close": "Close",
     "confirm": "Confirm",
+    "detail": "Detail",
     "download_receipt": "Download receipt",
     "go_to_history": "Go to histo",
     "next": "Next",
     "previous": "Previous",
-    "return": "Return"
+    "reset": "Reset",
+    "return": "Return",
+    "search": "Search",
+    "search_loading": "Search in progress"
   },
   "error": {
     "404_text": "Sorry! The page you were looking for doesn't exist.",
@@ -23,13 +37,18 @@
     "bad_credentials": "Bad credentials",
     "email_label": "Email ",
     "email_plh": "Agent's e-mail address",
+    "end_date_label": "End date",
     "password_label": "Password",
     "password_plh": "Enter your password",
     "pin_code_label": "PIN Code",
     "pin_code_plh": "Enter your PIN code",
+    "reference_label": "Transaction reference",
+    "reference_plh": "Enter transaction reference",
     "required_fields": "Please fill all required fields",
+    "search_advanced": "Advanced search",
     "search_label": "Search: ",
     "search_plh": "Type in to search",
+    "start_date_label": "Start date",
     "username_label": "Username"
   },
   "modal": {
@@ -72,13 +91,21 @@
   },
   "table": {
     "action": "Action",
+    "agency": "Agency",
+    "agent": "Agent",
     "amount": "Amount",
+    "boolean": {
+      "false": "No",
+      "true": "Yes"
+    },
     "empty_data": "No data available",
     "item_per_page": "Items per page",
+    "label": "Label",
     "reference": "Reference",
     "service": "Service",
     "status": "Status",
-    "trx_date": "Date"
+    "trx_date": "Date",
+    "value": "Value"
   },
   "toast": {
     "default_error": "An error occurred during your request",
@@ -92,6 +119,7 @@
     "choose_payment_option_failed": "Choice of service payment option failed",
     "confirm_payment_failed": "Confirmation of failed transaction execution",
     "detail_transaction": "Transaction details",
+    "download_receipt_payment_failed": "Payment receipt download failed",
     "get_balance_trx_failed": "Error retrieving transaction account",
     "get_service_failed": "Service detail failed to load",
     "get_service_types_failed": "Service type list failed to load",

@@ -184,7 +184,7 @@ export class TrxServicesComponent implements OnInit {
         const name = this.paymentInitiate.service.name + '-' + formatDate(new Date(), 'yyyy-MM-dd_HH-mm', 'fr-FR');
         this.commonSrv.openFileOnBlank(res, true, `'cca-receipt-${name}.pdf`)
       },
-      error: err => this.commonSrv.errorHandle(err, 'transactions.choose_payment_option_failed', 'transactions.payment_service')
+      error: err => this.commonSrv.errorHandle(err, 'transactions.download_receipt_payment_failed', 'transactions.payment_service')
     });
   }
 

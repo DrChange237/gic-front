@@ -6,6 +6,7 @@ import {SecureDataService} from "./secure-data.service";
 import {ToastOptions} from "../../shared/interfaces";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {CurrencyPipe, DatePipe, DecimalPipe, TitleCasePipe} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
@@ -72,5 +73,43 @@ export class CommonService {
   toggleLanguage(lang: string) {
     this.store.setItem('lang', lang);
     this.translate.use(lang);
+  }
+
+  objectToDisplayList(obj: any, hiddenKeys: string[] = [], locale: string = 'fr-FR'): { key: string; label: string, value: string }[] {
+    if (!obj || typeof obj !== 'object') return [];
+
+    const datePipe = new DatePipe(locale);
+    const currencyPipe = new CurrencyPipe(locale);
+    const decimalPipe = new DecimalPipe(locale);
+    const titleCasePipe = new TitleCasePipe();
+
+    return Object.entries(obj)
+        .filter(([key, value]) => !hiddenKeys.includes(key))
+        .map(([key, value]) => {
+          let formattedValue: string;
+
+          if (value === null || value === undefined || value === 'undefined') {
+            formattedValue = 'N/A';
+          } else if (typeof value === 'number' && ['amount'].includes(key)) {
+            formattedValue = currencyPipe.transform(value, 'XAF') || 'N/A';
+          } else if (typeof value === 'number') {
+            formattedValue = decimalPipe.transform(value, '1.0-2') || value.toString();
+          } else if (typeof value === 'boolean') {
+            formattedValue = this.translate.instant('table.boolean.' + value);
+          } else if (typeof value === 'string' && value.match(/^\d{4}-\d{2}-\d{2}T/)) {
+            formattedValue = datePipe.transform(value, 'dd/MM/yyyy - HH:mm') || value;
+          } else if (typeof value === 'object') {
+            const sub = value['name'] || value['code'] || value['title'] || value['username'];
+            formattedValue = sub ? sub.toString() : '[Objet]';
+          } else {
+            formattedValue = value.toString();
+          }
+
+          return {
+            key: key,
+            label: titleCasePipe.transform(key.replace(/([A-Z])/g, ' $1')), // ex: lastModifiedDate → Last Modified Date
+            value: formattedValue
+          };
+        });
   }
 }

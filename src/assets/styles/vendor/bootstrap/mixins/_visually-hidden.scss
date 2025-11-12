@@ -15,7 +15,7 @@
   white-space: nowrap !important;
   border: 0 !important;
 
-  // Fix for positioned table caption that could become anonymous cells
+  // Fix for positioned table-detail caption that could become anonymous cells
   &:not(caption) {
     position: absolute !important;
   }

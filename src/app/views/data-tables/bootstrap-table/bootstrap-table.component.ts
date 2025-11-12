@@ -13,7 +13,7 @@ import { CountryService } from 'src/app/core/services/country.service';
 
 
 @Component({
-  selector: 'app-bootstrap-table',
+  selector: 'app-bootstrap-table-detail',
   standalone: false,
   templateUrl: './bootstrap-table.component.html',
   styleUrl: './bootstrap-table.component.scss',

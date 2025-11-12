@@ -43,6 +43,10 @@ export class FactoryService extends BaseApiService {
     });
   }
 
+  getTrxDetail(transactionId: string) {
+    return this.get<Transaction>(`history/detail`, { params: { transactionId: transactionId } });
+  }
+
   getTrxHistory(filter: Record<string, string | number | boolean>, type?: string) {
     const url = type ? `/${type}` : '';
     return this.get<ListResponse<Transaction>>(`history${url}`, { params: filter })

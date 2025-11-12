@@ -5,6 +5,12 @@
 }
 
 .modal-body {
+    &.scroll-modal {
+        height: max-content;
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
     .avatar {
         height: 76px;
         width: 76px;

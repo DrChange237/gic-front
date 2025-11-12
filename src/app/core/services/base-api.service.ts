@@ -35,7 +35,7 @@ export abstract class BaseApiService {
 
     if (options?.params) {
       Object.entries(options.params).forEach(([key, value]) => {
-        httpParams = httpParams.set(key, value.toString());
+        if (value) httpParams = httpParams.set(key, value.toString());
       });
     }
 

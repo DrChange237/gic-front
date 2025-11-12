@@ -9,7 +9,7 @@ const routes: Routes = [
     component: ListPaginationComponent
   },
   {
-    path: 'bootstrap-table',
+    path: 'bootstrap-table-detail',
     component: BootstrapTableComponent
   }
 ];

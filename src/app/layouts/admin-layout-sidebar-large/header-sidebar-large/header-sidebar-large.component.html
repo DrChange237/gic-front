@@ -73,11 +73,13 @@
     </div>
 
     <div ngbDropdown [placement]="'bottom-right'" class="user col align-self-end pl-2">
-      <div class="d-inline-flex align-items-center" id="userDropdown" role="button" ngbDropdownToggle style="line-height: 0">
-        <span>{{ user.name || user.username }}</span>
-        <span class="text-35 ms-2 bg-user-img">
-          <i class="i-Male-21"></i>
-        </span>
+      <div class="d-inline-flex align-items-center" id="userDropdown" role="button" ngbDropdownToggle>
+        <div class="d-flex flex-column">
+          <span>{{ (user.name || user.username) | truncateString: 20 }}</span>
+          <span class="badge rounded-pill text-bg-primary">{{ user.role.name }}</span>
+        </div>
+
+        <i class="i-Male-21 text-35 bg-user-img ms-2"></i>
       </div>
 
       <div ngbDropdownMenu aria-labelledby="userDropdown" class="header-account-dropdown">

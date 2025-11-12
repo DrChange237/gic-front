@@ -162,7 +162,7 @@ export class NavigationService {
         //             icon: 'i-File-Horizontal-Text',
         //             sub: [
         //                 { icon: 'i-File-Horizontal-Text', name: 'List', state: '/tables/list', type: 'link' },
-        //                 { icon: 'i-Full-View-Window', name: 'Bootstrap Table', state: '/tables/bootstrap-table', type: 'link' },
+        //                 { icon: 'i-Full-View-Window', name: 'Bootstrap Table', state: '/tables/bootstrap-table-detail', type: 'link' },
         //             ]
         //         },
         //         {

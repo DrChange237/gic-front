@@ -33,8 +33,14 @@
         color: theme.$dark;
         vertical-align: middle;
 
+        &.col-action button{
+            line-height: 0;
+        }
+
+        &.col-action,
         &.col-status {
             width: 10%;
+            text-align: center;
         }
         &.col-reference {
             width: 15%;

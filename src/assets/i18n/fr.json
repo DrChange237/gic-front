@@ -3,16 +3,30 @@
     "language_en": "Anglais",
     "language_fr": "Français"
   },
+  "badge": {
+    "DEBITED": "Débité",
+    "FAILED": "Échoué",
+    "INIT": "Initialized",
+    "PENDING": "En attente",
+    "QUOTE": "Devis généré",
+    "REJECTED": "Rejeté",
+    "SUCCESS": "Réussie",
+    "WAITING": "En cours"
+  },
   "btn": {
     "back_to_home": "Retourner à l'accueil",
     "cancel": "Annuler",
     "close": "Fermer",
     "confirm": "Confirmer",
+    "detail": "Détail",
     "download_receipt": "Télécharger le reçu",
     "go_to_history": "Aller a l'historique",
     "next": "Suivant",
     "previous": "Précédent",
-    "return": "Retour"
+    "reset": "Réinitialiser",
+    "return": "Retour",
+    "search": "Rechercher",
+    "search_loading": "Recherche en cours"
   },
   "error": {
     "404_text": "Désolé, la page que vous demandé n'existe pas.",
@@ -23,13 +37,18 @@
     "bad_credentials": "Identifiants incorrects",
     "email_label": "Email ",
     "email_plh": "Adresse e-mail de l'agent",
+    "end_date_label": "Date de fin",
     "password_label": "Mot de passe",
     "password_plh": "Entrez votre mot de passe",
     "pin_code_label": "Code PIN",
     "pin_code_plh": "Entrez votre code PIN",
+    "reference_label": "Référence de transaction",
+    "reference_plh": "Entrez la référence de transaction",
     "required_fields": "Veuillez renseigner tous les champs obligatoire",
+    "search_advanced": "Recherche avancée",
     "search_label": "Rechercher :",
     "search_plh": "Saisissez pour rechercher",
+    "start_date_label": "Date de début",
     "username_label": "Nom d'utilisateur"
   },
   "modal": {
@@ -72,13 +91,21 @@
   },
   "table": {
     "action": "Action",
+    "agency": "Agence",
+    "agent": "Agent",
     "amount": "Montant",
+    "boolean": {
+      "false": "Non",
+      "true": "Oui"
+    },
     "empty_data": "Aucune donnée disponible",
-    "item_per_page": "Afficher par page",
+    "item_per_page": "Affichés par page",
+    "label": "Libellé",
     "reference": "Référence",
     "service": "Service",
     "status": "Statut",
-    "trx_date": "Date"
+    "trx_date": "Date",
+    "value": "Valeur"
   },
   "toast": {
     "default_error": "Une erreur s'est produite lors de votre demande",
@@ -92,6 +119,7 @@
     "choose_payment_option_failed": "Choix de l'option de paiement de service échoué",
     "confirm_payment_failed": "Confirmation de l'exécution de l'opération échouée",
     "detail_transaction": "Détails de la transaction",
+    "download_receipt_payment_failed": "Téléchargement du reçu de paiement échoué",
     "get_balance_trx_failed": "Erreur lors de la récupération du compte d'opération",
     "get_service_failed": "Détails du service non chargées",
     "get_service_types_failed": "Liste des types de services non chargée",

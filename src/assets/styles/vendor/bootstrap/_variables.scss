@@ -725,9 +725,9 @@ $mark-bg:                     $yellow-100 !default;
 
 // Tables
 //
-// Customizes the `.table` component with basic values, each used across all table variations.
+// Customizes the `.table-detail` component with basic values, each used across all table-detail variations.
 
-// scss-docs-start table-variables
+// scss-docs-start table-detail-variables
 $table-cell-padding-y:        .5rem !default;
 $table-cell-padding-x:        .5rem !default;
 $table-cell-padding-y-sm:     .25rem !default;
@@ -765,9 +765,9 @@ $table-group-separator-color: currentcolor !default;
 $table-caption-color:         var(--#{$prefix}secondary-color) !default;
 
 $table-bg-scale:              -80% !default;
-// scss-docs-end table-variables
+// scss-docs-end table-detail-variables
 
-// scss-docs-start table-loop
+// scss-docs-start table-detail-loop
 $table-variants: (
   "primary":    shift-color($primary, $table-bg-scale),
   "secondary":  shift-color($secondary, $table-bg-scale),
@@ -778,7 +778,7 @@ $table-variants: (
   "light":      $light,
   "dark":       $dark,
 ) !default;
-// scss-docs-end table-loop
+// scss-docs-end table-detail-loop
 
 
 // Buttons + Forms
