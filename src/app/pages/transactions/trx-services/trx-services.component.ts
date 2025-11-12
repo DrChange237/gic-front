@@ -18,7 +18,6 @@ import {
 } from "../../../shared/components/confirm-action-modal/confirm-action-modal.component";
 import {ActionResultModalComponent} from "../../../shared/components/action-result-modal/action-result-modal.component";
 import {SharedPipesModule} from "../../../shared/pipes/shared-pipes.module";
-import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-trx-services',
@@ -46,10 +45,7 @@ export class TrxServicesComponent implements OnInit {
 
   paymentInitiate: InitPaymentResponse;
 
-  historyType: string = '';
-
   constructor(
-      private route: ActivatedRoute,
       private modalService: NgbModal,
       private fb: UntypedFormBuilder,
       private commonSrv: CommonService,
@@ -58,7 +54,6 @@ export class TrxServicesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.commonSrv.router.routerState.snapshot);
     this.loadServicesType();
   }
 

@@ -6,8 +6,8 @@
             <div class="p-4">
                 <div class="mb-4 row">
                     <div class="col-xs-3 col-sm-5 col-md-4 col-lg-3">
-                        <input id="table-complete-search" type="text" class="form-control" name="searchTerm"
-                               [(ngModel)]="searchTerm" [placeholder]="'form.search_plh' | translate"/>
+                        <input id="table-complete-search" type="text" class="form-control" name="searchTerm" [(ngModel)]="searchTerm"
+                               (input)="filterUpdate($event)" [placeholder]="'form.search_plh' | translate"/>
                     </div>
                     @if (loading$ | async) {
                         <span class="col col-form-label">Loading...</span>
@@ -19,21 +19,11 @@
                         <thead>
                         <tr>
                             <th scope="col" role="button" class="px-3">{{ '#ID' | translate }}</th>
-                            <th scope="col" role="button" sortable="reference" (sort)="onSort($event)">
-                                {{ 'table.reference' | translate }}
-                            </th>
-                            <th scope="col" role="button" sortable="reference" (sort)="onSort($event)">
-                                {{ 'table.service' | translate }}
-                            </th>
-                            <th scope="col" role="button" sortable="amount" (sort)="onSort($event)">
-                                {{ 'table.amount' | translate }}
-                            </th>
-                            <th scope="col" role="button" sortable="date" (sort)="onSort($event)">
-                                {{ 'table.trx_date' | translate }}
-                            </th>
-                            <th scope="col" role="button" sortable="date" (sort)="onSort($event)">
-                                {{ 'table.status' | translate }}
-                            </th>
+                            <th scope="col" role="button">{{ 'table.reference' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.service' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.amount' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.trx_date' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.status' | translate }}</th>
                             <th scope="col" role="button">{{ 'table.action' | translate }}</th>
                         </tr>
                         </thead>
@@ -41,7 +31,7 @@
                             @for (transaction of items$ | async; track transaction.id) {
                                 <tr>
                                     <td class="col-reference text-truncate px-3">{{ transaction.id }}</td>
-                                    <td><ngb-highlight [result]="transaction.reference" [term]="searchTerm" /></td>
+                                    <td><ngb-highlight [result]="transaction.reference || 'N/A'" [term]="searchTerm" /></td>
                                     <td>
                                         <img [src]="transaction.serviceLogo | prefixImgUrl" [alt]="" class="me-2" style="width: 20px"
                                         />
@@ -56,7 +46,7 @@
                                 </tr>
                             } @empty {
                                 <tr>
-                                    <td colspan="4" style="text-align: center">{{ 'table.empty_data' | translate }}</td>
+                                    <td colspan="7" style="text-align: center">{{ 'table.empty_data' | translate }}</td>
                                 </tr>
                             }
                         </tbody>

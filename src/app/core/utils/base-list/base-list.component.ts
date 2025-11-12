@@ -1,5 +1,14 @@
-import { BehaviorSubject, Observable, finalize } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  finalize,
+  startWith,
+  distinctUntilChanged,
+  debounceTime,
+  combineLatest
+} from 'rxjs';
 import { Directive, OnInit } from '@angular/core';
+import {map} from "rxjs/operators";
 
 export interface Pagination {
   page: number;
@@ -20,6 +29,7 @@ export interface ListResponse<T> {
 export abstract class BaseListComponent<T> {
 
   protected _items$ = new BehaviorSubject<T[]>([]);
+  protected _filterSubject$ = new BehaviorSubject<string>('');
   protected _loading$ = new BehaviorSubject<boolean>(false);
   protected _pagination$ = new BehaviorSubject<Pagination>({
     page: 1,
@@ -33,10 +43,15 @@ export abstract class BaseListComponent<T> {
   sortColumn = '';
   sortDirection: 'asc' | 'desc' | '' = 'asc';
 
-  items$ = this._items$.asObservable();
+  items$: Observable<T[]>;
   loading$ = this._loading$.asObservable();
   pagination$ = this._pagination$.asObservable();
 
+  protected constructor() {
+    this.setupItems$();
+  }
+
+  abstract search(): void;
   abstract fetchData(query: ListQuery): Observable<ListResponse<T>>;
 
   load(): void {
@@ -58,6 +73,26 @@ export abstract class BaseListComponent<T> {
           });
         },
       });
+  }
+
+  protected filterData(item: T[], filter: string): T[] { return item; }
+
+  private setupItems$(): void {
+    this.items$ = combineLatest([
+      this._items$,
+      this._filterSubject$.pipe(
+          debounceTime(300),
+          distinctUntilChanged(),
+          startWith('')
+      )
+    ]).pipe(
+        map(([data, filter]) => this.filterData(data, filter))
+    );
+  }
+
+  filterUpdate(event: any): void {
+    const val = event?.target?.value ?? event ?? '';
+    this._filterSubject$.next(val);
   }
 
   setPage(page: number) {

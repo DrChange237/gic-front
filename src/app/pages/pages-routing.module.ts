@@ -19,12 +19,24 @@ const routes: Routes = [
       {
         path: 'history',
         data: { title: 'navigation.history' },
-        loadChildren:  () => import('./transactions/trx-history/trx-history.module').then(m => m.TrxHistoryModule)
-      },
-      {
-        path: 'history/agent',
-        data: { title: 'navigation.history_agent' },
-        loadComponent:  () => import('./transactions/trx-history/trx-history.component').then(c => c.TrxHistoryComponent)
+        children: [
+          {
+            path: 'agent',
+            data: { title: 'navigation.history_agent' },
+            loadComponent:  () => import('./transactions/trx-history/trx-history.component').then(c => c.TrxHistoryComponent)
+          },
+          {
+            path: 'agency',
+            data: { title: 'navigation.history_agency', history: 'agent' },
+            loadComponent:  () => import('./transactions/trx-history/trx-history.component').then(c => c.TrxHistoryComponent)
+          },
+          {
+            path: 'all',
+            data: { title: 'navigation.history_global', history: 'agency' },
+            loadComponent:  () => import('./transactions/trx-history/trx-history.component').then(c => c.TrxHistoryComponent)
+          },
+          { path: '', redirectTo: 'agent', pathMatch: 'full' }
+        ]
       },
       {
         path: 'reporting',
