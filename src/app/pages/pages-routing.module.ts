@@ -27,12 +27,12 @@ const routes: Routes = [
           },
           {
             path: 'agency',
-            data: { title: 'navigation.history_agency', history: 'agent' },
+            data: { title: 'navigation.history_agency', history: 'agency' },
             loadComponent:  () => import('./transactions/trx-history/trx-history.component').then(c => c.TrxHistoryComponent)
           },
           {
             path: 'all',
-            data: { title: 'navigation.history_global', history: 'agency' },
+            data: { title: 'navigation.history_global', history: 'global' },
             loadComponent:  () => import('./transactions/trx-history/trx-history.component').then(c => c.TrxHistoryComponent)
           },
           { path: '', redirectTo: 'agent', pathMatch: 'full' }
