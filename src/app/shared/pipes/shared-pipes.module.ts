@@ -13,8 +13,8 @@ const pipes = [
   RelativeTimePipe,
   PrefixImgUrlPipe,
   StatusBadgePipe,
-      TruncateStringPipe
-   ];
+  TruncateStringPipe,
+];
 
 @NgModule({
   imports: [

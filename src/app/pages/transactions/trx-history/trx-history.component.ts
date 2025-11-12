@@ -4,6 +4,8 @@ import {AsyncPipe, CurrencyPipe, DatePipe, formatDate, UpperCasePipe} from "@ang
 import {NgSelectModule} from "@ng-select/ng-select";
 import {TranslatePipe} from "@ngx-translate/core";
 import {ActivatedRoute} from "@angular/router";
+import {NgScrollbar} from "ngx-scrollbar";
+import {catchError, of} from "rxjs";
 import {FormGroup, FormsModule, ReactiveFormsModule, UntypedFormBuilder} from "@angular/forms";
 //
 import {BaseListComponent, ListQuery} from "../../../core/utils/base-list/base-list.component";
@@ -13,7 +15,6 @@ import {FactoryService} from "../../../core/services/factory.service";
 import {CommonService} from "../../../core/services/common.service";
 import {Transaction} from "../../../shared/interfaces";
 import {TableDetailComponent} from "../../../shared/components/table-detail/table-detail.component";
-import {NgScrollbar} from "ngx-scrollbar";
 
 @Component({
   selector: 'app-trx-history',
@@ -25,7 +26,6 @@ import {NgScrollbar} from "ngx-scrollbar";
 })
 export class TrxHistoryComponent extends BaseListComponent<Transaction> implements OnInit {
 
-  filterForm: FormGroup;
   historyType: string = '';
 
   currTransaction: Transaction;
@@ -45,10 +45,6 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
     this.historyType = this.route.snapshot.data['history'];
   }
 
-  ngOnInit(): void {
-    this.search();
-  }
-
   initializeForm() {
     this.filterForm = this.fb.group({
       reference: [''],
@@ -63,14 +59,19 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
   }
 
   override fetchData(query: ListQuery) {
-    return this.factorySrv.getTrxHistory(query, this.historyType);
+    return this.factorySrv.getTrxHistory(query, this.historyType).pipe(
+      catchError(err => {
+        this.commonSrv.errorHandle(err, 'transactions.get_history_transaction_failed', 'transactions.history');
+        return of(null);
+      })
+    );
   }
 
   protected override filterData(items: Transaction[], filter: string): Transaction[] {
     const lowerTerm = filter.toLowerCase();
-    return items.filter(user =>
-        user.serviceName.toLowerCase().includes(lowerTerm) ||
-        user.reference.toLowerCase().includes(lowerTerm)
+    return items.filter(transaction =>
+        transaction.serviceName.toLowerCase().includes(lowerTerm) ||
+        transaction.reference.toLowerCase().includes(lowerTerm)
     );
   }
 
@@ -80,7 +81,7 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
         const name = transaction.serviceName + '-' + formatDate(new Date(), 'yyyy-MM-dd_HH-mm', 'fr-FR');
         this.commonSrv.openFileOnBlank(res, true, `'cca-receipt-${name}.pdf`)
       },
-      error: err => this.commonSrv.errorHandle(err, 'transactions.download_receipt_payment_failed', 'transactions.payment_service')
+      error: err => this.commonSrv.errorHandle(err, 'transactions.download_receipt_payment_failed', 'transactions.history')
     });
   }
 
@@ -94,7 +95,7 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
             .open(content, { size: "lg", ariaLabelledBy: 'modal-basic-title', centered: true })
             .shown.subscribe(() => { this.scrollbarRef?.scrollTo({top: 0}).then();  });
       },
-      error: err => this.commonSrv.errorHandle(err, 'transactions.download_receipt_payment_failed', 'transactions.payment_service')
+      error: err => this.commonSrv.errorHandle(err, 'transactions.get_detail_transaction_failed', 'transactions.history')
     });
   }
 }

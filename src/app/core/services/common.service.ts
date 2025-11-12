@@ -50,6 +50,11 @@ export class CommonService {
 
         case 401:
           messageTr = this.translate.instant('sessions.session_expired');
+          break;
+
+        case 403:
+          titleTr = this.translate.instant('toast.forbidden_title');
+          messageTr = this.translate.instant('toast.forbidden_message');
       }
     }
 

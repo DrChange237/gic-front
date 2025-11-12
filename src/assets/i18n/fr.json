@@ -1,4 +1,9 @@
 {
+  "account": {
+    "account_balance": "Solde de Compte",
+    "get_balance_fees_failed": "Chargement du compte de commission échoué",
+    "get_balance_trx_failed": "Chargement du compte d'opération échoué"
+  },
   "app": {
     "language_en": "Anglais",
     "language_fr": "Français"
@@ -20,6 +25,7 @@
     "confirm": "Confirmer",
     "detail": "Détail",
     "download_receipt": "Télécharger le reçu",
+    "download_report": "Télécharger le rapport",
     "go_to_history": "Aller a l'historique",
     "next": "Suivant",
     "previous": "Précédent",
@@ -38,12 +44,14 @@
     "email_label": "Email ",
     "email_plh": "Adresse e-mail de l'agent",
     "end_date_label": "Date de fin",
+    "label_label": "Libellé",
     "password_label": "Mot de passe",
     "password_plh": "Entrez votre mot de passe",
     "pin_code_label": "Code PIN",
     "pin_code_plh": "Entrez votre code PIN",
     "reference_label": "Référence de transaction",
     "reference_plh": "Entrez la référence de transaction",
+    "report_label_plh": "Entrez le titre du rapport",
     "required_fields": "Veuillez renseigner tous les champs obligatoire",
     "search_advanced": "Recherche avancée",
     "search_label": "Rechercher :",
@@ -76,6 +84,11 @@
     "templates": "Templates",
     "transaction_history": "Historiques de Transaction"
   },
+  "reporting": {
+    "download_report_failed": "Téléchargement du report échoué",
+    "get_history_report_failed": "Chargement des données de transaction échoué",
+    "report": "Rapport"
+  },
   "sessions": {
     "forgot_password": "Mot de Passe Oublié",
     "session": "Session",
@@ -98,6 +111,8 @@
       "false": "Non",
       "true": "Oui"
     },
+    "created_date": "Date de création",
+    "description": "Description",
     "empty_data": "Aucune donnée disponible",
     "item_per_page": "Affichés par page",
     "label": "Libellé",
@@ -110,6 +125,8 @@
   "toast": {
     "default_error": "Une erreur s'est produite lors de votre demande",
     "error": "Erreur",
+    "forbidden_message": "Accès à la ressource demandée non autorisé",
+    "forbidden_title": "Autorisation",
     "info": "Info",
     "success": "Succès",
     "warning": "Attention"
@@ -120,9 +137,11 @@
     "confirm_payment_failed": "Confirmation de l'exécution de l'opération échouée",
     "detail_transaction": "Détails de la transaction",
     "download_receipt_payment_failed": "Téléchargement du reçu de paiement échoué",
-    "get_balance_trx_failed": "Erreur lors de la récupération du compte d'opération",
+    "get_detail_transaction_failed": "Chargement des détails de la transaction échoué",
+    "get_history_transaction_failed": "Chargement des données de transaction échoué",
     "get_service_failed": "Détails du service non chargées",
     "get_service_types_failed": "Liste des types de services non chargée",
+    "history": "Historique",
     "init_payment_failed": "Initiation du paiement de service échoué",
     "payment_confirm": "Confirmation",
     "payment_info": "Informations de Paiement",

@@ -21,7 +21,11 @@ export class AccountService extends BaseApiService {
 
   getAccountOperation() {
     return this.get<AccountBalance>('cashier/balance').pipe(
-      tap(res => this.accountOperation = res)
+      tap(res => this.accountOperation = res),
+      catchError(error => {
+        this.commonSrv.errorHandle(error, 'account.get_balance_trx_failed', 'account.account_balance')
+        return of(null);
+      })
     );
   }
 
@@ -29,7 +33,7 @@ export class AccountService extends BaseApiService {
     return this.get<AccountBalance>('cashier/balance').pipe(
         tap(res => this.accountCommission = res),
         catchError(error => {
-          this.commonSrv.errorHandle(error, 'transactions.get_balance_trx_failed', 'transactions.balance')
+          this.commonSrv.errorHandle(error, 'account.get_balance_fees_failed', 'account.account_balance')
           return of(null);
         })
     );

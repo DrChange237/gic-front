@@ -7,8 +7,9 @@ import {
   debounceTime,
   combineLatest
 } from 'rxjs';
-import { Directive } from '@angular/core';
+import {Directive, OnInit} from '@angular/core';
 import {map} from "rxjs/operators";
+import {FormGroup} from "@angular/forms";
 
 export interface Pagination {
   page: number;
@@ -26,7 +27,7 @@ export interface ListResponse<T> {
 }
 
 @Directive()
-export abstract class BaseListComponent<T> {
+export abstract class BaseListComponent<T> implements OnInit {
 
   protected _items$ = new BehaviorSubject<T[]>([]);
   protected _filterSubject$ = new BehaviorSubject<string>('');
@@ -37,6 +38,7 @@ export abstract class BaseListComponent<T> {
     totalItems: 0,
   });
   protected _query: ListQuery = {};
+  filterForm: FormGroup = new FormGroup({});
 
   pageSizeOptions = [5, 10, 25, 50];
   searchTerm: string = '';
@@ -49,6 +51,10 @@ export abstract class BaseListComponent<T> {
 
   protected constructor() {
     this.setupItems$();
+  }
+
+  ngOnInit(): void {
+    this.search();
   }
 
   abstract search(): void;
@@ -73,6 +79,11 @@ export abstract class BaseListComponent<T> {
           });
         },
       });
+  }
+
+  resetFilter() {
+    this.filterForm.reset();
+    this.search();
   }
 
   protected filterData(item: T[], filter: string): T[] { return item; }

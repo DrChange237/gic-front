@@ -1,4 +1,9 @@
 {
+  "account": {
+    "account_balance": "Account balance",
+    "get_balance_fees_failed": "Error retrieving commission account",
+    "get_balance_trx_failed": "Error retrieving transaction account"
+  },
   "app": {
     "language_en": "English",
     "language_fr": "French"
@@ -20,6 +25,7 @@
     "confirm": "Confirm",
     "detail": "Detail",
     "download_receipt": "Download receipt",
+    "download_report": "Download report",
     "go_to_history": "Go to histo",
     "next": "Next",
     "previous": "Previous",
@@ -38,12 +44,14 @@
     "email_label": "Email ",
     "email_plh": "Agent's e-mail address",
     "end_date_label": "End date",
+    "label_label": "Label",
     "password_label": "Password",
     "password_plh": "Enter your password",
     "pin_code_label": "PIN Code",
     "pin_code_plh": "Enter your PIN code",
     "reference_label": "Transaction reference",
     "reference_plh": "Enter transaction reference",
+    "report_label_plh": "Enter report label",
     "required_fields": "Please fill all required fields",
     "search_advanced": "Advanced search",
     "search_label": "Search: ",
@@ -76,6 +84,11 @@
     "templates": "Templates",
     "transaction_history": "Transaction History"
   },
+  "reporting": {
+    "download_report_failed": "Report download failed",
+    "get_history_report_failed": "Transaction data loading failed",
+    "report": "Report"
+  },
   "sessions": {
     "forgot_password": "Forgot Password",
     "session": "Session",
@@ -98,6 +111,8 @@
       "false": "No",
       "true": "Yes"
     },
+    "created_date": "Created date",
+    "description": "Description",
     "empty_data": "No data available",
     "item_per_page": "Items per page",
     "label": "Label",
@@ -110,6 +125,8 @@
   "toast": {
     "default_error": "An error occurred during your request",
     "error": "Error",
+    "forbidden_message": "Unauthorized access to the requested resource",
+    "forbidden_title": "Authorization",
     "info": "Info",
     "success": "Success",
     "warning": "Attention"
@@ -120,9 +137,11 @@
     "confirm_payment_failed": "Confirmation of failed transaction execution",
     "detail_transaction": "Transaction details",
     "download_receipt_payment_failed": "Payment receipt download failed",
-    "get_balance_trx_failed": "Error retrieving transaction account",
+    "get_detail_transaction_failed": "Failed to retrieve transaction details",
+    "get_history_transaction_failed": "Transaction data loading failed",
     "get_service_failed": "Service detail failed to load",
     "get_service_types_failed": "Service type list failed to load",
+    "history": "History",
     "init_payment_failed": "Service payment initiation failed",
     "payment_confirm": "Confirmation",
     "payment_info": "Payment Information",
