@@ -50,6 +50,7 @@ export class CommonService {
 
         case 401:
           messageTr = this.translate.instant('sessions.session_expired');
+          titleTr = this.translate.instant('toast.authentification_title');
           break;
 
         case 403:

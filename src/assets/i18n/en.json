@@ -1,6 +1,8 @@
 {
   "account": {
     "account_balance": "Account balance",
+    "agent": "Agent",
+    "get_agent_list_failed": "List agent loading failed",
     "get_balance_fees_failed": "Error retrieving commission account",
     "get_balance_trx_failed": "Error retrieving transaction account"
   },
@@ -123,6 +125,7 @@
     "value": "Value"
   },
   "toast": {
+    "authentification_title": "Authentification",
     "default_error": "An error occurred during your request",
     "error": "Error",
     "forbidden_message": "Unauthorized access to the requested resource",

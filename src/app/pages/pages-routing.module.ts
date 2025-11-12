@@ -38,13 +38,13 @@ const routes: Routes = [
           { path: '', redirectTo: 'agent', pathMatch: 'full' }
         ]
       },
-      {
-        path: 'reporting',
-        data: { title: 'navigation.reporting' },
-        loadComponent: () => import('./transactions/reporting/reporting.component').then(c => c.ReportingComponent)
-      },
       { path: '', redirectTo: 'service', pathMatch: 'full' }
     ]
+  },
+  {
+    path: 'reporting',
+    data: { title: 'navigation.reporting' },
+    loadComponent: () => import('./reporting/reporting.component').then(c => c.ReportingComponent)
   },
   {
     path: 'management',

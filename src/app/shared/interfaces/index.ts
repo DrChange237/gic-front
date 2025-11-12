@@ -9,3 +9,5 @@ export * from './account.interface';
 export * from './transaction';
 
 export * from './reporting.interface';
+
+export * from './management';

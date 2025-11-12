@@ -1,1 +1,77 @@
 <app-breadcrumb></app-breadcrumb>
+
+<div id="scroll-container">
+    <div class="card user-profile o-hidden mb-4">
+        <div class="header-cover" style="background-image: url('assets/images/photo-wide-5.png')"></div>
+        <div class="user-info">
+<!--            <img class="profile-picture avatar-lg mb-2" src="assets/images/faces/1.jpg" alt="">-->
+            <div class="profile-picture avatar-lg bg-white center mb-2">
+                <i class="i-Male-21 text-70 text-primary"></i>
+            </div>
+            <p class="m-0 text-24">{{user.name}}</p>
+            <p class="text-muted m-0">{{user.role.name}}</p>
+        </div>
+        <div class="card-body nav-center">
+            <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                <li ngbNavItem title="Timeline">
+                    <a ngbNavLink>Timeline</a>
+                    <ng-template ngbNavContent>
+
+                    </ng-template>
+                </li>
+                <li ngbNavItem title="About">
+                    <a ngbNavLink>About</a>
+                    <ng-template ngbNavContent>
+                        <h4>Personal Information</h4>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-4 col-6">
+                                <div class="mb-4">
+                                    <p class="text-primary mb-1"><i class="i-Calendar text-16 me-1"></i> Birth Date</p>
+                                    <span>1 Jan, 1994</span>
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-primary mb-1"><i class="i-Edit-Map text-16 me-1"></i> Birth Place</p>
+                                    <span>Dhaka, DB</span>
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-primary mb-1"><i class="i-Globe text-16 me-1"></i> Lives In</p>
+                                    <span>Dhaka, DB</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-6">
+                                <div class="mb-4">
+                                    <p class="text-primary mb-1"><i class="i-MaleFemale text-16 me-1"></i> Gender</p>
+                                    <span>1 Jan, 1994</span>
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-primary mb-1"><i class="i-MaleFemale text-16 me-1"></i> Email</p>
+                                    <span>example[at]ui-lib.com</span>
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-primary mb-1"><i class="i-Cloud-Weather text-16 me-1"></i> Website</p>
+                                    <span>www.ui-lib.com</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-6">
+                                <div class="mb-4">
+                                    <p class="text-primary mb-1"><i class="i-Face-Style-4 text-16 me-1"></i> Profession</p>
+                                    <span>Digital Marketer</span>
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-primary mb-1"><i class="i-Professor text-16 me-1"></i> Experience</p>
+                                    <span>8 Years</span>
+                                </div>
+                                <div class="mb-4">
+                                    <p class="text-primary mb-1"><i class="i-Home1 text-16 me-1"></i> School</p>
+                                    <span>School of Digital Marketing</span>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+            <div [ngbNavOutlet]="nav"></div>
+        </div>
+    </div>
+</div>

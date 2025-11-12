@@ -1,4 +1,4 @@
-import {AgentInfo} from "./user.interface";
+import {AgentInfo} from "./management";
 
 export interface Report {
     id: string,

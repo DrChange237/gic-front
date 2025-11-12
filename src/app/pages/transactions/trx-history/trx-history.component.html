@@ -84,13 +84,13 @@
                         <tbody>
                             @for (transaction of items$ | async; track transaction.id) {
                                 <tr>
-                                    <td class="col-reference text-truncate px-3" [ngbTooltip]="transaction.receiptId || 'N/A'">
-                                        {{ transaction.receiptId || 'N/A' }}
+                                    <td class="col-reference text-truncate px-3">
+                                        <ngb-highlight [ngbTooltip]="(transaction.receiptId || 'N/A')"
+                                                       [result]="transaction.receiptId || 'N/A'" [term]="searchTerm" />
                                     </td>
                                     <td><ngb-highlight [result]="transaction.reference || 'N/A'" [term]="searchTerm" /></td>
                                     <td>
-                                        <img [src]="transaction.serviceLogo | prefixImgUrl" [alt]="" class="me-2" style="width: 20px"
-                                        />
+                                        <img [src]="transaction.serviceLogo | prefixImgUrl" [alt]="" class="me-2" style="width: 30px"/>
                                         <ngb-highlight [result]="transaction.serviceName" [term]="searchTerm" />
                                     </td>
                                     @if (historyType) {
@@ -113,14 +113,16 @@
                                         </span>
                                     </td>
                                     <td class="col-action">
-                                        <button role="button" class="btn btn-info text-white text-14 me-2" [ngbTooltip]="'btn.detail' | translate"
-                                                (click)="openDetailTrx(modalDetailTrx, transaction)">
-                                            <i class="i-Information fw-medium"></i>
-                                        </button>
-                                        <button role="button" class="btn btn-primary text-14" [ngbTooltip]="'btn.download_receipt' | translate"
-                                                (click)="downloadReceipt(transaction)">
-                                            <i class="i-Download-from-Cloud fw-medium"></i>
-                                        </button>
+                                        <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                            <button role="button" class="btn btn-info text-white text-14" [ngbTooltip]="'btn.detail' | translate"
+                                                    (click)="openDetailTrx(modalDetailTrx, transaction)">
+                                                <i class="i-Information fw-medium"></i>
+                                            </button>
+                                            <button role="button" class="btn btn-primary text-14" [ngbTooltip]="'btn.download_receipt' | translate"
+                                                    (click)="downloadReceipt(transaction)">
+                                                <i class="i-Download-from-Cloud fw-medium"></i>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             } @empty {

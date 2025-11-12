@@ -1,4 +1,5 @@
 import { Town } from "./config.interface";
+import {AgentInfo} from "./management";
 
 export interface Account {
   id: string;
@@ -71,16 +72,3 @@ export interface Role {
   authorities: Authority[]
 }
 
-export interface AgentInfo {
-  id: string,
-  code: string,
-  name: string,
-  parent: string,
-  group: {
-    id: string,
-    name: string,
-    minCommission: number
-  },
-  enabled: boolean,
-  lastActivity: string | Date
-}

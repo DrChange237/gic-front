@@ -1,12 +1,18 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {NgbHighlight, NgbInputDatepicker, NgbModal, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
-import {AsyncPipe, CurrencyPipe, DatePipe, formatDate, UpperCasePipe} from "@angular/common";
+import {
+  NgbHighlight,
+  NgbInputDatepicker,
+  NgbModal,
+  NgbPagination,
+  NgbTooltip
+} from "@ng-bootstrap/ng-bootstrap";
+import {CommonModule, formatDate} from "@angular/common";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {TranslatePipe} from "@ngx-translate/core";
 import {ActivatedRoute} from "@angular/router";
 import {NgScrollbar} from "ngx-scrollbar";
 import {catchError, of} from "rxjs";
-import {FormGroup, FormsModule, ReactiveFormsModule, UntypedFormBuilder} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule, UntypedFormBuilder} from "@angular/forms";
 //
 import {BaseListComponent, ListQuery} from "../../../core/utils/base-list/base-list.component";
 import {SharedComponentsModule} from "../../../shared/components/shared-components.module";
@@ -20,8 +26,8 @@ import {TableDetailComponent} from "../../../shared/components/table-detail/tabl
   selector: 'app-trx-history',
   templateUrl: './trx-history.component.html',
   styleUrls: ['./trx-history.component.scss'],
-  imports: [SharedPipesModule, SharedComponentsModule, NgbPagination, FormsModule, NgbHighlight, AsyncPipe, NgSelectModule,
-    TranslatePipe, DatePipe, CurrencyPipe, UpperCasePipe, NgbTooltip, TableDetailComponent, NgScrollbar, NgbInputDatepicker, ReactiveFormsModule],
+  imports: [CommonModule, SharedPipesModule, SharedComponentsModule, NgbPagination, FormsModule, NgbHighlight, NgSelectModule,
+    TranslatePipe, NgbTooltip, TableDetailComponent, NgScrollbar, NgbInputDatepicker, ReactiveFormsModule],
   standalone: true,
 })
 export class TrxHistoryComponent extends BaseListComponent<Transaction> implements OnInit {
@@ -70,8 +76,12 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
   protected override filterData(items: Transaction[], filter: string): Transaction[] {
     const lowerTerm = filter.toLowerCase();
     return items.filter(transaction =>
-        transaction.serviceName.toLowerCase().includes(lowerTerm) ||
-        transaction.reference.toLowerCase().includes(lowerTerm)
+        transaction.serviceName?.toLowerCase()?.includes(lowerTerm) ||
+        transaction.reference?.toLowerCase()?.includes(lowerTerm) ||
+        transaction.receiptId?.toLowerCase()?.includes(lowerTerm) ||
+        transaction.cashier?.name.toLowerCase()?.includes(lowerTerm) ||
+        transaction.cashier?.agency?.name?.toLowerCase()?.includes(lowerTerm) ||
+        transaction.amount?.toString()?.includes(lowerTerm)
     );
   }
 

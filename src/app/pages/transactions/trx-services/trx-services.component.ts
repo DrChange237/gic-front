@@ -5,7 +5,7 @@ import {NgbDateAdapter, NgbInputDatepicker, NgbModal} from "@ng-bootstrap/ng-boo
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {TranslatePipe} from "@ngx-translate/core";
-import {CurrencyPipe, formatDate, NgClass} from "@angular/common";
+import {CommonModule, formatDate} from "@angular/common";
 //
 import {WizardComponent} from "../../../shared/components/form-wizard/wizard/wizard.component";
 import {FormWizardModule} from "../../../shared/components/form-wizard/form-wizard.module";
@@ -23,8 +23,8 @@ import {SharedPipesModule} from "../../../shared/pipes/shared-pipes.module";
   selector: 'app-trx-services',
   templateUrl: './trx-services.component.html',
   styleUrls: ['./trx-services.component.scss'],
-  imports: [SharedComponentsModule, FormWizardModule, FormsModule, ReactiveFormsModule,
-    TranslatePipe, NgSelectModule, NgbInputDatepicker, NgClass, CurrencyPipe, SharedPipesModule],
+  imports: [CommonModule, SharedComponentsModule, FormWizardModule, FormsModule, ReactiveFormsModule, TranslatePipe,
+    NgSelectModule, NgbInputDatepicker, SharedPipesModule],
   standalone: true,
   providers: [{ provide: NgbDateAdapter, useClass: CustomDateAdapter }]
 })

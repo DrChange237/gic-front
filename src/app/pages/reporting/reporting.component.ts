@@ -1,27 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup, FormsModule, ReactiveFormsModule, UntypedFormBuilder} from "@angular/forms";
-import {AsyncPipe, CurrencyPipe, DatePipe, formatDate, NgClass, UpperCasePipe} from "@angular/common";
+import {NgbHighlight, NgbInputDatepicker, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {CommonModule, formatDate} from "@angular/common";
+import {NgSelectComponent} from "@ng-select/ng-select";
+import {TranslatePipe} from "@ngx-translate/core";
 import {catchError, of} from "rxjs";
 //
 import { SharedComponentsModule } from "src/app/shared/components/shared-components.module";
-import {BaseListComponent, ListQuery} from "../../../core/utils/base-list/base-list.component";
-import {ReportingService} from "../../../core/services/reporting.service";
-import {CommonService} from "../../../core/services/common.service";
-import {Report} from "../../../shared/interfaces";
-import {NgSelectComponent} from "@ng-select/ng-select";
-import {NgbHighlight, NgbInputDatepicker, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
-import {SharedPipesModule} from "../../../shared/pipes/shared-pipes.module";
-import {TranslatePipe} from "@ngx-translate/core";
+import {BaseListComponent, ListQuery} from "../../core/utils/base-list/base-list.component";
+import {ReportingService} from "../../core/services/reporting.service";
+import {CommonService} from "../../core/services/common.service";
+import {Report} from "../../shared/interfaces";
+import {SharedPipesModule} from "../../shared/pipes/shared-pipes.module";
 
 @Component({
   selector: 'app-reporting',
   templateUrl: './reporting.component.html',
   styleUrls: ['./reporting.component.scss'],
-  imports: [SharedComponentsModule, AsyncPipe, CurrencyPipe, DatePipe, FormsModule, NgSelectComponent, NgbHighlight, NgbInputDatepicker, NgbPagination, ReactiveFormsModule, SharedPipesModule, TranslatePipe, UpperCasePipe, NgbTooltip, NgClass],
+  imports: [CommonModule, SharedComponentsModule, FormsModule, NgSelectComponent, NgbHighlight, NgbInputDatepicker, NgbPagination,
+    ReactiveFormsModule, SharedPipesModule, TranslatePipe, NgbTooltip],
   standalone: true,
 })
 export class ReportingComponent extends BaseListComponent<Report> implements OnInit {
-  filterForm: FormGroup;
 
   constructor(
       private fb: UntypedFormBuilder,
@@ -57,8 +57,8 @@ export class ReportingComponent extends BaseListComponent<Report> implements OnI
   protected override filterData(items: Report[], filter: string): Report[] {
     const lowerTerm = filter.toLowerCase();
     return items.filter(report =>
-        report.name.toLowerCase().includes(lowerTerm) ||
-        report.description.toLowerCase().includes(lowerTerm)
+        report.name?.toLowerCase()?.includes(lowerTerm) ||
+        report.description?.toLowerCase()?.includes(lowerTerm)
     );
   }
 

@@ -76,7 +76,7 @@ export class NavigationService {
             name: 'reporting',
             type: 'link',
             icon: 'i-Statistic',
-            state: 'transactions/reporting',
+            state: 'reporting',
         },
         {
             name: 'management',

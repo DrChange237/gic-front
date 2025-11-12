@@ -1,1 +1,72 @@
 <app-breadcrumb></app-breadcrumb>
+
+<div class="row" id="scroll-container">
+    <div class="col-md-12">
+        <div class="card o-hidden">
+            <div class="p-4">
+                <div class="mb-4 row">
+                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-3">
+                        <input id="table-complete-search" type="text" class="form-control" name="searchTerm" [(ngModel)]="searchTerm"
+                               (input)="filterUpdate($event)" [placeholder]="'form.search_plh' | translate"/>
+                    </div>
+                    @if (loading$ | async) {
+                        <span class="col col-form-label">Loading...</span>
+                    }
+                </div>
+
+                <div class="rounded-table overflow-x-auto">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th class="px-3" scope="col" role="button">{{ 'table.label' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.description' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.created_date' | translate }}</th>
+                            <th class="text-center" scope="col" role="button">{{ 'table.action' | translate }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @for (agent of items$ | async; track agent.id) {
+                                <tr>
+                                    <td class="px-3">
+<!--                                        <img [src]="'assets/images/icons/' + agent.fileType.toLowerCase() + '.png'"-->
+<!--                                             [alt]="" class="me-2" style="width: 30px"/>-->
+                                        <ngb-highlight [result]="agent.name" [term]="searchTerm" />
+                                    </td>
+                                    <td><ngb-highlight [result]="agent.code" [term]="searchTerm" /></td>
+                                    <td>{{(agent.lastActivity | date: 'dd/MM/yyyy - HH:mm') || 'N/A' }}</td>
+                                    <td class="col-action">
+                                        <button role="button" class="btn btn-primary text-14" [ngbTooltip]="'btn.download_report' | translate"
+                                                (click)="null">
+                                            <i class="i-Download-from-Cloud fw-medium"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            } @empty {
+                                <tr>
+                                    <td colspan="4" style="text-align: center">
+                                        {{ 'table.empty_data' | translate }}
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3 justify-content-between py-2">
+                    <ngb-pagination [collectionSize]="pagination?.totalItems || 0" [page]="pagination?.page"
+                                    [pageSize]="pagination?.pageSize" (pageChange)="setPage($event)" [boundaryLinks]="true">
+                    </ngb-pagination>
+
+                    <div class="d-flex">
+                        <label class="text-14 fw-medium py-2 pe-3">
+                            {{ 'table.item_per_page' | translate }}
+                        </label>
+                        <ng-select [items]="pageSizeOptions" class="custom" [dropdownPosition]="'top'" [clearable]="false" name="pageSize"
+                                   (change)="setPageSize($event)" [ngModel]="pagination?.pageSize">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

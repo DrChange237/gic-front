@@ -1,6 +1,8 @@
 {
   "account": {
     "account_balance": "Solde de Compte",
+    "agent": "Agent",
+    "get_agent_list_failed": "Chargement de la liste des agents échoué",
     "get_balance_fees_failed": "Chargement du compte de commission échoué",
     "get_balance_trx_failed": "Chargement du compte d'opération échoué"
   },
@@ -123,6 +125,7 @@
     "value": "Valeur"
   },
   "toast": {
+    "authentification_title": "Autentification",
     "default_error": "Une erreur s'est produite lors de votre demande",
     "error": "Erreur",
     "forbidden_message": "Accès à la ressource demandée non autorisé",

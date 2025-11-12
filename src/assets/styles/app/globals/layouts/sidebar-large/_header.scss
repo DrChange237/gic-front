@@ -223,6 +223,7 @@
             }
             .menu-toggle {
                 width: 60px;
+                margin: 0;
             }
             .header-part-right {
                 .user {
@@ -239,11 +240,11 @@
 
 }
 
-@media (max-width: 360px) {
+@media (max-width: 370px) {
     .layout-sidebar-large {
         .main-header {
-            .menu-toggle {
-                margin: 0;
+            .header-part-right .language.d-inline-block {
+                display: none !important;
             }
         }
     }
