@@ -1,3 +1,5 @@
+import {Authority} from "./user.interface";
+
 export interface AgentInfo {
     id: string,
     code: string,
@@ -18,3 +20,12 @@ export interface AgentGroup {
     slug: string,
     description: string
 }
+
+export interface Role {
+    id: string,
+    agent: AgentInfo,
+    name: string,
+    description: string,
+    authorities: Authority[]
+}
+

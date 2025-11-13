@@ -2,9 +2,13 @@
   "account": {
     "account_balance": "Account balance",
     "agent": "Agent",
-    "get_agent_list_failed": "List agent loading failed",
+    "authorities_role": "Role privileges",
+    "detail_role": "Role detail",
+    "get_agent_list_failed": "List role loading failed",
     "get_balance_fees_failed": "Error retrieving commission account",
-    "get_balance_trx_failed": "Error retrieving transaction account"
+    "get_balance_trx_failed": "Error retrieving transaction account",
+    "get_role_list_failed": "List agent loading failed",
+    "get_detail_role_failed": "Failed to retrieve role details"
   },
   "app": {
     "language_en": "English",
@@ -29,6 +33,7 @@
     "download_receipt": "Download receipt",
     "download_report": "Download report",
     "go_to_history": "Go to histo",
+    "list_authorities": "Authorities list",
     "next": "Next",
     "previous": "Previous",
     "reset": "Reset",
@@ -118,7 +123,9 @@
     "empty_data": "No data available",
     "item_per_page": "Items per page",
     "label": "Label",
+    "number_authorities": "Number authorities",
     "reference": "Reference",
+    "role": "Role",
     "service": "Service",
     "status": "Status",
     "trx_date": "Date",
@@ -153,5 +160,6 @@
     "service": "Service",
     "service_instructions": "Service instructions",
     "service_type": "Service Type"
-  }
+  },
+  "role": {}
 }

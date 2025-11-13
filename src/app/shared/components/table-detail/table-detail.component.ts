@@ -17,6 +17,7 @@ export class TableDetailComponent implements OnChanges {
   @Input() data: { key: string; label: string; value: string }[] = [];
   @Input() pageSize: number = 5;
   @Input() paginate: boolean = false;
+  @Input() columns: string[] = ['label', 'value'];
 
   currentPage = 1;
   pagedData: { key: string; label: string; value: string }[] = [];
@@ -48,7 +49,7 @@ export class TableDetailComponent implements OnChanges {
   }
 
   get totalItems(): number {
-    return this.data.length;
+    return this.data?.length || 0;
   }
 
 }

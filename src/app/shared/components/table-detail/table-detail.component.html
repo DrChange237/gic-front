@@ -2,15 +2,17 @@
     <table class="table table-hover mb-0">
         <thead>
         <tr>
-            <th>{{ 'table.label' | translate }}</th>
-            <th>{{ 'table.value' | translate }}</th>
+            @for (column of columns; track column) {
+                <th>{{ 'table.' + column | translate }}</th>
+            }
         </tr>
         </thead>
         <tbody>
             @for (item of pagedData; track item.key) {
                 <tr>
-                    <td>{{ item.label | translate }}</td>
-                    <td>{{ item.value }}</td>
+                    @for (column of columns; track item + columns) {
+                        <td>{{ item[column] | translate }}</td>
+                    }
                 </tr>
             } @empty {
                 <tr>

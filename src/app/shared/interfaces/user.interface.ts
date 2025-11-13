@@ -1,5 +1,5 @@
 import { Town } from "./config.interface";
-import {AgentInfo} from "./management";
+import {AgentInfo, Role} from "./management";
 
 export interface Account {
   id: string;
@@ -63,12 +63,5 @@ export interface Cashier {
   username: string;
   lastActivity: string; // ISO date string
   lang: Lang;
-}
-
-export interface Role {
-  id: string,
-  agent: AgentInfo,
-  name: string,
-  authorities: Authority[]
 }
 

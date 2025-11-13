@@ -31,7 +31,7 @@ export class MgnAgentsComponent extends BaseListComponent<AgentInfo> implements 
   override search() { this.load(); }
 
   override fetchData(query: ListQuery) {
-    return this.accountSrv.getAgents(query).pipe(
+    return this.accountSrv.getListAgents(query).pipe(
         catchError(err => {
           this.commonSrv.errorHandle(err, 'account.get_agent_list_failed', 'account.agent');
           return of(null);

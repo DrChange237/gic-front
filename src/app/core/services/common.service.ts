@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {ToastrService} from "ngx-toastr";
-import {TranslateService} from "@ngx-translate/core";
+import {isArray, TranslateService} from "@ngx-translate/core";
 import {LocalStoreService} from "./local-store.service";
 import {SecureDataService} from "./secure-data.service";
 import {ToastOptions} from "../../shared/interfaces";
@@ -90,7 +90,7 @@ export class CommonService {
     const titleCasePipe = new TitleCasePipe();
 
     return Object.entries(obj)
-        .filter(([key, value]) => !hiddenKeys.includes(key))
+        .filter(([key, _value]) => !hiddenKeys.includes(key))
         .map(([key, value]) => {
           let formattedValue: string;
 

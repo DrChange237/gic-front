@@ -42,12 +42,10 @@ export abstract class BaseListComponent<T> implements OnInit {
 
   pageSizeOptions = [5, 10, 25, 50];
   searchTerm: string = '';
-  sortColumn = '';
-  sortDirection: 'asc' | 'desc' | '' = 'asc';
 
-  items$: Observable<T[]>;
   loading$ = this._loading$.asObservable();
-  pagination$ = this._pagination$.asObservable();
+
+  items$: Observable<T[]>
 
   protected constructor() {
     this.setupItems$();
@@ -86,9 +84,15 @@ export abstract class BaseListComponent<T> implements OnInit {
     this.search();
   }
 
-  protected filterData(item: T[], filter: string): T[] { return item; }
+  // item: T[], filter: string
+  protected filterData(items: any, filter: any): T[] { return items; }
 
-  private setupItems$(): void {
+  filterUpdate(event: any): void {
+    const val = event?.target?.value ?? event ?? '';
+    this._filterSubject$.next(val);
+  }
+
+  setupItems$(){
     this.items$ = combineLatest([
       this._items$,
       this._filterSubject$.pipe(
@@ -99,11 +103,6 @@ export abstract class BaseListComponent<T> implements OnInit {
     ]).pipe(
         map(([data, filter]) => this.filterData(data, filter))
     );
-  }
-
-  filterUpdate(event: any): void {
-    const val = event?.target?.value ?? event ?? '';
-    this._filterSubject$.next(val);
   }
 
   setPage(page: number) {

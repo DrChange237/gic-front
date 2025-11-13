@@ -2,9 +2,13 @@
   "account": {
     "account_balance": "Solde de Compte",
     "agent": "Agent",
-    "get_agent_list_failed": "Chargement de la liste des agents échoué",
+    "authorities_role": "Privilèges du rôles",
+    "detail_role": "Detail du rôle",
+    "get_agent_list_failed": "Chargement de la liste des rôle échoué",
     "get_balance_fees_failed": "Chargement du compte de commission échoué",
-    "get_balance_trx_failed": "Chargement du compte d'opération échoué"
+    "get_balance_trx_failed": "Chargement du compte d'opération échoué",
+    "get_role_list_failed": "Chargement de la liste des agents échoué",
+    "get_detail_role_failed": "Chargement des détails du role échoué"
   },
   "app": {
     "language_en": "Anglais",
@@ -29,6 +33,7 @@
     "download_receipt": "Télécharger le reçu",
     "download_report": "Télécharger le rapport",
     "go_to_history": "Aller a l'historique",
+    "list_authorities": "Liste des autorisations",
     "next": "Suivant",
     "previous": "Précédent",
     "reset": "Réinitialiser",
@@ -118,7 +123,9 @@
     "empty_data": "Aucune donnée disponible",
     "item_per_page": "Affichés par page",
     "label": "Libellé",
+    "number_authorities": "Nombre d'autorités",
     "reference": "Référence",
+    "role": "Rôle",
     "service": "Service",
     "status": "Statut",
     "trx_date": "Date",
@@ -153,5 +160,6 @@
     "service": "Service",
     "service_instructions": "Instructions sur le service",
     "service_type": "Type de Service"
-  }
+  },
+  "role": {}
 }
