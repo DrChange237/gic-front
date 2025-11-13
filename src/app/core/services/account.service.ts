@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import {BaseApiService} from "./base-api.service";
 import {HttpClient} from "@angular/common/http";
-import {AccountBalance, AgentInfo, Role} from "../../shared/interfaces";
+import {AccountBalance, Agency, Cashier, Role} from "../../shared/interfaces";
 import {catchError, of, tap} from "rxjs";
 import {CommonService} from "./common.service";
-import {ListResponse} from "../utils/base-list/base-list.component";
 
 @Injectable({
   providedIn: 'root'
@@ -40,12 +39,15 @@ export class AccountService extends BaseApiService {
     );
   }
 
-  getListAgents(filter: Record<string, string | number | boolean>) {
-      return this.get<ListResponse<AgentInfo>>('admin/agent/getAll', { params: filter });
+  getListAgents() {
+      return this.get<Cashier[]>('cashier/getMyCashiers');
   }
 
   getListRoles() {
       return this.get<Role[]>('role/list');
+  }
+  getListAgencies() {
+      return this.get<Agency[]>('agency/getMyAgencies');
   }
 
   getDetailRole(roleId: string) {

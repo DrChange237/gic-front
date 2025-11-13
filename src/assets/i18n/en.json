@@ -1,14 +1,19 @@
 {
   "account": {
     "account_balance": "Account balance",
+    "agency": "Agency",
     "agent": "Agent",
     "authorities_role": "Role privileges",
     "detail_role": "Role detail",
-    "get_agent_list_failed": "List role loading failed",
+    "get_agency_list_failed": "List agency loading failed",
+    "get_agent_list_failed": "List agent loading failed",
     "get_balance_fees_failed": "Error retrieving commission account",
     "get_balance_trx_failed": "Error retrieving transaction account",
+    "get_detail_agency_failed": "Failed to retrieve agency details",
+    "get_detail_agent_failed": "Failed to retrieve agent details",
+    "get_detail_role_failed": "Failed to retrieve role details",
     "get_role_list_failed": "List agent loading failed",
-    "get_detail_role_failed": "Failed to retrieve role details"
+    "role": "Role"
   },
   "app": {
     "language_en": "English",
@@ -25,6 +30,11 @@
     "WAITING": "Processing"
   },
   "btn": {
+    "agent_active": {
+      "false": "Disable agent",
+      "true": "Enable agent"
+    },
+    "agent_history": "Agent history",
     "back_to_home": "Go back to home",
     "cancel": "Cancel",
     "close": "Close",
@@ -32,14 +42,19 @@
     "detail": "Detail",
     "download_receipt": "Download receipt",
     "download_report": "Download report",
-    "go_to_history": "Go to histo",
+    "go_to_history": "Go to history",
     "list_authorities": "Authorities list",
     "next": "Next",
     "previous": "Previous",
     "reset": "Reset",
     "return": "Return",
     "search": "Search",
-    "search_loading": "Search in progress"
+    "search_loading": "Search in progress",
+    "agency_active": {
+      "false": "Disable agency",
+      "true": "Enable agency"
+    },
+    "agency_history": "Agency history"
   },
   "error": {
     "404_text": "Sorry! The page you were looking for doesn't exist.",
@@ -111,6 +126,7 @@
   },
   "table": {
     "action": "Action",
+    "address": "Address",
     "agency": "Agency",
     "agent": "Agent",
     "amount": "Amount",
@@ -118,17 +134,22 @@
       "false": "No",
       "true": "Yes"
     },
+    "city": "City",
+    "code": "Code",
     "created_date": "Created date",
     "description": "Description",
     "empty_data": "No data available",
     "item_per_page": "Items per page",
     "label": "Label",
+    "last_activity": "Last activity",
+    "name": "Name",
     "number_authorities": "Number authorities",
     "reference": "Reference",
     "role": "Role",
     "service": "Service",
     "status": "Status",
     "trx_date": "Date",
+    "username": "Username",
     "value": "Value"
   },
   "toast": {
@@ -160,6 +181,5 @@
     "service": "Service",
     "service_instructions": "Service instructions",
     "service_type": "Service Type"
-  },
-  "role": {}
+  }
 }

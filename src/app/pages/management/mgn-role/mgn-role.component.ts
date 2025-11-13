@@ -39,7 +39,7 @@ export class MgnRoleComponent extends BaseListNonPagedComponent<Role> implements
   override fetchData(): Observable<Role[]> {
     return this.accountSrv.getListRoles().pipe(
         catchError(err => {
-          this.commonSrv.errorHandle(err, 'account.get_agent_list_failed', 'account.agent');
+          this.commonSrv.errorHandle(err, 'account.get_agent_list_failed', 'account.role');
           return of(null);
         })
     );
@@ -56,7 +56,6 @@ export class MgnRoleComponent extends BaseListNonPagedComponent<Role> implements
   openModal(content: TemplateRef<never>,  role: Role, action: 'DETAIL' | 'AUTH') {
     if (!role) return;
 
-
     this.modalService.open(content, { size: "lg", ariaLabelledBy: 'modal-basic-title', centered: true })
     this.accountSrv.getDetailRole(role.id).subscribe({
       next: res => {
@@ -71,7 +70,7 @@ export class MgnRoleComponent extends BaseListNonPagedComponent<Role> implements
             this.authorities = role.authorities.map(r => ({ key: r.id, label: r.name, description: r.description }));
           }
       },
-      error: err => this.commonSrv.errorHandle(err, 'transactions.get_detail_transaction_failed', 'transactions.history')
+      error: err => this.commonSrv.errorHandle(err, 'transactions.get_detail_transaction_failed', 'account.role')
     });
   }
 

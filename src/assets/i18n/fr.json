@@ -1,14 +1,19 @@
 {
   "account": {
     "account_balance": "Solde de Compte",
+    "agency": "Agence",
     "agent": "Agent",
     "authorities_role": "Privilèges du rôles",
     "detail_role": "Detail du rôle",
-    "get_agent_list_failed": "Chargement de la liste des rôle échoué",
+    "get_agency_list_failed": "Chargement de la liste des agences échoué",
+    "get_agent_list_failed": "Chargement de la liste des agents échoué",
     "get_balance_fees_failed": "Chargement du compte de commission échoué",
     "get_balance_trx_failed": "Chargement du compte d'opération échoué",
+    "get_detail_agency_failed": "Chargement des détails de agence échoué",
+    "get_detail_agent_failed": "Chargement des détails du agent échoué",
+    "get_detail_role_failed": "Chargement des détails du role échoué",
     "get_role_list_failed": "Chargement de la liste des agents échoué",
-    "get_detail_role_failed": "Chargement des détails du role échoué"
+    "role": "Rôle"
   },
   "app": {
     "language_en": "Anglais",
@@ -25,6 +30,11 @@
     "WAITING": "En cours"
   },
   "btn": {
+    "agent_active": {
+      "false": "Désactivé l'agent",
+      "true": "Activé agent"
+    },
+    "agent_history": "Historique de l'agent",
     "back_to_home": "Retourner à l'accueil",
     "cancel": "Annuler",
     "close": "Fermer",
@@ -39,7 +49,12 @@
     "reset": "Réinitialiser",
     "return": "Retour",
     "search": "Rechercher",
-    "search_loading": "Recherche en cours"
+    "search_loading": "Recherche en cours",
+    "agency_active": {
+      "false": "Désactivé l'agence",
+      "true": "Activé agence"
+    },
+    "agency_history": "Historique de l'agence"
   },
   "error": {
     "404_text": "Désolé, la page que vous demandé n'existe pas.",
@@ -111,6 +126,7 @@
   },
   "table": {
     "action": "Action",
+    "address": "Adresse",
     "agency": "Agence",
     "agent": "Agent",
     "amount": "Montant",
@@ -118,17 +134,22 @@
       "false": "Non",
       "true": "Oui"
     },
+    "city": "Ville",
+    "code": "Code",
     "created_date": "Date de création",
     "description": "Description",
     "empty_data": "Aucune donnée disponible",
     "item_per_page": "Affichés par page",
     "label": "Libellé",
+    "last_activity": "Dernière connexion",
+    "name": "Nom",
     "number_authorities": "Nombre d'autorités",
     "reference": "Référence",
     "role": "Rôle",
     "service": "Service",
     "status": "Statut",
     "trx_date": "Date",
+    "username": "Nom d'utilisateur",
     "value": "Valeur"
   },
   "toast": {
@@ -160,6 +181,5 @@
     "service": "Service",
     "service_instructions": "Instructions sur le service",
     "service_type": "Type de Service"
-  },
-  "role": {}
+  }
 }

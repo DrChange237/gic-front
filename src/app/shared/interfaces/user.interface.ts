@@ -63,5 +63,6 @@ export interface Cashier {
   username: string;
   lastActivity: string; // ISO date string
   lang: Lang;
+  enabled: boolean;
 }
 
