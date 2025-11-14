@@ -32,6 +32,7 @@ import {TableDetailComponent} from "../../../shared/components/table-detail/tabl
 })
 export class TrxHistoryComponent extends BaseListComponent<Transaction> implements OnInit {
 
+  paramsFilter: { id: string, name: string } | null = null;
   historyType: string = '';
 
   currTransaction: Transaction;
@@ -57,15 +58,22 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
       startDate: [null],
       endDate: [null]
     });
+
+    const param = this.route.snapshot.paramMap.get('data');
+    if (param) this.paramsFilter = this.commonSrv.secureSrv.decryptParams(param);
   }
 
   override search() {
     this._query = this.filterForm.getRawValue();
+    if (this.paramsFilter) {
+      const entity = this.historyType ? 'agencyId' : 'cashierId';
+      this._query[entity] = this.paramsFilter.id;
+    }
     this.load();
   }
 
   override fetchData(query: ListQuery) {
-    return this.factorySrv.getTrxHistory(query, this.historyType).pipe(
+    return this.factorySrv.getTrxHistory(query, this.historyType, this.paramsFilter?.id).pipe(
       catchError(err => {
         this.commonSrv.errorHandle(err, 'transactions.get_history_transaction_failed', 'transactions.history');
         return of(null);

@@ -26,7 +26,7 @@ export class MgnRoleComponent extends BaseListNonPagedComponent<Role> implements
   currRole: Role;
   modalAction: string = '';
   datasRole: { key: string; label: string; value: string }[];
-  authorities: { key: string; label: string, description: string }[];
+  authorities: { key: string; label: string, value: string }[];
 
   constructor(
       private modalService: NgbModal,
@@ -47,7 +47,7 @@ export class MgnRoleComponent extends BaseListNonPagedComponent<Role> implements
 
   filterData(items: Role[], filter: string): Role[] {
     const lowerTerm = filter.toLowerCase();
-    return items.filter(role =>
+    return items?.filter(role =>
         role.name?.toLowerCase()?.includes(lowerTerm) ||
         role.description?.toLowerCase()?.includes(lowerTerm)
     );
@@ -56,19 +56,23 @@ export class MgnRoleComponent extends BaseListNonPagedComponent<Role> implements
   openModal(content: TemplateRef<never>,  role: Role, action: 'DETAIL' | 'AUTH') {
     if (!role) return;
 
-    this.modalService.open(content, { size: "lg", ariaLabelledBy: 'modal-basic-title', centered: true })
     this.accountSrv.getDetailRole(role.id).subscribe({
       next: res => {
-        this.currRole = res
-          this.modalAction = action;
-          if (action === 'DETAIL') {
-            this.datasRole = this.commonSrv.objectToDisplayList(role, ['id', 'authorities', 'agent']);
-            this.datasRole.push({ key: 'authorities', label: 'table.number_authorities', value: `${role.authorities.length}` })
-          }
+        this.currRole = res;
+        this.modalAction = action;
+        if (action === 'DETAIL') {
+          this.datasRole = this.commonSrv.objectToDisplayList(role, ['id', 'authorities', 'agent']);
+          this.datasRole.push({
+            key: 'authorities',
+            label: 'table.authorities',
+            value: `${role.authorities.map(r => r.name).join(' - ')}` || 'N/A'
+          })
+        }
 
-          if (action === 'AUTH') {
-            this.authorities = role.authorities.map(r => ({ key: r.id, label: r.name, description: r.description }));
-          }
+        if (action === 'AUTH') {
+          this.authorities = role.authorities.map(r => ({ key: r.id, label: r.name, value: r.description }));
+        }
+        this.modalService.open(content, { size: "lg", ariaLabelledBy: 'modal-basic-title', centered: true })
       },
       error: err => this.commonSrv.errorHandle(err, 'transactions.get_detail_transaction_failed', 'account.role')
     });

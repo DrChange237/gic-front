@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {NgbHighlight, NgbInputDatepicker, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {Component, OnInit} from '@angular/core';
+import {NgbHighlight, NgbInputDatepicker, NgbModal, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgSelectComponent} from "@ng-select/ng-select";
 import {TranslatePipe} from "@ngx-translate/core";
@@ -11,18 +11,24 @@ import {AccountService} from "../../../core/services/account.service";
 import {CommonService} from "../../../core/services/common.service";
 import {Cashier} from "../../../shared/interfaces";
 import {BaseListNonPagedComponent} from "../../../core/utils/base-list/base-list-unpaged.component";
+import {SharedPipesModule} from "../../../shared/pipes/shared-pipes.module";
+import {
+  ConfirmActionModalComponent
+} from "../../../shared/components/confirm-action-modal/confirm-action-modal.component";
+import {ActionResultModalComponent} from "../../../shared/components/action-result-modal/action-result-modal.component";
 
 @Component({
   selector: 'app-mgn-agents',
   templateUrl: './mgn-agents.component.html',
   styleUrls: ['./mgn-agents.component.scss'],
   imports: [CommonModule, SharedComponentsModule, FormsModule, NgSelectComponent, NgbHighlight, NgbInputDatepicker,
-    NgbPagination, ReactiveFormsModule, TranslatePipe, NgbTooltip],
+    NgbPagination, ReactiveFormsModule, TranslatePipe, NgbTooltip, SharedPipesModule],
   standalone: true
 })
 export class MgnAgentsComponent extends BaseListNonPagedComponent<Cashier> implements OnInit {
 
   constructor(
+      private modalService: NgbModal,
       private commonSrv: CommonService,
       private accountSrv: AccountService,
   ) {
@@ -46,6 +52,52 @@ export class MgnAgentsComponent extends BaseListNonPagedComponent<Cashier> imple
         agent.role.name?.toLowerCase()?.includes(lowerTerm) ||
         agent.username?.toLowerCase()?.includes(lowerTerm)
     );
+  }
+
+  viewHistoryAgent(cashier: Cashier){
+    const param = this.commonSrv.secureSrv.encryptParams({id: cashier.id, name: cashier.name});
+    this.commonSrv.router.navigate(['transactions/history/agent', param])
+  }
+
+  openConfirmModal(cashier: Cashier) {
+    const modalRef = this.modalService.open(ConfirmActionModalComponent, {
+      centered: true, backdrop: 'static',
+    });
+
+    modalRef.componentInstance.title = cashier.enabled ? 'modal.disable' : 'modal.enable';
+    modalRef.componentInstance.message = this.commonSrv.translate.instant(
+        cashier.enabled ? 'modal.disable_message' : 'modal.enable_message',
+        { name: cashier.name });
+    modalRef.componentInstance.withoutAuth = true;
+
+    modalRef.result.then((res: string) => res && this.onChangeStatusAgent(cashier));
+  }
+
+  onChangeStatusAgent(cashier: Cashier) {
+    this.accountSrv.changCashierStatus(cashier.username, !cashier.enabled).subscribe({
+      next: () => {
+        this.openResultModal(cashier.username)
+        this.commonSrv.alert('success', 'account.update_status_agent_done', 'account.agent')
+      },
+      error: err => this.commonSrv.errorHandle(err, 'account.update_status_agent_failed', 'account.agent')
+    });
+  }
+
+  openResultModal(code: string) {
+      const resultModal = this.modalService.open(ActionResultModalComponent, {
+        centered: true,
+      });
+
+      resultModal.componentInstance.message = 'account.update_status_agent_done';
+      resultModal.componentInstance.isSuccess = true;
+
+      resultModal.result.then(res => {
+        const items = this.allItems;
+        const index = items.findIndex(c => c.username === code);
+        items[index] = { ...items[index], enabled: !items[index].enabled };
+        this._allItems$.next(items);
+        this.updatePaged();
+      });
   }
 
 }

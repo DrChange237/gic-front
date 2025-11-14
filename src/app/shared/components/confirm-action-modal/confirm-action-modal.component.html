@@ -1,24 +1,33 @@
-<div class="modal-header">
-    <h5 class="modal-title fw-bold">{{ title | translate }}</h5>
+<div class="modal-header" [ngClass]="{'d-none border-0': withoutAuth}">
+    @if (!withoutAuth) { <h5 class="modal-title fw-bold">{{ title | translate }}</h5> }
     <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
 </div>
 
-<div class="modal-body">
-    <p>{{ message | translate }}</p>
+<div class="modal-body" [ngClass]="{'text-center center flex-column mt-2': withoutAuth}">
+    @if (withoutAuth) {
+        <div class="avatar rounded-full center text-white bg-info">
+            <i class="i-Information text-78"></i>
+        </div>
+        <h5 class="my-3 text-24 fw-semibold">{{ title | translate }}</h5>
 
-    <div class="form-group mt-3">
-        <label for="pinInput">{{ (requirePin ? 'form.pin_code_label' : 'form.password_label') | translate }}</label>
-        <input [type]="requirePin ? 'text' : 'password'" class="form-control mt-1" id="pinInput" [(ngModel)]="pinOrPassword"
-                [placeholder]="(requirePin ? 'form.pin_code_plh' : 'form.password_plh') | translate"
-        />
-    </div>
+        <p class="text-14 fw-medium mb-0">{{ message | translate }}</p>
+    } @else {
+        <p>{{ message | translate }}</p>
 
-    <div *ngIf="errorMessage" class="alert alert-danger rounded-2 mt-3 py-2">
-        {{ errorMessage }}
-    </div>
+        <div class="form-group mt-3">
+            <label for="pinInput">{{ (requirePin ? 'form.pin_code_label' : 'form.password_label') | translate }}</label>
+            <input [type]="requirePin ? 'text' : 'password'" class="form-control mt-1" id="pinInput" [(ngModel)]="pinOrPassword"
+                    [placeholder]="(requirePin ? 'form.pin_code_plh' : 'form.password_plh') | translate"
+            />
+        </div>
+
+        <div *ngIf="errorMessage" class="alert alert-danger rounded-2 mt-3 py-2">
+            {{ errorMessage }}
+        </div>
+    }
 </div>
 
-<div class="modal-footer">
+<div class="modal-footer" [ngClass]="{' justify-content-center border-0 mb-2': withoutAuth}">
     <button type="button" class="btn btn-dark" (click)="cancel()">
         {{ cancelButtonText | translate }}
     </button>

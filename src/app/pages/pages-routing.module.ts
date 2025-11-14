@@ -22,11 +22,21 @@ const routes: Routes = [
         children: [
           {
             path: 'agent',
-            data: { title: 'navigation.history_agent' },
+            data: { title: 'navigation.my_history' },
+            loadComponent:  () => import('./transactions/trx-history/trx-history.component').then(c => c.TrxHistoryComponent)
+          },
+          {
+            path: 'agent/:data',
+            data: { title: 'navigation.history_cashier' },
             loadComponent:  () => import('./transactions/trx-history/trx-history.component').then(c => c.TrxHistoryComponent)
           },
           {
             path: 'agency',
+            data: { title: 'navigation.history_agency', history: 'agency' },
+            loadComponent:  () => import('./transactions/trx-history/trx-history.component').then(c => c.TrxHistoryComponent)
+          },
+          {
+            path: 'agency/:data',
             data: { title: 'navigation.history_agency', history: 'agency' },
             loadComponent:  () => import('./transactions/trx-history/trx-history.component').then(c => c.TrxHistoryComponent)
           },

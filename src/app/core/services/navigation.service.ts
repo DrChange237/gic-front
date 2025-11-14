@@ -67,7 +67,7 @@ export class NavigationService {
             type: 'dropDown',
             icon: 'i-Money-2',
             sub: [
-                { icon: 'i-Business-Man', name: 'history_agent', state: 'transactions/history/agent', type: 'link' },
+                { icon: 'i-Business-Man', name: 'my_history', state: 'transactions/history/agent', type: 'link' },
                 { icon: 'i-Business-Mens', name: 'history_agency', state: 'transactions/history/agency', type: 'link' },
                 { icon: 'i-University1', name: 'history_global', state: 'transactions/history/all', type: 'link' },
             ]

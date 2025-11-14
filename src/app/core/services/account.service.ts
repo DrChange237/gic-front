@@ -43,11 +43,23 @@ export class AccountService extends BaseApiService {
       return this.get<Cashier[]>('cashier/getMyCashiers');
   }
 
+  changCashierStatus(username: string, enabled: boolean) {
+      return this.post<any>('cashier/enabled', { username, enabled });
+  }
+
   getListRoles() {
       return this.get<Role[]>('role/list');
   }
   getListAgencies() {
       return this.get<Agency[]>('agency/getMyAgencies');
+  }
+
+  getDetailAgency(agencyId: string) {
+      return this.get<Agency>('agency/agencyInfo', { params: { agencyId } });
+  }
+
+  changAgencyStatus(agencyCode: string, enabled: boolean) {
+      return this.post<any>('agency/enabled', { agencyCode, enabled });
   }
 
   getDetailRole(roleId: string) {

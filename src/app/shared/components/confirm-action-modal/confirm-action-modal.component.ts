@@ -14,6 +14,7 @@ export class ConfirmActionModalComponent implements OnInit {
   @Input() confirmButtonText: string = 'btn.confirm';
   @Input() cancelButtonText: string = 'btn.cancel';
   @Input() requirePin: boolean = true;
+  @Input() withoutAuth: boolean = false;
 
   pinOrPassword: string = '';
   errorMessage: string = '';
@@ -26,6 +27,8 @@ export class ConfirmActionModalComponent implements OnInit {
   }
 
   confirm() {
+    if (this.withoutAuth) return this.activeModal.close(true);
+
     if (!this.pinOrPassword || this.pinOrPassword.trim().length < 4) {
       this.errorMessage = this.translate.instant('modal.invalid_code');
       return;

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import {ToastrService} from "ngx-toastr";
-import {isArray, TranslateService} from "@ngx-translate/core";
+import {TranslateService} from "@ngx-translate/core";
 import {LocalStoreService} from "./local-store.service";
 import {SecureDataService} from "./secure-data.service";
 import {ToastOptions} from "../../shared/interfaces";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {CurrencyPipe, DatePipe, DecimalPipe, TitleCasePipe} from "@angular/common";
+import {CurrencyPipe, DatePipe, DecimalPipe, Location, TitleCasePipe} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,7 @@ export class CommonService {
       public store: LocalStoreService,
       public secureSrv: SecureDataService,
       public router: Router,
+      public location: Location,
   ) {}
 
   openFileOnBlank(file: Blob | string, download: boolean = false, name?: string) {

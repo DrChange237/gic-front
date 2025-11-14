@@ -35,7 +35,7 @@ export class TableDetailComponent implements OnChanges {
     }
 
     const startIndex = (this.currentPage - 1) * this.pageSize;
-    this.pagedData = this.data.slice(startIndex, startIndex + this.pageSize);
+    this.pagedData = this.data?.slice(startIndex, startIndex + this.pageSize);
   }
 
   onPageChange(page: number): void {

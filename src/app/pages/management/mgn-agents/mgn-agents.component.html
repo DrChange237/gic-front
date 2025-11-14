@@ -23,6 +23,7 @@
                             <th scope="col" role="button">{{ 'table.role' | translate }}</th>
                             <th scope="col" role="button">{{ 'table.agency' | translate }}</th>
                             <th scope="col" role="button">{{ 'table.last_activity' | translate }}</th>
+                            <th class="text-center"  scope="col" role="button">{{ 'table.status' | translate }}</th>
                             <th class="text-center" scope="col" role="button">{{ 'table.action' | translate }}</th>
                         </tr>
                         </thead>
@@ -34,19 +35,20 @@
                                     <td><ngb-highlight [result]="agent.role.name" [term]="searchTerm" /></td>
                                     <td><ngb-highlight [result]="agent.agency.name" [term]="searchTerm" /></td>
                                     <td>{{(agent.lastActivity | date: 'dd/MM/yyyy - HH:mm') || 'N/A' }}</td>
+                                    <td class="col-status">
+                                        <span class="badge rounded-pill p-2 text-bg-{{agent.enabled ? 'success text-white' : 'danger'}}">
+                                            {{ 'badge.status.' + agent.enabled | translate | uppercase }}
+                                        </span>
+                                    </td>
                                     <td class="col-action">
                                         <div class="d-flex justify-content-center gap-2">
-                                            <button role="button" class="btn btn-info text-white text-14" [ngbTooltip]="'btn.detail' | translate"
-                                                    (click)="null">
-                                                <i class="i-Information fw-medium"></i>
-                                            </button>
                                             <button role="button" class="btn btn-primary text-white text-14" [ngbTooltip]="'btn.agent_history' | translate"
-                                                    (click)="null">
-                                                <i class="i-Wallet fw-medium"></i>
+                                                    (click)="viewHistoryAgent(agent)">
+                                                <i class="i-Receipt fw-medium"></i>
                                             </button>
                                             <button role="button" class="btn text-14" [ngClass]="{'btn-danger': agent.enabled, 'btn-success text-white': !agent.enabled}"
                                                     [ngbTooltip]="('btn.agent_active.' + !agent.enabled) | translate"
-                                                    (click)="null">
+                                                    (click)="openConfirmModal(agent)">
                                                 <i class="fw-medium" [ngClass]="{'i-Lock-2': agent.enabled, 'i-Unlock-2': !agent.enabled}"></i>
                                             </button>
                                         </div>

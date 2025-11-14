@@ -2,6 +2,7 @@
   "account": {
     "account_balance": "Account balance",
     "agency": "Agency",
+    "agency_detail": "Agency detail",
     "agent": "Agent",
     "authorities_role": "Role privileges",
     "detail_role": "Role detail",
@@ -13,7 +14,11 @@
     "get_detail_agent_failed": "Failed to retrieve agent details",
     "get_detail_role_failed": "Failed to retrieve role details",
     "get_role_list_failed": "List agent loading failed",
-    "role": "Role"
+    "role": "Role",
+    "update_status_agency_done": "Agency status change successful",
+    "update_status_agency_failed": "Agency status change failed",
+    "update_status_agent_done": "Agent status change successful",
+    "update_status_agent_failed": "Agent status change failed"
   },
   "app": {
     "language_en": "English",
@@ -27,9 +32,18 @@
     "QUOTE": "Quote generated",
     "REJECTED": "Rejected",
     "SUCCESS": "Successful",
-    "WAITING": "Processing"
+    "WAITING": "Processing",
+    "status": {
+      "false": "Disable",
+      "true": "Enable"
+    }
   },
   "btn": {
+    "agency_active": {
+      "false": "Disable agency",
+      "true": "Enable agency"
+    },
+    "agency_history": "Agency history",
     "agent_active": {
       "false": "Disable agent",
       "true": "Enable agent"
@@ -49,12 +63,7 @@
     "reset": "Reset",
     "return": "Return",
     "search": "Search",
-    "search_loading": "Search in progress",
-    "agency_active": {
-      "false": "Disable agency",
-      "true": "Enable agency"
-    },
-    "agency_history": "Agency history"
+    "search_loading": "Search in progress"
   },
   "error": {
     "404_text": "Sorry! The page you were looking for doesn't exist.",
@@ -87,6 +96,10 @@
     "confirm_action": "Confirm action",
     "confirm_action_message": "Enter your password or PIN code to execute:",
     "confirm_payment_service": "Confirm payment by entering your password:",
+    "disable": "Disable",
+    "disable_message": "By confirming, you will deactivate {{name}}.",
+    "enable": "Enable",
+    "enable_message": "By confirming, you will activate {{name}}",
     "invalid_code": "Please enter a valid code (at least 4 characters)"
   },
   "navigation": {
@@ -94,11 +107,13 @@
     "agencies": "Agencies",
     "agents": "Agents",
     "dashboard": "Dashboard",
+    "empty_notification": "Empty notification",
     "history": "History",
     "history_agency": "Agency history",
-    "history_agent": "My history",
+    "history_cashier": "Case history",
     "history_global": "General history",
     "management": "Management",
+    "my_history": "My history",
     "profile": "Profile",
     "reporting": "Reporting",
     "role_profile": "Role & Profile",
@@ -130,6 +145,7 @@
     "agency": "Agency",
     "agent": "Agent",
     "amount": "Amount",
+    "authorities": "Authorities",
     "boolean": {
       "false": "No",
       "true": "Yes"

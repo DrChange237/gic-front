@@ -31,12 +31,14 @@
 
     <div ngbDropdown [placement]="'bottom-right'" class="d-none d-sm-inline-block">
       <div class="badge-top-container">
-        <span class="badge p-0 position-absolute bg-danger rounded-circle d-flex justify-content-center align-items-center">{{notifications?.length}}</span>
+        <span [ngClass]="{'d-none': !notifications.length}" class="badge p-0 position-absolute bg-danger rounded-circle d-flex justify-content-center align-items-center">
+            {{notifications?.length}}
+        </span>
         <i ngbDropdownToggle class="i-Bell text-muted header-icon" role="button"></i>
       </div>
       <div ngbDropdownMenu class="notification-dropdown">
-        <ng-scrollbar>
-          @for (item of notifications; track item) {
+        @for (item of notifications; track item) {
+          <ng-scrollbar>
             <div class="dropdown-item d-flex" [routerLink]="[item.link]">
               <div class="notification-icon">
                 <i class="{{item.icon}} text-{{item.status}} me-1"></i>
@@ -54,8 +56,12 @@
                 <p class="text-small text-muted m-0">{{item.text | excerpt:30}}</p>
               </div>
             </div>
-          }
-        </ng-scrollbar>
+          </ng-scrollbar>
+        } @empty {
+          <div class="p-3">
+            {{ 'navigation.empty_notification' | translate }}
+          </div>
+        }
       </div>
     </div>
 

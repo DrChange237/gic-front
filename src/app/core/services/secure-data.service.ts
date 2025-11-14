@@ -33,4 +33,19 @@ export class SecureDataService {
     return CryptoJS.SHA256(value).toString();
   }
 
+  encryptParams(data: any): string {
+    const text = typeof data === 'string' ? data : JSON.stringify(data);
+    return CryptoJS.Rabbit.encrypt(text, 'filter-data-params').toString();
+  }
+
+  decryptParams(cipherText: string): any {
+    try {
+      const bytes = CryptoJS.Rabbit.decrypt(cipherText, 'filter-data-params');
+      const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+      return JSON.parse(decryptedText);
+    } catch (e) {
+      return null;
+    }
+  }
+
 }

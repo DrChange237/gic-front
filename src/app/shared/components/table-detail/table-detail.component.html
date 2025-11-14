@@ -2,16 +2,16 @@
     <table class="table table-hover mb-0">
         <thead>
         <tr>
-            @for (column of columns; track column) {
-                <th>{{ 'table.' + column | translate }}</th>
+            @for (column of columns; track column; let isFirst = $first) {
+                <th [ngClass]="{'px-3': isFirst}">{{ 'table.' + column | translate }}</th>
             }
         </tr>
         </thead>
         <tbody>
             @for (item of pagedData; track item.key) {
                 <tr>
-                    @for (column of columns; track item + columns) {
-                        <td>{{ item[column] | translate }}</td>
+                    @for (column of columns; track item + columns; let isFirst = $first) {
+                        <td [ngClass]="{'px-3': isFirst}">{{ item[column] | translate }}</td>
                     }
                 </tr>
             } @empty {
@@ -25,16 +25,18 @@
 
 
 <!-- Pagination -->
-<div class="d-flex justify-content-between py-2">
-    <div class="d-flex">
-        <label class="text-14 fw-medium py-2 pe-3">
-            {{ 'table.item_per_page' | translate }}
-        </label>
-        <ng-select [items]="[5, 10, 20]" class="custom" [(ngModel)]="pageSize" [clearable]="false" [dropdownPosition]="'top'"
-                   (change)="onPageSizeChange($event)">
-        </ng-select>
-    </div>
+@if (paginate) {
+    <div class="d-flex justify-content-between py-2">
+        <div class="d-flex">
+            <label class="text-14 fw-medium py-2 pe-3">
+                {{ 'table.item_per_page' | translate }}
+            </label>
+            <ng-select [items]="[5, 10, 20]" class="custom" [(ngModel)]="pageSize" [clearable]="false" [dropdownPosition]="'top'"
+                       (change)="onPageSizeChange($event)">
+            </ng-select>
+        </div>
 
-    <ngb-pagination [collectionSize]="totalItems!" [(page)]="currentPage" [pageSize]="pageSize" (pageChange)="onPageChange($event)">
-    </ngb-pagination>
-</div>
+        <ngb-pagination [collectionSize]="totalItems!" [(page)]="currentPage" [pageSize]="pageSize" (pageChange)="onPageChange($event)">
+        </ngb-pagination>
+    </div>
+}

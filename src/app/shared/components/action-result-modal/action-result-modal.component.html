@@ -1,8 +1,4 @@
-<div class="modal-header border-0">
-    <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
-</div>
-
-<div class="modal-body text-center center flex-column">
+<div class="modal-body text-center center flex-column mt-2">
     <div class="avatar rounded-full center text-white" [ngClass]="{'bg-success': isSuccess, 'bg-danger': !isSuccess}">
         <i class="text-78" [ngClass]="{'i-Yes': isSuccess, 'i-Close': !isSuccess}"></i>
     </div>
@@ -11,7 +7,7 @@
     <p class="text-14 fw-medium mb-0">{{ message | translate }}</p>
 </div>
 
-<div class="modal-footer justify-content-center border-0">
+<div class="modal-footer justify-content-center border-0 mb-2">
     <button type="button" class="btn" [ngClass]="isSuccess ? 'btn-success text-white' : 'btn-danger'" (click)="close()">
         {{ closeButtonText | translate }}
     </button>

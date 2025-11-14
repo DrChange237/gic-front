@@ -23,6 +23,7 @@
                             <th scope="col" role="button">{{ 'table.address' | translate }}</th>
                             <th scope="col" role="button">{{ 'table.city' | translate }}</th>
                             <th scope="col" role="button">{{ 'table.last_activity' | translate }}</th>
+                            <th class="text-center"  scope="col" role="button">{{ 'table.status' | translate }}</th>
                             <th class="text-center" scope="col" role="button">{{ 'table.action' | translate }}</th>
                         </tr>
                         </thead>
@@ -34,19 +35,24 @@
                                     <td><ngb-highlight [result]="agency.address" [term]="searchTerm" /></td>
                                     <td><ngb-highlight [result]="agency.town.name + ' - ' + agency.town.country.name" [term]="searchTerm" /></td>
                                     <td>{{(agency.lastActivity | date: 'dd/MM/yyyy - HH:mm') || 'N/A' }}</td>
+                                    <td class="col-status">
+                                        <span class="badge rounded-pill p-2 text-bg-{{agency.enabled ? 'success text-white' : 'danger'}}">
+                                            {{ 'badge.status.' + agency.enabled | translate | uppercase }}
+                                        </span>
+                                    </td>
                                     <td class="col-action">
                                         <div class="d-flex justify-content-center gap-2">
                                             <button role="button" class="btn btn-info text-white text-14" [ngbTooltip]="'btn.detail' | translate"
-                                                    (click)="null">
+                                                    (click)="openModal(modalDetailAgency, agency)">
                                                 <i class="i-Information fw-medium"></i>
                                             </button>
                                             <button role="button" class="btn btn-primary text-white text-14" [ngbTooltip]="'btn.agent_history' | translate"
-                                                    (click)="null">
-                                                <i class="i-Wallet fw-medium"></i>
+                                                    (click)="viewHistoryAgency(agency)">
+                                                <i class="i-Receipt fw-medium"></i>
                                             </button>
                                             <button role="button" class="btn text-14" [ngClass]="{'btn-danger': agency.enabled, 'btn-success text-white': !agency.enabled}"
                                                     [ngbTooltip]="('btn.agent_active.' + !agency.enabled) | translate"
-                                                    (click)="null">
+                                                    (click)="openConfirmModal(agency)">
                                                 <i class="fw-medium" [ngClass]="{'i-Lock-2': agency.enabled, 'i-Unlock-2': !agency.enabled}"></i>
                                             </button>
                                         </div>
@@ -81,3 +87,20 @@
         </div>
     </div>
 </div>
+
+<ng-template #modalDetailAgency let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-payment-instructions">
+            {{ 'account.agency_detail' | translate }}
+        </h4>
+        <a role="button" class="btn btn-close" aria-label="Close" (click)="modal.close()"></a>
+    </div>
+    <div class="modal-body">
+        <ng-scrollbar visibility="hover" style="height: max-content">
+            <app-table-detail [pageSize]="10" [data]="datasAgency" [paginate]="false"></app-table-detail>
+        </ng-scrollbar>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-dark" (click)="modal.close()">{{ 'btn.close' | translate }}</button>
+    </div>
+</ng-template>

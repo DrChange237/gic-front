@@ -35,11 +35,11 @@
                                     <td class="col-action">
                                         <div class="d-flex gap-2 flex-wrap justify-content-center">
                                             <button role="button" class="btn btn-info text-white text-14" [ngbTooltip]="'btn.detail' | translate"
-                                                    (click)="openModal(modalDetailTrx, role, 'DETAIL')">
+                                                    (click)="openModal(modalDetailRole, role, 'DETAIL')">
                                                 <i class="i-Information fw-medium"></i>
                                             </button>
                                             <button role="button" class="btn btn-primary text-14" [ngbTooltip]="'btn.list_authorities' | translate"
-                                                    (click)="openModal(modalDetailTrx, role, 'AUTH')">
+                                                    (click)="openModal(modalDetailRole, role, 'AUTH')">
                                                 <i class="i-Lock-User fw-medium"></i>
                                             </button>
                                         </div>
@@ -75,7 +75,7 @@
     </div>
 </div>
 
-<ng-template #modalDetailTrx let-modal>
+<ng-template #modalDetailRole let-modal>
     <div class="modal-header">
         <h4 class="modal-title" id="modal-payment-instructions">
             {{ (modalAction === 'AUTH' ? 'account.authorities_role' : 'account.detail_role') | translate }}
@@ -84,7 +84,8 @@
     </div>
     <div class="modal-body">
         <ng-scrollbar visibility="hover" style="height: max-content">
-            <app-table-detail [columns]="['label',  modalAction === 'AUTH' ? 'description' : 'value']" [data]="datasRole" [pageSize]="10" [paginate]="true"></app-table-detail>
+            <app-table-detail [columns]="['label',  modalAction === 'AUTH' ? 'description' : 'value']" [pageSize]="10"
+                              [data]="(modalAction === 'AUTH' ? authorities : datasRole)" [paginate]="false"></app-table-detail>
         </ng-scrollbar>
     </div>
     <div class="modal-footer">

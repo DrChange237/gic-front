@@ -2,6 +2,7 @@
   "account": {
     "account_balance": "Solde de Compte",
     "agency": "Agence",
+    "agency_detail": "Détail de l'agence",
     "agent": "Agent",
     "authorities_role": "Privilèges du rôles",
     "detail_role": "Detail du rôle",
@@ -13,7 +14,11 @@
     "get_detail_agent_failed": "Chargement des détails du agent échoué",
     "get_detail_role_failed": "Chargement des détails du role échoué",
     "get_role_list_failed": "Chargement de la liste des agents échoué",
-    "role": "Rôle"
+    "role": "Rôle",
+    "update_status_agency_done": "Modification du statut de l'agence réussi",
+    "update_status_agency_failed": "Modification du statut de l'agence échoué",
+    "update_status_agent_done": "Modification du statut de l'agent réussi",
+    "update_status_agent_failed": "Modification du statut de l'agent échoué"
   },
   "app": {
     "language_en": "Anglais",
@@ -27,9 +32,18 @@
     "QUOTE": "Devis généré",
     "REJECTED": "Rejeté",
     "SUCCESS": "Réussie",
-    "WAITING": "En cours"
+    "WAITING": "En cours",
+    "status": {
+      "false": "Désactivié",
+      "true": "Activé"
+    }
   },
   "btn": {
+    "agency_active": {
+      "false": "Désactivé l'agence",
+      "true": "Activé agence"
+    },
+    "agency_history": "Historique de l'agence",
     "agent_active": {
       "false": "Désactivé l'agent",
       "true": "Activé agent"
@@ -49,12 +63,7 @@
     "reset": "Réinitialiser",
     "return": "Retour",
     "search": "Rechercher",
-    "search_loading": "Recherche en cours",
-    "agency_active": {
-      "false": "Désactivé l'agence",
-      "true": "Activé agence"
-    },
-    "agency_history": "Historique de l'agence"
+    "search_loading": "Recherche en cours"
   },
   "error": {
     "404_text": "Désolé, la page que vous demandé n'existe pas.",
@@ -87,6 +96,10 @@
     "confirm_action": "Confirmer l'action",
     "confirm_action_message": "Saisissez votre mot de passe ou code PIN pour exécuter :",
     "confirm_payment_service": "Confirmez le paiement du service en saisissant votre mot de passe",
+    "disable": "Désactivation",
+    "disable_message": "En confirmant vous désactiverez {{name}}",
+    "enable": "Activation",
+    "enable_message": "En confirmant vous activerez {{name}}",
     "invalid_code": "Veuillez entrer un code valide (au moins 4 caractères)"
   },
   "navigation": {
@@ -94,11 +107,13 @@
     "agencies": "Agences",
     "agents": "Agents",
     "dashboard": "Tableau de bord",
+    "empty_notification": "Aucune notification",
     "history": "Historique",
     "history_agency": "Historique agence",
-    "history_agent": "Mon Historique",
+    "history_cashier": "Historique de caisse",
     "history_global": "Historique générale",
     "management": "Management",
+    "my_history": "Mon Historique",
     "profile": "Profil",
     "reporting": "Rapport",
     "role_profile": "Rôle & Profil",
@@ -130,6 +145,7 @@
     "agency": "Agence",
     "agent": "Agent",
     "amount": "Montant",
+    "authorities": "Autorités",
     "boolean": {
       "false": "Non",
       "true": "Oui"
@@ -141,7 +157,7 @@
     "empty_data": "Aucune donnée disponible",
     "item_per_page": "Affichés par page",
     "label": "Libellé",
-    "last_activity": "Dernière connexion",
+    "last_activity": "Dernière activité",
     "name": "Nom",
     "number_authorities": "Nombre d'autorités",
     "reference": "Référence",
