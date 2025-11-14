@@ -1,0 +1,49 @@
+<app-breadcrumb></app-breadcrumb>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="card-title mb-3">{{ 'form.fund_transfert_data' | translate }}</div>
+                <form [formGroup]="transfertForm" (ngSubmit)="openConfirmModal()">
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label>
+                                {{ 'form.agency_source' | translate }} <span class="text-danger"> *</span>
+                            </label>
+                            <ng-select [items]="agencies$" bindLabel="name" bindValue="id" class="custom" formControlName="agencyOriginId"
+                                   [ngClass]="{ 'is-invalid': isSubmitted && sf?.agencyOriginId?.invalid}">
+                            </ng-select>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>
+                                {{ 'form.agency_destination' |translate }} <span class="text-danger"> *</span>
+                            </label>
+                            <ng-select [items]="agencies$" bindLabel="name" bindValue="id" class="custom" formControlName="agencyDestinationId"
+                                       [ngClass]="{ 'is-invalid': isSubmitted && sf?.agencyDestinationId?.invalid}">
+                            </ng-select>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <label>
+                                {{ 'form.amount_label' |translate }} <span class="text-danger"> *</span>
+                            </label>
+                            <input class="form-control" formControlName="amount" type="number"
+                                   [ngClass]="{ 'is-invalid': isSubmitted && sf?.amount?.invalid}">
+                        </div>
+                        <div class="form-group col-sm-8">
+                            <label>
+                                {{ 'form.description' | translate }} <span class="text-danger"> *</span>
+                            </label>
+                            <input class="form-control" formControlName="description" type="text"
+                                   [ngClass]="{ 'is-invalid': isSubmitted && sf?.description?.invalid}">
+                        </div>
+                        <div class="col-md-12 mt-4 d-inline-flex justify-content-end gap-4">
+                            <button class="btn btn-dark" type="button" (click)="resetForm()">{{ 'btn.reset' | translate }}</button>
+                            <button class="btn btn-primary" type="submit">{{ 'btn.confirm' | translate }}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

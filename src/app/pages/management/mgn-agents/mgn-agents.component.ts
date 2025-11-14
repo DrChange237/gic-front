@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NgbHighlight, NgbInputDatepicker, NgbModal, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {NgbHighlight, NgbModal, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgSelectComponent} from "@ng-select/ng-select";
 import {TranslatePipe} from "@ngx-translate/core";
@@ -16,27 +16,32 @@ import {
   ConfirmActionModalComponent
 } from "../../../shared/components/confirm-action-modal/confirm-action-modal.component";
 import {ActionResultModalComponent} from "../../../shared/components/action-result-modal/action-result-modal.component";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-mgn-agents',
   templateUrl: './mgn-agents.component.html',
   styleUrls: ['./mgn-agents.component.scss'],
-  imports: [CommonModule, SharedComponentsModule, FormsModule, NgSelectComponent, NgbHighlight, NgbInputDatepicker,
-    NgbPagination, ReactiveFormsModule, TranslatePipe, NgbTooltip, SharedPipesModule],
+  imports: [CommonModule, SharedPipesModule, SharedComponentsModule, FormsModule, NgSelectComponent, NgbHighlight,
+    NgbPagination, ReactiveFormsModule, TranslatePipe, NgbTooltip],
   standalone: true
 })
 export class MgnAgentsComponent extends BaseListNonPagedComponent<Cashier> implements OnInit {
+
+  listType: string = '';
 
   constructor(
       private modalService: NgbModal,
       private commonSrv: CommonService,
       private accountSrv: AccountService,
+      private route: ActivatedRoute,
   ) {
     super();
+    this.listType = this.route.snapshot.data['all'];
   }
 
   override fetchData() {
-    return this.accountSrv.getListAgents().pipe(
+    return this.accountSrv.getListAgents(this.listType).pipe(
         catchError(err => {
           this.commonSrv.errorHandle(err, 'account.get_agent_list_failed', 'account.agent');
           return of(null);
@@ -91,7 +96,7 @@ export class MgnAgentsComponent extends BaseListNonPagedComponent<Cashier> imple
       resultModal.componentInstance.message = 'account.update_status_agent_done';
       resultModal.componentInstance.isSuccess = true;
 
-      resultModal.result.then(res => {
+      resultModal.result.then(() => {
         const items = this.allItems;
         const index = items.findIndex(c => c.username === code);
         items[index] = { ...items[index], enabled: !items[index].enabled };

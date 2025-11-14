@@ -1,5 +1,6 @@
 import { Town } from "./config.interface";
-import {AgentInfo, Role} from "./management";
+import {Role} from "./management";
+import {AccountBalance} from "./account.interface";
 
 export interface Account {
   id: string;
@@ -7,6 +8,7 @@ export interface Account {
   accountNumber: string;
   accountKey: string;
   title: string;
+  balance?: AccountBalance
 }
 
 export interface Group {

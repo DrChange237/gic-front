@@ -71,9 +71,19 @@ const routes: Routes = [
         loadComponent: () => import('./management/mgn-agencies/mgn-agencies.component').then(c => c.MgnAgenciesComponent)
       },
       {
-        path: 'agents',
-        data: { title: 'navigation.agents' },
+        path: 'agents/all',
+        data: { title: 'navigation.agents', list: 'all' },
         loadComponent: () => import('./management/mgn-agents/mgn-agents.component').then(c => c.MgnAgentsComponent)
+      },
+      {
+        path: 'agency/agents',
+        data: { title: 'navigation.my_agents' },
+        loadComponent: () => import('./management/mgn-agents/mgn-agents.component').then(c => c.MgnAgentsComponent)
+      },
+      {
+        path: 'transfer-fund',
+        data: { title: 'navigation.transfer_fund' },
+        loadComponent: () => import('./management/mgn-fund-transfer/mgn-fund-transfer.component').then(c => c.MgnFundTransfer)
       },
       { path: '', redirectTo: 'agencies', pathMatch: 'full' }
     ]

@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import {BaseApiService} from "./base-api.service";
 import {HttpClient} from "@angular/common/http";
-import {InitPaymentData, InitPaymentResponse, ServiceModel, ServiceType, Transaction} from "../../shared/interfaces";
+import {
+  InitPaymentData,
+  InitPaymentResponse,
+  InitTransfertFund,
+  ServiceModel,
+  ServiceType,
+  Transaction
+} from "../../shared/interfaces";
 import {ListResponse} from "../utils/base-list/base-list.component";
 
 @Injectable({
@@ -33,6 +40,10 @@ export class FactoryService extends BaseApiService {
 
   confirmPayment(data: { id: string, pin?: number, password?: string }) {
     return this.post<InitPaymentResponse>('pay/confirm', data)
+  }
+
+  transferToAgency(data: InitTransfertFund) {
+    return this.post<any>('operation/tranferToAgency', data)
   }
 
   downloadReceipt(transactionId: string) {

@@ -33,6 +33,7 @@
     "REJECTED": "Rejected",
     "SUCCESS": "Successful",
     "WAITING": "Processing",
+    "service_unavailable": "Unavailable",
     "status": {
       "false": "Disable",
       "true": "Enable"
@@ -70,11 +71,15 @@
     "404_title": "Error!"
   },
   "form": {
+    "agency_destination": "Destination agency",
+    "agency_source": "Source agency",
     "amount_label": "Amount",
     "bad_credentials": "Bad credentials",
+    "description": "Description",
     "email_label": "Email ",
     "email_plh": "Agent's e-mail address",
     "end_date_label": "End date",
+    "fund_transfert_data": "Data transfert",
     "label_label": "Label",
     "password_label": "Password",
     "password_plh": "Enter your password",
@@ -96,6 +101,7 @@
     "confirm_action": "Confirm action",
     "confirm_action_message": "Enter your password or PIN code to execute:",
     "confirm_payment_service": "Confirm payment by entering your password:",
+    "confirm_transaction_service": "Confirm transaction by entering your password:",
     "disable": "Disable",
     "disable_message": "By confirming, you will deactivate {{name}}.",
     "enable": "Enable",
@@ -113,13 +119,15 @@
     "history_cashier": "Case history",
     "history_global": "General history",
     "management": "Management",
+    "my_agents": "My agents",
     "my_history": "My history",
     "profile": "Profile",
     "reporting": "Reporting",
     "role_profile": "Role & Profile",
     "services": "Services",
     "templates": "Templates",
-    "transaction_history": "Transaction History"
+    "transaction_history": "Transaction History",
+    "transfer_fund": "Transfer of funds"
   },
   "reporting": {
     "download_report_failed": "Report download failed",
@@ -151,6 +159,7 @@
       "true": "Yes"
     },
     "city": "City",
+    "client_fees": "Client fees",
     "code": "Code",
     "created_date": "Created date",
     "description": "Description",
@@ -164,6 +173,7 @@
     "role": "Role",
     "service": "Service",
     "status": "Status",
+    "total_amount": "Total amount",
     "trx_date": "Date",
     "username": "Username",
     "value": "Value"
@@ -177,6 +187,9 @@
     "info": "Info",
     "success": "Success",
     "warning": "Attention"
+  },
+  "transaction": {
+    "fund_transfert": "Transfert fund"
   },
   "transactions": {
     "balance": "Balance",
@@ -196,6 +209,7 @@
     "payment_successful": "Your transaction has been successfully completed",
     "service": "Service",
     "service_instructions": "Service instructions",
-    "service_type": "Service Type"
+    "service_type": "Service Type",
+    "transfert_fund_transaction_failed": "Failed to execute fund transfer"
   }
 }

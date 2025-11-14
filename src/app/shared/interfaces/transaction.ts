@@ -112,4 +112,13 @@ export interface ServiceModel {
     description: string;
     typeAccount: string;
     instructions: string;
+    maintenance: boolean;
+}
+
+export interface InitTransfertFund {
+    agencyOriginId: string,
+    agencyDestinationId: string,
+    amount: number,
+    description: string,
+    password: string
 }

@@ -24,7 +24,7 @@
                 <div class="row my-3">
                     @for (service of services$; track service.code) {
                         <div class="col-sm-6 col-lg-4 col-xl-3">
-                            <div class="card card-profile-1 card-zoom mb-4" (click)="initializeForm(service)">
+                            <div class="card card-profile-1 card-zoom mb-4 position-relative" (click)="initializeForm(service)">
                                 <div class="card-body text-center">
                                     <div class="avatar rounded-1 mb-3 border p-1">
                                         <img [src]="service.logo | prefixImgUrl" [alt]="service.name">
@@ -32,6 +32,14 @@
                                     <h5 class="m-0 fw-semibold text-14 text-truncate">{{ service.name }}</h5>
                                     <p class="m-0 py-2 fw-medium text-truncate">{{ service.description }}</p>
                                 </div>
+
+                                @if (service.maintenance) {
+                                    <div class="position-absolute top-0 end-0 mt-2 me-2">
+                                        <span class="badge rounded-pill text-bg-warning">
+                                            {{ 'badge.service_unavailable' | translate }}
+                                        </span>
+                                    </div>
+                                }
                             </div>
                         </div>
                     }
@@ -53,6 +61,11 @@
                                 <div class="mt-1">
                                     <h5 class="m-0 fw-semibold text-14">{{ currService.name }}</h5>
                                     <p class="m-0 py-2 fw-medium">{{ currService.description }}</p>
+                                    @if (currService.maintenance) {
+                                        <span class="badge rounded-pill text-bg-warning">
+                                            {{ 'badge.service_unavailable' | translate }}
+                                        </span>
+                                    }
                                 </div>
                             </div>
 
@@ -161,6 +174,11 @@
                                 <div class="mt-1">
                                     <h5 class="m-0 fw-semibold text-14">{{ currService.name }}</h5>
                                     <p class="m-0 py-2  fw-medium">{{ currService.description }}</p>
+                                    @if (currService.maintenance) {
+                                        <span class="badge rounded-pill text-bg-warning">
+                                            {{ 'badge.service_unavailable' | translate }}
+                                        </span>
+                                    }
                                 </div>
                             </div>
 
@@ -175,6 +193,40 @@
                         </div>
                         <div class="row">
                             <p class="text-14 fw-semibold">{{ 'transactions.detail_transaction' | translate }}</p>
+
+                            @if (currService.withRef) {
+                                <div class="col-md-4 col-6" >
+                                    <div class="mb-4">
+                                        <p class="text-primary mb-1"><i class="i-Yes text-16 me-1"></i> {{ 'table.reference' | translate }}</p>
+                                        <span class="fw-medium">{{ paymentInitiate.reference }}</span>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="col-md-4 col-6" >
+                                <div class="mb-4">
+                                    <p class="text-primary mb-1"><i class="i-Yes text-16 me-1"></i> {{ 'form.amount_label' | translate }}</p>
+                                    <span class="fw-medium">{{ paymentInitiate.amount | currency: 'XAF' }}</span>
+                                </div>
+                            </div>
+
+                            @if (paymentInitiate.clientFees) {
+                                <div class="col-md-4 col-6" >
+                                    <div class="mb-4">
+                                        <p class="text-primary mb-1"><i class="i-Yes text-16 me-1"></i> {{ 'table.client_fees' | translate }}</p>
+                                        <span class="fw-medium">{{ paymentInitiate.clientFees | currency: 'XAF' }}</span>
+                                    </div>
+                                </div>
+                            }
+
+                            @if (paymentInitiate.totalAmount) {
+                                <div class="col-md-4 col-6" >
+                                    <div class="mb-4">
+                                        <p class="text-primary mb-1"><i class="i-Yes text-16 me-1"></i> {{ 'table.total_amount' | translate }}</p>
+                                        <span class="fw-medium">{{ paymentInitiate.totalAmount | currency: 'XAF' }}</span>
+                                    </div>
+                                </div>
+                            }
 
                             @for (data of paymentInitiate.information; track data) {
                                 <div class="col-md-4 col-6" >

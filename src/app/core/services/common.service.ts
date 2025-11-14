@@ -25,7 +25,7 @@ export class CommonService {
   openFileOnBlank(file: Blob | string, download: boolean = false, name?: string) {
     const url = typeof file === 'string'
         ? file
-        : window.URL.createObjectURL(file);
+        : URL.createObjectURL(file);
 
     if (download) {
       window.open(url, '_blank');
@@ -34,7 +34,7 @@ export class CommonService {
       a.href = url;
       a.download = name || 'file-' + +new Date();
       a.click();
-      window.URL.revokeObjectURL(url);
+      URL.revokeObjectURL(url);
     }
   }
 

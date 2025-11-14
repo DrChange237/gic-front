@@ -39,8 +39,9 @@ export class AccountService extends BaseApiService {
     );
   }
 
-  getListAgents() {
-      return this.get<Cashier[]>('cashier/getMyCashiers');
+  getListAgents(type: string) {
+      const url = type === 'all' ? 'getCashiers' : 'getMyCashiers';
+      return this.get<Cashier[]>(`cashier/${url}`);
   }
 
   changCashierStatus(username: string, enabled: boolean) {

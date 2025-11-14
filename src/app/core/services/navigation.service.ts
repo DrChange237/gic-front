@@ -83,9 +83,11 @@ export class NavigationService {
             type: 'dropDown',
             icon: 'i-Management',
             sub: [
-                { icon: 'i-Lock-User', name: 'role_profile', state: 'management/role-and-profile', type: 'link' },
+                { icon: 'i-Financial', name: 'transfer_fund', state: 'management/transfer-fund', type: 'link' },
+                { icon: 'i-Business-ManWoman', name: 'agents', state: 'management/agents/all', type: 'link' },
+                { icon: 'i-Business-ManWoman', name: 'my_agents', state: 'management/agency/agents', type: 'link' },
                 { icon: 'i-University1', name: 'agencies', state: 'management/agencies', type: 'link' },
-                { icon: 'i-Business-ManWoman', name: 'agents', state: 'management/agents', type: 'link' },
+                { icon: 'i-Lock-User', name: 'role_profile', state: 'management/role-and-profile', type: 'link' },
             ]
         },
         // {

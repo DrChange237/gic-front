@@ -33,6 +33,7 @@
     "REJECTED": "Rejeté",
     "SUCCESS": "Réussie",
     "WAITING": "En cours",
+    "service_unavailable": "Indisponible",
     "status": {
       "false": "Désactivié",
       "true": "Activé"
@@ -70,11 +71,15 @@
     "404_title": "Erreur!"
   },
   "form": {
+    "agency_destination": "Agence de destination",
+    "agency_source": "Agence source",
     "amount_label": "Montant",
     "bad_credentials": "Identifiants incorrects",
+    "description": "Description",
     "email_label": "Email ",
     "email_plh": "Adresse e-mail de l'agent",
     "end_date_label": "Date de fin",
+    "fund_transfert_data": "Donnée du transfert",
     "label_label": "Libellé",
     "password_label": "Mot de passe",
     "password_plh": "Entrez votre mot de passe",
@@ -96,6 +101,7 @@
     "confirm_action": "Confirmer l'action",
     "confirm_action_message": "Saisissez votre mot de passe ou code PIN pour exécuter :",
     "confirm_payment_service": "Confirmez le paiement du service en saisissant votre mot de passe",
+    "confirm_transaction_service": "Confirmez la transaction en saisissant votre mot de passe",
     "disable": "Désactivation",
     "disable_message": "En confirmant vous désactiverez {{name}}",
     "enable": "Activation",
@@ -113,13 +119,15 @@
     "history_cashier": "Historique de caisse",
     "history_global": "Historique générale",
     "management": "Management",
+    "my_agents": "Mes agents",
     "my_history": "Mon Historique",
     "profile": "Profil",
     "reporting": "Rapport",
     "role_profile": "Rôle & Profil",
     "services": "Services",
     "templates": "Templates",
-    "transaction_history": "Historiques de Transaction"
+    "transaction_history": "Historiques de Transaction",
+    "transfer_fund": "Transfert de fonds"
   },
   "reporting": {
     "download_report_failed": "Téléchargement du report échoué",
@@ -151,6 +159,7 @@
       "true": "Oui"
     },
     "city": "Ville",
+    "client_fees": "Frais client",
     "code": "Code",
     "created_date": "Date de création",
     "description": "Description",
@@ -164,6 +173,7 @@
     "role": "Rôle",
     "service": "Service",
     "status": "Statut",
+    "total_amount": "Montant total",
     "trx_date": "Date",
     "username": "Nom d'utilisateur",
     "value": "Valeur"
@@ -177,6 +187,9 @@
     "info": "Info",
     "success": "Succès",
     "warning": "Attention"
+  },
+  "transaction": {
+    "fund_transfert": "Transfert de fond"
   },
   "transactions": {
     "balance": "Solde",
@@ -196,6 +209,7 @@
     "payment_successful": "Votre transaction a été effectuée avec succès",
     "service": "Service",
     "service_instructions": "Instructions sur le service",
-    "service_type": "Type de Service"
+    "service_type": "Type de Service",
+    "transfert_fund_transaction_failed": "Exécution du transfert de fond échoué"
   }
 }
