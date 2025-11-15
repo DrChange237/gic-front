@@ -1,4 +1,30 @@
 @use "../../themes/themes" as theme;
+
+.account-card {
+    border-radius: 14px;
+    color: #fff;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.18);
+    background-blend-mode: overlay;
+    height: 100%;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.75rem;
+
+    &.operation {
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cpath d='M0 100 L50 0 L100 100 L50 200 Z' fill='none' stroke='rgba(255,255,255,0.08)' stroke-width='4'/%3E%3C/svg%3E")
+                theme.$primary;
+        background-size: 120px;
+    }
+
+    &.commission {
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.08)' stroke-width='10'%3E%3Ccircle cx='120' cy='120' r='50'/%3E%3Ccircle cx='120' cy='120' r='90'/%3E%3Ccircle cx='120' cy='120' r='130'/%3E%3C/g%3E%3C/svg%3E")
+                theme.$primary;
+        background-size: 200px;
+    }
+}
+
 .card {
     // padding: 1rem;
     border-radius: 10px;

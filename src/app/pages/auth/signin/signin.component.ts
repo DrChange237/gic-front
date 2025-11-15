@@ -6,6 +6,7 @@ import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
 import {CommonService} from "../../../core/services/common.service";
 import {AuthService} from "../../../core/services/auth.service";
 import {AccountService} from "../../../core/services/account.service";
+import {finalize} from "rxjs";
 
 @Component({
     selector: 'app-signin',
@@ -35,7 +36,7 @@ export class SigninComponent implements OnInit {
     ngOnInit() {
         this.router.events.subscribe(event => {
             if (event instanceof RouteConfigLoadStart || event instanceof ResolveStart) {
-                this.loadingText = 'Loading Dashboard Module...';
+                this.loadingText = this.commonSrv.translate.instant('btn.loading_request');
 
                 this.loading = true;
             }
@@ -63,19 +64,19 @@ export class SigninComponent implements OnInit {
             password: this.commonSrv.secureSrv.hashMD5(this.signinForm.value?.password || '')
         };
 
-        this.auth.signIn(data).subscribe({
-            next: () => {
-                this.alert = { show: true, message: 'sessions.sign_in_success', type: 'success' };
-                this.commonSrv.alert('success', 'sessions.sign_in_success', 'sessions.session');
-                this.getAccount();
-                this.router.navigateByUrl('/dashboard');
-            },
-            error: err => {
-                this.alert = { show: true, message: err?.error?.message || 'sessions.sign_in_failed', type: 'danger' };
-                this.commonSrv.errorHandle(err, 'sessions.sign_in_failed', 'sessions.session');
-            },
+        this.auth.signIn(data).pipe(finalize(() => this.loading = false ))
+            .subscribe({
+                next: () => {
+                    this.alert = { show: true, message: 'sessions.sign_in_success', type: 'success' };
+                    this.commonSrv.alert('success', 'sessions.sign_in_success', 'sessions.session');
+                    this.getAccount();
+                    this.router.navigateByUrl('/dashboard');
+                },
+                error: err => {
+                    this.alert = { show: true, message: err?.error?.message || 'sessions.sign_in_failed', type: 'danger' };
+                    this.commonSrv.errorHandle(err, 'sessions.sign_in_failed', 'sessions.session');
+                },
         });
-        this.loading = false;
     }
 
     getAccount() {

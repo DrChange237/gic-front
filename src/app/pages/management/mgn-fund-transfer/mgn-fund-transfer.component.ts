@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {NgbInputDatepicker, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormGroup, ReactiveFormsModule, UntypedFormBuilder, Validators} from "@angular/forms";
 //
 import {SharedComponentsModule} from "../../../shared/components/shared-components.module";
@@ -19,7 +19,7 @@ import {NgSelectComponent} from "@ng-select/ng-select";
   selector: 'app-mgn-fund-transfer',
   templateUrl: './mgn-fund-transfer.component.html',
   styleUrls: ['./mgn-fund-transfer.component.scss'],
-  imports: [CommonModule, SharedComponentsModule, NgbInputDatepicker, ReactiveFormsModule, TranslatePipe, NgSelectComponent],
+  imports: [CommonModule, SharedComponentsModule, ReactiveFormsModule, TranslatePipe, NgSelectComponent],
   standalone: true
 })
 export class MgnFundTransfer implements OnInit {

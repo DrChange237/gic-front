@@ -7,6 +7,13 @@
                 <div class="card-title mb-3">{{ 'form.fund_transfert_data' | translate }}</div>
                 <form [formGroup]="transfertForm" (ngSubmit)="openConfirmModal()">
                     <div class="row">
+                        <div class="form-group col-sm-12">
+                            <label>
+                                {{ 'form.amount_label' |translate }} <span class="text-danger"> *</span>
+                            </label>
+                            <input class="form-control" formControlName="amount" type="number" step="5000"
+                                   [ngClass]="{ 'is-invalid': isSubmitted && sf?.amount?.invalid}">
+                        </div>
                         <div class="form-group col-sm-6">
                             <label>
                                 {{ 'form.agency_source' | translate }} <span class="text-danger"> *</span>
@@ -23,21 +30,15 @@
                                        [ngClass]="{ 'is-invalid': isSubmitted && sf?.agencyDestinationId?.invalid}">
                             </ng-select>
                         </div>
-                        <div class="form-group col-sm-4">
-                            <label>
-                                {{ 'form.amount_label' |translate }} <span class="text-danger"> *</span>
-                            </label>
-                            <input class="form-control" formControlName="amount" type="number"
-                                   [ngClass]="{ 'is-invalid': isSubmitted && sf?.amount?.invalid}">
-                        </div>
-                        <div class="form-group col-sm-8">
+                        <div class="form-group col-sm-12">
                             <label>
                                 {{ 'form.description' | translate }} <span class="text-danger"> *</span>
                             </label>
-                            <input class="form-control" formControlName="description" type="text"
+                            <textarea class="form-control" formControlName="description" type="text" rows="1"
                                    [ngClass]="{ 'is-invalid': isSubmitted && sf?.description?.invalid}">
+                            </textarea>
                         </div>
-                        <div class="col-md-12 mt-4 d-inline-flex justify-content-end gap-4">
+                        <div class="col-md-12 mt-3 d-inline-flex justify-content-end gap-2">
                             <button class="btn btn-dark" type="button" (click)="resetForm()">{{ 'btn.reset' | translate }}</button>
                             <button class="btn btn-primary" type="submit">{{ 'btn.confirm' | translate }}</button>
                         </div>

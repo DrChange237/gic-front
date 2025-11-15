@@ -85,7 +85,7 @@ const routes: Routes = [
         data: { title: 'navigation.transfer_fund' },
         loadComponent: () => import('./management/mgn-fund-transfer/mgn-fund-transfer.component').then(c => c.MgnFundTransfer)
       },
-      { path: '', redirectTo: 'agencies', pathMatch: 'full' }
+      { path: '', redirectTo: 'agency/agents', pathMatch: 'full' }
     ]
   },
   {

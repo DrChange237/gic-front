@@ -127,7 +127,7 @@
                                 </tr>
                             } @empty {
                                 <tr>
-                                    <td colspan="{{!historyType ? 7 : historyType === 'global' ? 9 : 8}}}" style="text-align: center">
+                                    <td [attr.colspan]="historyType ? (historyType === 'global' ? 9 : 8) : 7" style="text-align: center">
                                         {{ 'table.empty_data' | translate }}
                                     </td>
                                 </tr>

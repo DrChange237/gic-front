@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { echartStyles } from '../../../shared/echart-styles';
+import {AccountService} from "../../../core/services/account.service";
+import {forkJoin} from "rxjs";
+import {AccountBalance} from "../../../shared/interfaces";
 
 @Component({
     selector: 'app-dashboard-agent',
@@ -14,9 +17,23 @@ export class DashboardAgentComponent implements OnInit {
     salesChartBar: any;
     salesChartPie: any;
 
-	constructor() { }
+    operationAcc: AccountBalance;
+    commissionAcc: AccountBalance;
+    date = new Date();
+
+	constructor(
+        private accountSrv: AccountService,
+    ) { }
 
 	ngOnInit() {
+        forkJoin([
+            this.accountSrv.getAccountOperation(),
+            this.accountSrv.getAccountCommission(),
+        ]).subscribe(([operation, commission]) => {
+            this.operationAcc = operation;
+            this.commissionAcc = commission;
+        })
+
 		this.chartLineOption1 = {
 			...echartStyles.lineFullWidth, ...{
 				series: [{
