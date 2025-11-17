@@ -1,7 +1,7 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import { SharedComponentsModule } from "src/app/shared/components/shared-components.module";
 import {FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
-import {NgbDateAdapter, NgbInputDatepicker, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbDateAdapter, NgbDateStruct, NgbInputDatepicker, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {TranslatePipe} from "@ngx-translate/core";
@@ -48,6 +48,9 @@ export class TrxServicesComponent implements OnInit {
 
   paymentInitiate: InitPaymentResponse;
 
+  minDate = { year: 1900, month: 1, day: 1 };
+  maxDate: NgbDateStruct;
+
   constructor(
       private modalService: NgbModal,
       private fb: UntypedFormBuilder,
@@ -55,7 +58,10 @@ export class TrxServicesComponent implements OnInit {
       private factorySrv: FactoryService,
       private sanitizer: DomSanitizer,
       public authSrv: AuthService,
-  ) { }
+  ) {
+    const today = new Date();
+    this.maxDate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
+  }
 
   ngOnInit() {
     this.loadServicesType();

@@ -141,7 +141,7 @@
                                                        [ngClass]="{ 'is-invalid': isSubmitted && sf?.[item.name]?.invalid}">
                                             } @else if (item.type.toLowerCase() === 'date') {
                                                 <div class="input-group">
-                                                    <input ngbDatepicker name="dp" #dp="ngbDatepicker" class="form-control"
+                                                    <input ngbDatepicker name="dp" #dp="ngbDatepicker" class="form-control" [minDate]="minDate" [maxDate]="maxDate"
                                                            formControlName="{{item.name}}" placeholder="yyyy-mm-dd" (click)="dp.toggle()"
                                                            [ngClass]="{ 'is-invalid': isSubmitted && sf?.[item.name]?.invalid}">
                                                     <div class="input-group-append">
