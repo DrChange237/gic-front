@@ -24,6 +24,7 @@ export interface Agent {
   parent: string;
   group: Group;
   enabled: boolean;
+  mode: 'AGENCY' | 'BANK'
   lastActivity: string; // ISO date string
 }
 

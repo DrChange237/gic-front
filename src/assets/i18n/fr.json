@@ -6,6 +6,7 @@
     "agent": "Agent",
     "authorities_role": "Privilèges du rôles",
     "balance_available": "Solde disponible",
+    "balance_operation": "Solde d'opération",
     "detail_role": "Detail du rôle",
     "get_agency_list_failed": "Chargement de la liste des agences échoué",
     "get_agent_list_failed": "Chargement de la liste des agents échoué",

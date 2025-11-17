@@ -10,6 +10,7 @@ export interface AgentInfo {
         name: string,
         minCommission: number
     },
+    mode: 'AGENCY' | 'BANK'
     enabled: boolean,
     lastActivity: string | Date
 }

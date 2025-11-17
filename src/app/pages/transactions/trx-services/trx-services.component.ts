@@ -10,7 +10,7 @@ import {CommonModule, formatDate} from "@angular/common";
 import {WizardComponent} from "../../../shared/components/form-wizard/wizard/wizard.component";
 import {FormWizardModule} from "../../../shared/components/form-wizard/form-wizard.module";
 import {FactoryService} from "../../../core/services/factory.service";
-import {InitPaymentResponse, ServiceModel, ServiceType} from "../../../shared/interfaces";
+import {AccountBalance, InitPaymentResponse, ServiceModel, ServiceType} from "../../../shared/interfaces";
 import {CommonService} from "../../../core/services/common.service";
 import {CustomDateAdapter} from "../../../core/utils/date-picker/custom-date-adapter";
 import {
@@ -18,6 +18,7 @@ import {
 } from "../../../shared/components/confirm-action-modal/confirm-action-modal.component";
 import {ActionResultModalComponent} from "../../../shared/components/action-result-modal/action-result-modal.component";
 import {SharedPipesModule} from "../../../shared/pipes/shared-pipes.module";
+import {AuthService} from "../../../core/services/auth.service";
 
 @Component({
   selector: 'app-trx-services',
@@ -38,6 +39,8 @@ export class TrxServicesComponent implements OnInit {
   services$: ServiceModel[] = [];
   currService: ServiceModel;
 
+  balanceAccount: AccountBalance;
+
   sizeOfForm: number = 0;
   safeInstructions: SafeHtml = '';
   serviceForm: UntypedFormGroup;
@@ -51,6 +54,7 @@ export class TrxServicesComponent implements OnInit {
       private commonSrv: CommonService,
       private factorySrv: FactoryService,
       private sanitizer: DomSanitizer,
+      public authSrv: AuthService,
   ) { }
 
   ngOnInit() {
@@ -74,11 +78,20 @@ export class TrxServicesComponent implements OnInit {
     });
   }
 
+  loadBalance(service: string) {
+    this.factorySrv.getBalanceOperationAccount(this.authSrv.getUser()?.agency?.code, service).subscribe({
+      next: res => { this.balanceAccount = res },
+      error: err => this.commonSrv.errorHandle(err, 'account.get_balance_trx_failed', 'transactions.service')
+    });
+  }
+
   initializeForm(service: ServiceModel) {
     this.currService = service;
-    this.addStyleOnInstruction(service.instructions);
     this.isFormCompleted = false;
     this.paymentInitiate = null;
+
+    this.addStyleOnInstruction(service.instructions);
+    if (this.authSrv.isBankUser) { this.loadBalance(service.code); }
 
     this.buildForm(service);
 

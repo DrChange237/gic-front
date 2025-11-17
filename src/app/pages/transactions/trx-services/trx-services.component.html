@@ -53,7 +53,7 @@
             <wizard-step [title]="'transactions.payment_info' | translate" [isValid]="serviceForm?.valid" (onNext)="onConfirmStep()">
                 @if (serviceForm) {
                     <div class="my-3 mb-4">
-                        <div class="d-flex flex-wrap mb-2">
+                        <div class="d-sm-flex flex-wrap mb-2">
                             <div class="d-inline-flex flex-grow-1 gap-3">
                                 <div class="avatar-lg center rounded-1 mb-3 border p-1">
                                     <img [src]="currService.logo | prefixImgUrl" [alt]="currService.name">
@@ -69,14 +69,24 @@
                                 </div>
                             </div>
 
-                            @if (currService.instructions) {
-                                <div>
+                            <div class="d-flex flex-column justify-content-between">
+                                @if (currService.instructions) {
                                     <a role="button" class="link-offset-2-hover" (click)="openModal(modalPaymentInstructions)">
                                         <i class="i-Information pe-1"></i>
                                         <span>{{ 'transactions.service_instructions' | translate }}</span>
                                     </a>
-                                </div>
-                            }
+                                }
+
+                                @if (authSrv.isBankUser) {
+                                    <div class="text-start text-sm-end my-2">
+                                        <div class="fw-bold fs-4 text-primary">
+                                            {{ (balanceAccount?.balance | number:'1.0-0') || 'N/A' }}
+                                            {{ balanceAccount?.currency?.code || 'XAF' }}
+                                        </div>
+                                        <small class="text-muted">{{ 'account.balance_operation' | translate }}</small>
+                                    </div>
+                                }
+                            </div>
                         </div>
                         <form [formGroup]="serviceForm" (ngSubmit)="!paymentInitiate ? initPayment() : choosePaymentOption()">
                             @if (currService.withOptions && paymentInitiate) {

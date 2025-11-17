@@ -10,19 +10,22 @@
     <div></div>
   </div>
 
-  <div class="d-none d-md-inline-flex align-items-center">
-    <h3 class="balance-bar m-0 px-3 py-1 fw-bold">
-      <i class="i-Coins pe-3"></i>
-      <span>
-        {{ (accountSrv.accountOperation?.balance | currency: accountSrv.accountOperation?.currency?.code) || 'N/A' }}
-      </span>
-      @if (!accountSrv.accountOperation?.balance) {
-          <span class="ms-3 p-1 icon-refresh" (click)="getAccount()">
-            <i class="i-Reload fw-bold" role="button"></i>
+    @if (!authSrv.isBankUser) {
+      <div class="d-none d-md-inline-flex align-items-center">
+        <h3 class="balance-bar m-0 px-3 py-1 fw-bold">
+          <i class="i-Coins pe-3"></i>
+          <span>
+            {{ (accountSrv.accountOperation?.balance | number: '1.0-1') || 'N/A'}}
+            {{ accountSrv.accountOperation?.currency?.code || 'XAF' }}
           </span>
-      }
-    </h3>
-  </div>
+          @if (!accountSrv.accountOperation?.balance) {
+              <span class="ms-3 p-1 icon-refresh" (click)="getAccount()">
+                <i class="i-Reload fw-bold" role="button"></i>
+              </span>
+          }
+        </h3>
+      </div>
+    }
 
   <div style="margin: auto"></div>
 

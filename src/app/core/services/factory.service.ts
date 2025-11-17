@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {BaseApiService} from "./base-api.service";
 import {HttpClient} from "@angular/common/http";
 import {
+  AccountBalance,
   InitPaymentData,
   InitPaymentResponse,
   InitTransfertFund,
@@ -28,6 +29,10 @@ export class FactoryService extends BaseApiService {
 
   getServices(type: string) {
     return this.get<ServiceModel[]>('bill/billers', { params: { type } });
+  }
+
+  getBalanceOperationAccount(agencyCode: string, billerCode: string) {
+    return this.get<AccountBalance>('agency/operationBalance', { params: { agencyCode, billerCode } });
   }
 
   initPayment(data: InitPaymentData) {

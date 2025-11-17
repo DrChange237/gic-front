@@ -6,6 +6,7 @@
     "agent": "Agent",
     "authorities_role": "Role privileges",
     "balance_available": "Available balance",
+    "balance_operation": "Operation balance",
     "detail_role": "Role detail",
     "get_agency_list_failed": "List agency loading failed",
     "get_agent_list_failed": "List agent loading failed",

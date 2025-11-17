@@ -25,13 +25,13 @@ export class HeaderSidebarLargeComponent implements OnInit {
       public navService: NavigationService,
       public translate: TranslateService,
       public accountSrv: AccountService,
-      private auth: AuthService,
+      public authSrv: AuthService,
       private commonSrv: CommonService,
     ) { }
   
     ngOnInit() {
-      this.user = this.auth.getUser();
-      if (this.auth.authenticated) this.getAccount();
+      this.user = this.authSrv.getUser();
+      if (this.authSrv.authenticated) this.getAccount();
     }
   
     toggleSidebar() {
@@ -57,7 +57,7 @@ export class HeaderSidebarLargeComponent implements OnInit {
     }
   
     signOut() {
-      this.auth.signOut().subscribe({
+      this.authSrv.signOut().subscribe({
         next: () => this.commonSrv.alert('info', 'sessions.sign_out_success', 'sessions.session'),
         error: () => this.commonSrv.alert('error', 'sessions.sign_out_failed', 'sessions.session')
       });

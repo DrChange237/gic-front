@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import {tap} from "rxjs";
 //
-import {AuthResponse, Credentials} from "../../shared/interfaces";
+import {AuthResponse, Cashier, Credentials} from "../../shared/interfaces";
 import { LocalStoreService } from "./local-store.service";
 import {BaseApiService} from "./base-api.service";
 
@@ -12,6 +12,7 @@ import {BaseApiService} from "./base-api.service";
 })
 export class AuthService extends BaseApiService {
   authenticated = false;
+  isBankUser: boolean = false;
 
   constructor(
       private store: LocalStoreService,
@@ -26,15 +27,20 @@ export class AuthService extends BaseApiService {
     this.authenticated = this.store.getItem("user");
   }
 
-  getUser() {
+  checkBankUser(user?: Cashier) {
+    user = user ?? this.store.getItem("user");
+    this.isBankUser = user && user?.role?.agent?.mode === 'BANK';
+  }
+
+  getUser(): Cashier | null {
     return this.store.getItem('user');
   }
 
-  getAccessToken() {
+  getAccessToken(): string {
     return this.store.getItem('access_token');
   }
 
-  getLanguage() {
+  getLanguage(): string {
     return this.store.getItem('lang');
   }
 
@@ -42,6 +48,7 @@ export class AuthService extends BaseApiService {
     return this.post<AuthResponse>('login', credentials).pipe(
       tap(res => {
         this.authenticated = true;
+        this.checkBankUser(res.cashier);
         this.store.setItem('user', res.cashier);
         this.store.setItem('access_token', res.token);
       })
