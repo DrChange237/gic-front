@@ -192,14 +192,24 @@
                                 </div>
                             </div>
 
-                            @if (currService.instructions) {
-                                <div>
+                            <div class="d-flex flex-column justify-content-between">
+                                @if (currService.instructions) {
                                     <a role="button" class="link-offset-2-hover" (click)="openModal(modalPaymentInstructions)">
                                         <i class="i-Information pe-1"></i>
                                         <span>{{ 'transactions.service_instructions' | translate }}</span>
                                     </a>
-                                </div>
-                            }
+                                }
+
+                                @if (authSrv.isBankUser) {
+                                    <div class="text-start text-sm-end my-2">
+                                        <div class="fw-bold fs-4" [ngClass]="+balanceAccount?.balance > +paymentInitiate.totalAmount ? 'text-primary' : 'text-danger'">
+                                            {{ (balanceAccount?.balance | number:'1.0-0') || 'N/A' }}
+                                            {{ balanceAccount?.currency?.code || 'XAF' }}
+                                        </div>
+                                        <small class="text-muted">{{ 'account.balance_operation' | translate }}</small>
+                                    </div>
+                                }
+                            </div>
                         </div>
                         <div class="row">
                             <p class="text-14 fw-semibold">{{ 'transactions.detail_transaction' | translate }}</p>
@@ -208,7 +218,7 @@
                                 <div class="col-md-4 col-6" >
                                     <div class="mb-4">
                                         <p class="text-primary mb-1"><i class="i-Yes text-16 me-1"></i> {{ 'table.reference' | translate }}</p>
-                                        <span class="fw-medium">{{ paymentInitiate.reference }}</span>
+                                        <span class="text-14 fw-semibold">{{ paymentInitiate.reference }}</span>
                                     </div>
                                 </div>
                             }
@@ -216,7 +226,7 @@
                             <div class="col-md-4 col-6" >
                                 <div class="mb-4">
                                     <p class="text-primary mb-1"><i class="i-Yes text-16 me-1"></i> {{ 'form.amount_label' | translate }}</p>
-                                    <span class="fw-medium">{{ paymentInitiate.amount | currency: 'XAF' }}</span>
+                                    <span class="text-14 fw-semibold">{{ paymentInitiate.amount | currency: 'XAF' }}</span>
                                 </div>
                             </div>
 
@@ -224,7 +234,7 @@
                                 <div class="col-md-4 col-6" >
                                     <div class="mb-4">
                                         <p class="text-primary mb-1"><i class="i-Yes text-16 me-1"></i> {{ 'table.client_fees' | translate }}</p>
-                                        <span class="fw-medium">{{ paymentInitiate.clientFees | currency: 'XAF' }}</span>
+                                        <span class="text-14 fw-semibold">{{ paymentInitiate.clientFees | currency: 'XAF' }}</span>
                                     </div>
                                 </div>
                             }
@@ -233,7 +243,7 @@
                                 <div class="col-md-4 col-6" >
                                     <div class="mb-4">
                                         <p class="text-primary mb-1"><i class="i-Yes text-16 me-1"></i> {{ 'table.total_amount' | translate }}</p>
-                                        <span class="fw-medium">{{ paymentInitiate.totalAmount | currency: 'XAF' }}</span>
+                                        <span class="text-14 fw-semibold">{{ paymentInitiate.totalAmount | currency: 'XAF' }}</span>
                                     </div>
                                 </div>
                             }

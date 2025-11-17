@@ -46,14 +46,14 @@ export class DashboardAgentComponent implements OnInit {
 						}
 					},
 					areaStyle: {
-						color: 'rgba(102, 51, 153, .2)',
+						color: 'rgba(110, 58, 150, .2)',
 						origin: 'start'
 					},
 					lineStyle: {
-						color: '#663399',
+						color: '#6E3A96',
 					},
 					itemStyle: {
-						color: '#663399'
+						color: '#6E3A96'
 					}
 				}]
 			}
@@ -165,7 +165,7 @@ export class DashboardAgentComponent implements OnInit {
             series: [{
                     name: 'Online',
                     data: [35000, 69000, 22500, 60000, 50000, 50000, 30000, 80000, 70000, 60000, 20000, 30005],
-                    label: { show: false, color: '#0168c1' },
+                    label: { show: false, color: '#bcbbdd' },
                     type: 'bar',
                     barGap: 0,
                     color: '#bcbbdd',
@@ -175,9 +175,9 @@ export class DashboardAgentComponent implements OnInit {
                 {
                     name: 'Offline',
                     data: [45000, 82000, 35000, 93000, 71000, 89000, 49000, 91000, 80200, 86000, 35000, 40050],
-                    label: { show: false, color: '#639' },
+                    label: { show: false, color: '#6E3A96' },
                     type: 'bar',
-                    color: '#7569b3',
+                    color: '#6E3A96',
                     // smooth: true
                 }
 
@@ -185,7 +185,7 @@ export class DashboardAgentComponent implements OnInit {
         };
 
         this.salesChartPie = {
-            color: ['#62549c', '#7566b5', '#7d6cbb', '#8877bd', '#9181bd', '#6957af'],
+            color: ['#6E3A96', '#058EFC', '#4CAF50', '#8877bd', '#FFC107', '#d22346'],
             tooltip: {
                 show: true,
                 backgroundColor: 'rgba(0, 0, 0, .8)',
