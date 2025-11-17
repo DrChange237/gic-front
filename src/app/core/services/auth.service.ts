@@ -21,6 +21,7 @@ export class AuthService extends BaseApiService {
   ) {
     super(http)
     this.checkAuth();
+    this.checkBankUser();
   }
 
   checkAuth() {
