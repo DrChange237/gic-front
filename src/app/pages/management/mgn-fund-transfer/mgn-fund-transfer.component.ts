@@ -26,7 +26,9 @@ export class MgnFundTransfer implements OnInit {
   transfertForm: FormGroup
   isSubmitted: boolean = false;
 
-  agencies$: Agency[];
+  agencies$: Agency[]
+  sources$: Agency[];
+  beneficiaries$: Agency[];
 
   constructor(
       private fb: UntypedFormBuilder,
@@ -41,6 +43,8 @@ export class MgnFundTransfer implements OnInit {
   ngOnInit() {
     this.accountSrv.getListAgencies().subscribe(res => {
       this.agencies$ = res;
+      this.sources$ = res;
+      this.beneficiaries$ = res;
     });
   }
 
@@ -48,7 +52,7 @@ export class MgnFundTransfer implements OnInit {
     this.transfertForm = this.fb.group({
       agencyOriginId: [null, Validators.required],
       agencyDestinationId: [null, Validators.required],
-      amount: [0, Validators.required],
+      amount: [null, Validators.required],
       description: ['', Validators.required],
     });
   }
@@ -97,6 +101,14 @@ export class MgnFundTransfer implements OnInit {
       },
       error: err => this.commonSrv.errorHandle(err, 'transactions.transfert_fund_transaction_failed', 'transaction.fund_transfert')
     });
+  }
+
+  onChangeAgencies(agency: Agency, target: 'SOURCE' | 'BENEFICIARY' = 'BENEFICIARY') {
+    if (target === 'SOURCE') {
+      this.sources$ = this.agencies$.filter(a => !agency || a.code !== agency.code)
+    } else {
+      this.beneficiaries$ = this.agencies$.filter(a => !agency || a.code !== agency.code)
+    }
   }
 
 }

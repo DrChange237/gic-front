@@ -5,7 +5,6 @@ import { Router, RouteConfigLoadStart, ResolveStart, RouteConfigLoadEnd, Resolve
 import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
 import {CommonService} from "../../../core/services/common.service";
 import {AuthService} from "../../../core/services/auth.service";
-import {AccountService} from "../../../core/services/account.service";
 import {finalize} from "rxjs";
 
 @Component({
@@ -29,7 +28,6 @@ export class SigninComponent implements OnInit {
         private fb: UntypedFormBuilder,
         private auth: AuthService,
         private router: Router,
-        private accountSrv: AccountService,
         private commonSrv: CommonService
     ) { }
 
@@ -69,7 +67,6 @@ export class SigninComponent implements OnInit {
                 next: () => {
                     this.alert = { show: true, message: 'sessions.sign_in_success', type: 'success' };
                     this.commonSrv.alert('success', 'sessions.sign_in_success', 'sessions.session');
-                    this.getAccount();
                     this.router.navigateByUrl('/dashboard');
                 },
                 error: err => {
@@ -77,9 +74,5 @@ export class SigninComponent implements OnInit {
                     this.commonSrv.errorHandle(err, 'sessions.sign_in_failed', 'sessions.session');
                 },
         });
-    }
-
-    getAccount() {
-        this.accountSrv.getAccountOperation().subscribe();
     }
 }

@@ -11,30 +11,30 @@
                             <label>
                                 {{ 'form.amount_label' |translate }} <span class="text-danger"> *</span>
                             </label>
-                            <input class="form-control" formControlName="amount" type="number" step="5000"
-                                   [ngClass]="{ 'is-invalid': isSubmitted && sf?.amount?.invalid}">
+                            <input class="form-control" formControlName="amount" type="number" step="5000" [min]="1"
+                                   [ngClass]="{ 'is-invalid': isSubmitted && sf?.amount?.invalid}" [placeholder]="'form.amount_plh' | translate">
                         </div>
                         <div class="form-group col-sm-6">
                             <label>
                                 {{ 'form.agency_source' | translate }} <span class="text-danger"> *</span>
                             </label>
-                            <ng-select [items]="agencies$" bindLabel="name" bindValue="id" class="custom" formControlName="agencyOriginId"
-                                   [ngClass]="{ 'is-invalid': isSubmitted && sf?.agencyOriginId?.invalid}">
+                            <ng-select [items]="sources$" bindLabel="name" bindValue="id" class="custom" formControlName="agencyOriginId" (change)="onChangeAgencies($event)"
+                                   [ngClass]="{ 'is-invalid': isSubmitted && sf?.agencyOriginId?.invalid}" [placeholder]="'form.agency_source_plh' | translate">
                             </ng-select>
                         </div>
                         <div class="form-group col-sm-6">
                             <label>
                                 {{ 'form.agency_destination' |translate }} <span class="text-danger"> *</span>
                             </label>
-                            <ng-select [items]="agencies$" bindLabel="name" bindValue="id" class="custom" formControlName="agencyDestinationId"
-                                       [ngClass]="{ 'is-invalid': isSubmitted && sf?.agencyDestinationId?.invalid}">
+                            <ng-select [items]="beneficiaries$" bindLabel="name" bindValue="id" class="custom" formControlName="agencyDestinationId" (change)="onChangeAgencies($event, 'SOURCE')"
+                                       [ngClass]="{ 'is-invalid': isSubmitted && sf?.agencyDestinationId?.invalid}" [placeholder]="'form.agency_destination_plh' | translate">
                             </ng-select>
                         </div>
                         <div class="form-group col-sm-12">
                             <label>
                                 {{ 'form.description' | translate }} <span class="text-danger"> *</span>
                             </label>
-                            <textarea class="form-control" formControlName="description" type="text" rows="1"
+                            <textarea class="form-control" formControlName="description" type="text" rows="1" [placeholder]="'form.description_plh' | translate"
                                    [ngClass]="{ 'is-invalid': isSubmitted && sf?.description?.invalid}">
                             </textarea>
                         </div>

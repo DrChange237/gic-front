@@ -12,7 +12,7 @@
         <form [formGroup]="signinForm" (ngSubmit)="signIn()">
           @if (alert.show) {
             <div class="col-md-12">
-              <ngb-alert class="py-2" [type]="alert.type" [dismissible]="false">
+              <ngb-alert class="py-2 rounded-5" [type]="alert.type" [dismissible]="false">
                 {{ alert.message | translate }}
               </ngb-alert>
             </div>
