@@ -59,7 +59,7 @@ export class SigninComponent implements OnInit {
         this.loadingText = this.commonSrv.translate.instant('sessions.signing_in');
         const data = {
             username: this.signinForm.value?.email as string,
-            password: this.commonSrv.secureSrv.hashMD5(this.signinForm.value?.password || '')
+            password: this.signinForm.value?.password || ''
         };
 
         this.auth.signIn(data).pipe(finalize(() => this.loading = false ))

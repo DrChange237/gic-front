@@ -173,7 +173,7 @@ export class TrxServicesComponent implements OnInit {
   confirmPayment(code: string) {
     const data = {
       id: this.paymentInitiate.id,
-      password: this.commonSrv.secureSrv.hashMD5(code)
+      password: code
     };
 
     this.factorySrv.confirmPayment(data).subscribe({

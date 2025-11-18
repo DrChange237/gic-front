@@ -85,7 +85,7 @@ export class MgnFundTransfer implements OnInit {
   }
 
   private  confirmTransfert(code: string) {
-    const data = { ...this.transfertForm.getRawValue(), password: this.commonSrv.secureSrv.hashMD5(code) };
+    const data = { ...this.transfertForm.getRawValue(), password: code };
 
     this.factorySrv.transferToAgency(data).subscribe({
       next: () => {
