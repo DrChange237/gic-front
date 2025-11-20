@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BaseApiService} from "./base-api.service";
 import {HttpClient} from "@angular/common/http";
-import {AccountBalance, Agency, Cashier, Role} from "../../shared/interfaces";
+import {AccountBalance, Agency, Cashier, OperationAccount, Role} from "../../shared/interfaces";
 import {catchError, of, tap} from "rxjs";
 import {CommonService} from "./common.service";
 
@@ -44,8 +44,12 @@ export class AccountService extends BaseApiService {
       return this.get<Cashier[]>(`cashier/${url}`);
   }
 
-  changCashierStatus(username: string, enabled: boolean) {
+  updateCashierStatus(username: string, enabled: boolean) {
       return this.post<any>('cashier/enabled', { username, enabled });
+  }
+
+  updateCashierRole(data: { cashierId: string, roleId: string, password: string  }) {
+      return this.post<any>('cashier/updateRole', data);
   }
 
   getListRoles() {
@@ -65,5 +69,13 @@ export class AccountService extends BaseApiService {
 
   getDetailRole(roleId: string) {
       return this.get<Role>('role/detail', { params: { roleId } });
+  }
+
+  getOperationAccount(agencyId: string) {
+      return this.get<OperationAccount[]>(`agency/operationAccounts`, { params: { agencyId } });
+  }
+
+  updateAgencyAvailability(data: { agencyId: string, avaibility: string, password: string  }) {
+      return this.post<any>('agency/openOrCloses', data);
   }
 }

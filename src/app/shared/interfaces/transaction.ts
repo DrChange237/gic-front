@@ -123,9 +123,29 @@ export interface InitTransfertFund {
     password: string
 }
 
+export interface TransitAccount {
+    title: string,
+    balance: number,
+    currency: {
+        code: string,
+        name: string
+    }
+}
+
 export interface OperationAccount {
     id: string,
     agency: Agency,
-    biller: ServiceModel,
+    biller: {
+        balancePassageAccount: TransitAccount,
+        id: string
+        code: string,
+        name: string,
+        logo: string,
+        enabled: boolean,
+        commissionAccount: string,
+        passageAgencyCode: string,
+        passageAccountNumber: string,
+        passageAccountKey: string,
+    },
     account: Account
 }

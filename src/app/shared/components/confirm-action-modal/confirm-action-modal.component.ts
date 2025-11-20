@@ -9,8 +9,8 @@ import {TranslateService} from "@ngx-translate/core";
   standalone: false,
 })
 export class ConfirmActionModalComponent implements OnInit {
-  @Input() title: string = 'modal.confirm_action';
-  @Input() message: string = 'modal.confirm_action_message';
+  @Input() title: string = '';
+  @Input() message: string = '';
   @Input() confirmButtonText: string = 'btn.confirm';
   @Input() cancelButtonText: string = 'btn.cancel';
   @Input() requirePin: boolean = true;
@@ -23,7 +23,7 @@ export class ConfirmActionModalComponent implements OnInit {
 
   ngOnInit() {
     this.title = this.title || 'modal.confirm_action';
-    this.message = this.message || 'modal.confirm_action_message';
+    this.message = this.message || (this.requirePin ? 'modal.confirm_action_message_pin' : 'modal.confirm_action_message_password');
   }
 
   confirm() {

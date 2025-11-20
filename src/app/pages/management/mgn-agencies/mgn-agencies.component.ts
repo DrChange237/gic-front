@@ -68,7 +68,9 @@ export class MgnAgenciesComponent extends BaseListNonPagedComponent<Agency> impl
   }
 
   viewOperationReview(agency: Agency){
-    const param = this.commonSrv.secureSrv.encryptParams({id: agency.id, name: agency.name});
+    const param = this.commonSrv.secureSrv.encryptParams(
+        { id: agency.id, name: agency.name, availability: agency.avaibility }
+    );
     this.commonSrv.router.navigate(['management/operation-review', param])
   }
 
@@ -88,10 +90,7 @@ export class MgnAgenciesComponent extends BaseListNonPagedComponent<Agency> impl
 
   onChangeStatusAgency(agency: Agency) {
     this.accountSrv.changAgencyStatus(agency.code, !agency.enabled).subscribe({
-      next: () => {
-        this.openResultModal(agency.id)
-        this.commonSrv.alert('success', 'account.update_status_agency_done', 'account.agent')
-      },
+      next: () => { this.openResultModal(agency.id) },
       error: err => this.commonSrv.errorHandle(err, 'account.update_status_agency_failed', 'account.agent')
     });
   }

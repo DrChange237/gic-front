@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {NgbHighlight, NgbModal, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgSelectComponent} from "@ng-select/ng-select";
@@ -9,7 +9,7 @@ import {catchError, of} from "rxjs";
 import { SharedComponentsModule } from "src/app/shared/components/shared-components.module";
 import {AccountService} from "../../../core/services/account.service";
 import {CommonService} from "../../../core/services/common.service";
-import {Cashier} from "../../../shared/interfaces";
+import {Cashier, Role} from "../../../shared/interfaces";
 import {BaseListNonPagedComponent} from "../../../core/utils/base-list/base-list-unpaged.component";
 import {SharedPipesModule} from "../../../shared/pipes/shared-pipes.module";
 import {
@@ -29,6 +29,11 @@ import {HasPermissionDirective} from "../../../shared/directives/permission.dire
   standalone: true
 })
 export class MgnAgentsComponent extends BaseListNonPagedComponent<Cashier> implements OnInit {
+
+  roles: Role[];
+  cashierRole: Role;
+  currCashier: Cashier;
+  errorMessage: string;
 
   listType: string = '';
 
@@ -68,42 +73,77 @@ export class MgnAgentsComponent extends BaseListNonPagedComponent<Cashier> imple
     this.commonSrv.router.navigate(['transactions/history/agent', param])
   }
 
-  openConfirmModal(cashier: Cashier) {
+  editRoleCashier(content: TemplateRef<never>, cashier: Cashier) {
+    this.accountSrv.getListRoles().subscribe({
+      next: res => {
+        this.roles = res;
+        this.cashierRole = cashier.role;
+        this.currCashier = cashier;
+        this.errorMessage = '';
+        this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true });
+      },
+      error: err => this.commonSrv.errorHandle(err, 'account.get_agent_list_failed', 'account.role')
+    });
+  }
+
+  openConfirmModal(update: 'ROLE' | 'STATUS', cashier?: Cashier) {
+    if (update === 'ROLE' && this.currCashier.role.id === this.cashierRole.id) {
+      this.errorMessage = 'form.select_role_already_apply';
+      return;
+    } else { this.modalService.dismissAll() }
+
     const modalRef = this.modalService.open(ConfirmActionModalComponent, {
       centered: true, backdrop: 'static',
     });
 
-    modalRef.componentInstance.title = cashier.enabled ? 'modal.disable' : 'modal.enable';
-    modalRef.componentInstance.message = this.commonSrv.translate.instant(
-        cashier.enabled ? 'modal.disable_message' : 'modal.enable_message',
-        { name: cashier.name });
-    modalRef.componentInstance.withoutAuth = true;
+    if (update === "STATUS") {
+      this.currCashier = cashier;
+      modalRef.componentInstance.title = cashier.enabled ? 'modal.disable' : 'modal.enable';
+      modalRef.componentInstance.message = this.commonSrv.translate.instant(
+          cashier.enabled ? 'modal.disable_message' : 'modal.enable_message',
+          { name: cashier.name });
+      modalRef.componentInstance.withoutAuth = true;
+      modalRef.result.then((res: string) => res && this.onChangeStatusAgent());
+    }
 
-    modalRef.result.then((res: string) => res && this.onChangeStatusAgent(cashier));
+    if (update === "ROLE") {
+      modalRef.componentInstance.withoutAuth = false;
+      modalRef.componentInstance.requirePin = false;
+      modalRef.result.then((res: string) => res && this.onChangeRoleAgent(res));
+    }
   }
 
-  onChangeStatusAgent(cashier: Cashier) {
-    this.accountSrv.changCashierStatus(cashier.username, !cashier.enabled).subscribe({
-      next: () => {
-        this.openResultModal(cashier.username)
-        this.commonSrv.alert('success', 'account.update_status_agent_done', 'account.agent')
-      },
+  onChangeStatusAgent() {
+    this.accountSrv.updateCashierStatus(this.currCashier.username, !this.currCashier.enabled).subscribe({
+      next: () => { this.openResultModal('STATUS') },
       error: err => this.commonSrv.errorHandle(err, 'account.update_status_agent_failed', 'account.agent')
     });
   }
 
-  openResultModal(code: string) {
-      const resultModal = this.modalService.open(ActionResultModalComponent, {
-        centered: true,
-      });
+  onChangeRoleAgent(code: string) {
+    const data = { cashierId: this.currCashier.id, roleId: this.cashierRole.id, password: code };
 
-      resultModal.componentInstance.message = 'account.update_status_agent_done';
+    this.accountSrv.updateCashierRole(data).subscribe({
+      next: () => { this.openResultModal('ROLE'); },
+      error: err => this.commonSrv.errorHandle(err, 'account.update_role_agent_failed', 'account.agent')
+    });
+  }
+
+  openResultModal(action: 'ROLE' | 'STATUS') {
+      const resultModal = this.modalService.open(ActionResultModalComponent, { centered: true });
+
+      resultModal.componentInstance.message = action === 'STATUS' ? 'account.update_status_agent_done' : 'account.update_role_agent_done';
       resultModal.componentInstance.isSuccess = true;
 
       resultModal.result.then(() => {
         const items = this.allItems;
-        const index = items.findIndex(c => c.username === code);
-        items[index] = { ...items[index], enabled: !items[index].enabled };
+        const index = items.findIndex(c => c.username === this.currCashier.username);
+
+        if (action === 'STATUS') { items[index] = { ...items[index], enabled: !this.currCashier.enabled }; }
+        if (action === 'ROLE') { items[index] = { ...items[index], role: this.cashierRole }; }
+        this.cashierRole = null;
+        this.currCashier = null;
+
         this._allItems$.next(items);
         this.updatePaged();
       });

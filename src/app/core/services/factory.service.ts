@@ -5,7 +5,7 @@ import {
   AccountBalance,
   InitPaymentData,
   InitPaymentResponse,
-  InitTransfertFund, OperationAccount,
+  InitTransfertFund,
   ServiceModel,
   ServiceType,
   Transaction
@@ -65,10 +65,6 @@ export class FactoryService extends BaseApiService {
     const url1 = type ? `/${type}` : '';
     const url2 = entityId ? `/all` : '';
     return this.get<ListResponse<Transaction>>(`history${url1}${url2}`, { params: filter })
-  }
-
-  getOperationAccount(agencyId: string) {
-    return this.get<OperationAccount>(`agency/operationAccounts`, { params: { agencyId } });
   }
 
 }

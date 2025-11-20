@@ -46,9 +46,13 @@
                                                     (click)="viewHistoryAgent(agent)" *hasPermission="Permission.HISTORY_CASHIER_VIEW">
                                                 <i class="i-Receipt fw-medium"></i>
                                             </button>
+                                            <button role="button" class="btn btn-warning text-14" [ngbTooltip]="'btn.update_role_agent' | translate"
+                                                    (click)="editRoleCashier(modalDetailAgency, agent)" *hasPermission="Permission.CASHIER_ENABLE">
+                                                <i class="i-Lock-User fw-medium"></i>
+                                            </button>
                                             <button role="button" class="btn text-14" [ngClass]="{'btn-danger': agent.enabled, 'btn-success text-white': !agent.enabled}"
                                                     [ngbTooltip]="('btn.agent_active.' + !agent.enabled) | translate"
-                                                    (click)="openConfirmModal(agent)" *hasPermission="Permission.CASHIER_ENABLE">
+                                                    (click)="openConfirmModal('STATUS', agent)" *hasPermission="Permission.CASHIER_ENABLE">
                                                 <i class="fw-medium" [ngClass]="{'i-Lock-2': agent.enabled, 'i-Unlock-2': !agent.enabled}"></i>
                                             </button>
                                         </div>
@@ -83,3 +87,31 @@
         </div>
     </div>
 </div>
+
+<ng-template #modalDetailAgency let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title fw-semibold">{{ 'modal.update_agent_role' | translate }}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
+    </div>
+
+    <div class="modal-body">
+        <p>{{ 'modal.select_role_message' | translate }} {{ currCashier.name }}</p>
+
+        <div class="form-group mt-3">
+            <label>{{ 'form.role_label' | translate }}</label>
+            <ng-select [items]="roles" class="custom" [(ngModel)]="cashierRole" bindLabel="name" [clearable]="false"
+                   [placeholder]="'form.role_plh' | translate" [ngClass]="{'is-invalid': errorMessage}" (change)="errorMessage = ''">
+            </ng-select>
+            <div *ngIf="errorMessage" class="invalid-feedback py-1 fst-italic">
+                {{ errorMessage | translate }}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-dark" (click)="modal.close()">{{ 'btn.cancel' | translate }}</button>
+        <button type="button" class="btn btn-primary" (click)="openConfirmModal('ROLE')">
+            {{ 'btn.confirm' | translate }}
+        </button>
+    </div>
+</ng-template>

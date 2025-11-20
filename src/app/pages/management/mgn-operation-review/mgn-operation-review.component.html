@@ -1,4 +1,88 @@
 <app-breadcrumb [subName]="paramsFilter?.name || ''"></app-breadcrumb>
 
-<div class="row">
+<div class="row" id="scroll-container">
+    <div class="col-md-12">
+        <div class="card o-hidden">
+            <div class="p-4">
+                <div class="justify-content-between">
+                    <div class="mb-4 row">
+                        <div class="col-xs-3 col-sm-5 col-md-4 col-lg-3">
+                            <input id="table-complete-search" type="text" class="form-control" name="searchTerm" [(ngModel)]="searchTerm"
+                                   (input)="filterUpdate($event)" [placeholder]="'form.search_plh' | translate"/>
+                        </div>
+                        @if (loading$ | async) {
+                            <span class="col col-form-label">Loading...</span>
+                        }
+                    </div>
+
+                    @if (paramsFilter.availability) {
+                        <button role="button" class="btn text-14" [ngClass]="paramsFilter.availability === 'OPEN' ? 'btn-warning' : 'btn-success text-white'"
+                                (click)="openConfirmModal()" *hasPermission="Permission.AGENCY_OPEN">
+                            {{ ('btn.agent_available.' + paramsFilter.availability) | translate }}
+                        </button>
+                    }
+                </div>
+
+                <div class="rounded-table overflow-x-auto">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th class="px-3" scope="col" role="button">{{ 'table.service' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.operation_account' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.operation_account_balance' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.transit_account' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.transit_account_balance' | translate }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @for (account of items$ | async; track account.id) {
+                                <tr>
+                                    <td class="px-3">
+                                        <img [src]="account.biller.logo | prefixImgUrl" [alt]="" class="me-2" style="width: 30px"/>
+                                        <ngb-highlight [result]="account.biller.name" [term]="searchTerm" />
+                                    </td>
+                                    <td>
+                                        {{account.account.agencyCode}}-{{account.account.accountNumber}}-{{account.account.accountKey}}
+                                    </td>
+                                    <td>
+                                        {{(account.account?.balance?.balance | number: '1.0-0') || 'N/A'}}
+                                        {{account.account?.balance?.currency?.code}}
+                                    </td>
+                                    <td>
+                                        {{account.biller.passageAgencyCode}}-{{account.biller.passageAccountNumber}}-{{account.biller.passageAccountKey}}
+                                    </td>
+                                    <td>
+                                        {{(account.biller?.balancePassageAccount?.balance | number: '1.0-0') || 'N/A'}}
+                                        {{account.biller?.balancePassageAccount?.currency?.name}}
+                                    </td>
+                                </tr>
+                            } @empty {
+                                <tr>
+                                    <td colspan="5" style="text-align: center">
+                                        {{ 'table.empty_data' | translate }}
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3 justify-content-between py-2">
+                    <ngb-pagination [collectionSize]="pagination?.totalItems || 0" [page]="pagination?.page"
+                                    [pageSize]="pagination?.pageSize" (pageChange)="setPage($event)" [boundaryLinks]="true">
+                    </ngb-pagination>
+
+                    <div class="d-flex">
+                        <label class="text-14 fw-medium py-2 pe-3">
+                            {{ 'table.item_per_page' | translate }}
+                        </label>
+                        <ng-select [items]="pageSizeOptions" class="custom" [dropdownPosition]="'top'" [clearable]="false" name="pageSize"
+                                   (change)="setPageSize($event)" [ngModel]="pagination?.pageSize">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
