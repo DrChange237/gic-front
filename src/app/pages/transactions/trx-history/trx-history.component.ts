@@ -21,13 +21,15 @@ import {FactoryService} from "../../../core/services/factory.service";
 import {CommonService} from "../../../core/services/common.service";
 import {Transaction} from "../../../shared/interfaces";
 import {TableDetailComponent} from "../../../shared/components/table-detail/table-detail.component";
+import {Permission} from "../../../shared/enums/permission";
+import {HasPermissionDirective} from "../../../shared/directives/permission.directive";
 
 @Component({
   selector: 'app-trx-history',
   templateUrl: './trx-history.component.html',
   styleUrls: ['./trx-history.component.scss'],
   imports: [CommonModule, SharedPipesModule, SharedComponentsModule, NgbPagination, FormsModule, NgbHighlight, NgSelectModule,
-    TranslatePipe, NgbTooltip, TableDetailComponent, NgScrollbar, NgbInputDatepicker, ReactiveFormsModule],
+    TranslatePipe, NgbTooltip, TableDetailComponent, NgScrollbar, NgbInputDatepicker, ReactiveFormsModule, HasPermissionDirective],
   standalone: true,
 })
 export class TrxHistoryComponent extends BaseListComponent<Transaction> implements OnInit {
@@ -39,6 +41,8 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
   datasTransaction: { key: string; label: string, value: string }[];
 
   @ViewChild(NgScrollbar) scrollbarRef!: NgScrollbar;
+
+  protected readonly Permission = Permission;
 
   constructor(
       private fb: UntypedFormBuilder,

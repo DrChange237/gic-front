@@ -53,7 +53,7 @@
   <ul class="childNav" appDropdown>
     @for (item of parentItem?.sub; track item) {
       <li appDropdownLink class="nav-item">
-        @if (item.type === 'link') {
+        @if (!item.disabled && item.type === 'link') {
           <a routerLink="{{ item.state }}" class="" routerLinkActive="open">
             @if (item.icon) {
               <i [class]="'nav-icon ' + item.icon"></i>
@@ -61,7 +61,7 @@
             <span class="item-name lvl1">{{ 'navigation.' + item.name | translate }}</span>
           </a>
         }
-        @if (item.type === 'dropDown') {
+        @if (!item.disabled && item.type === 'dropDown') {
           <div>
             <a appDropdownToggle [ngClass]="{ open: item.active }" routerLinkActive="open">
               @if (item.icon) {

@@ -23,7 +23,7 @@ export class UserSettingsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.user = this.authSrv.getUser();
+    this.user = this.authSrv.user;
   }
 
 }

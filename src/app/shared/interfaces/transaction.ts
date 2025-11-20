@@ -1,5 +1,5 @@
 import {PaymentStatus, TransactionStatus} from "../enums";
-import {Cashier} from "./user.interface";
+import {Account, Agency, Cashier} from "./user.interface";
 
 export interface Transaction {
     id: string,
@@ -121,4 +121,11 @@ export interface InitTransfertFund {
     amount: number,
     description: string,
     password: string
+}
+
+export interface OperationAccount {
+    id: string,
+    agency: Agency,
+    biller: ServiceModel,
+    account: Account
 }

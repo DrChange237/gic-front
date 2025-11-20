@@ -115,7 +115,7 @@
                                     <td class="col-action">
                                         <div class="d-flex flex-wrap gap-2 justify-content-center">
                                             <button role="button" class="btn btn-info text-white text-14" [ngbTooltip]="'btn.detail' | translate"
-                                                    (click)="openDetailTrx(modalDetailTrx, transaction)">
+                                                    (click)="openDetailTrx(modalDetailTrx, transaction)" *hasPermission="Permission.HISTORY_CASHIER_DETAIL">
                                                 <i class="i-Information fw-medium"></i>
                                             </button>
                                             <button role="button" class="btn btn-primary text-14" [ngbTooltip]="'btn.download_receipt' | translate"

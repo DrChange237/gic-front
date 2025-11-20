@@ -38,6 +38,10 @@
     "REJECTED": "Rejeté",
     "SUCCESS": "Réussie",
     "WAITING": "En cours",
+    "availability": {
+      "CLOSE": "Fermer",
+      "OPEN": "Ouvert"
+    },
     "service_unavailable": "Indisponible",
     "status": {
       "false": "Désactivié",
@@ -53,6 +57,10 @@
     "agent_active": {
       "false": "Désactivé l'agent",
       "true": "Activé agent"
+    },
+    "agent_available": {
+      "CLOSE": "Ouvrir l'agence",
+      "OPEN": "Fermer l'agence"
     },
     "agent_history": "Historique de l'agent",
     "back_to_home": "Retourner à l'accueil",
@@ -131,6 +139,7 @@
     "management": "Management",
     "my_agents": "Mes agents",
     "my_history": "Mon Historique",
+    "operation_review": "Bilan des opérations",
     "profile": "Profil",
     "reporting": "Rapport",
     "role_profile": "Rôle & Profil",
@@ -164,6 +173,7 @@
     "agent": "Agent",
     "amount": "Montant",
     "authorities": "Autorités",
+    "availability": "Disponibilité",
     "boolean": {
       "false": "Non",
       "true": "Oui"

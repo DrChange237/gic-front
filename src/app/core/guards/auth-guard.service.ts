@@ -13,10 +13,8 @@ export class AuthGuard {
   ) { }
 
   canActivate() {
-    if (this.auth.authenticated) {
-      return true;
-    } else {
-      this.router.navigateByUrl('/sessions/signin');
-    }
+    if (!this.auth.authenticated) return this.router.navigateByUrl('/sessions/signin');
+
+    return true;
   }
 }

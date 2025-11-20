@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import {inject, Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {AuthService} from "./auth.service";
+import {GROUP_PERMISSIONS, Permission} from "../../shared/enums/permission";
 
 export interface IMenuItem {
     id?: string;
@@ -24,6 +26,7 @@ export interface IChildItem {
     icon?: string;
     sub?: IChildItem[];
     active?: boolean;
+    disabled?: boolean;
 }
 
 interface IBadge {
@@ -45,7 +48,9 @@ export class NavigationService {
         childnavOpen: false
     };
     selectedItem: IMenuItem;
-    
+
+    protected authSrv: AuthService = inject(AuthService);
+
     constructor() {
     }
 
@@ -68,8 +73,8 @@ export class NavigationService {
             icon: 'i-Money-2',
             sub: [
                 { icon: 'i-Business-Man', name: 'my_history', state: 'transactions/history/agent', type: 'link' },
-                { icon: 'i-Business-Mens', name: 'history_agency', state: 'transactions/history/agency', type: 'link' },
-                { icon: 'i-University1', name: 'history_global', state: 'transactions/history/all', type: 'link' },
+                { icon: 'i-Business-Mens', name: 'history_agency', state: 'transactions/history/agency', type: 'link', disabled: !this.authSrv.hasPermission(Permission.HISTORY_AGENCY_VIEW) },
+                { icon: 'i-University1', name: 'history_global', state: 'transactions/history/all', type: 'link', disabled: !this.authSrv.hasPermission(Permission.HISTORY_CASHIER_VIEW) },
             ]
         },
         {
@@ -77,130 +82,22 @@ export class NavigationService {
             type: 'link',
             icon: 'i-Statistic',
             state: 'reporting',
+            disabled: !this.authSrv.hasPermission(Permission.REPORT_VIEW)
         },
         {
             name: 'management',
             type: 'dropDown',
             icon: 'i-Management',
+            disabled: !this.authSrv.hasAnyPermission([...GROUP_PERMISSIONS.MANAGEMENT]),
             sub: [
-                { icon: 'i-Financial', name: 'transfer_fund', state: 'management/transfer-fund', type: 'link' },
-                { icon: 'i-Business-ManWoman', name: 'agents', state: 'management/agents/all', type: 'link' },
-                { icon: 'i-Business-ManWoman', name: 'my_agents', state: 'management/agency/agents', type: 'link' },
-                { icon: 'i-University1', name: 'agencies', state: 'management/agencies', type: 'link' },
-                { icon: 'i-Lock-User', name: 'role_profile', state: 'management/role-and-profile', type: 'link' },
+                { icon: 'i-Token-', name: 'operation_review', state: 'management/operation-review', type: 'link', disabled: !this.authSrv.hasPermission(Permission.FUNDS_TRANSFER_VIEW)  },
+                { icon: 'i-Financial', name: 'transfer_fund', state: 'management/transfer-fund', type: 'link', disabled: !this.authSrv.hasPermission(Permission.FUNDS_TRANSFER_VIEW)  },
+                { icon: 'i-Business-ManWoman', name: 'agents', state: 'management/agents/all', type: 'link', disabled: !this.authSrv.hasPermission(Permission.CASHIER_ALL_VIEW) },
+                { icon: 'i-Business-ManWoman', name: 'my_agents', state: 'management/agency/agents', type: 'link', disabled: !this.authSrv.hasPermission(Permission.CASHIER_VIEW) },
+                { icon: 'i-University1', name: 'agencies', state: 'management/agencies', type: 'link', disabled: !this.authSrv.hasPermission(Permission.AGENCY_VIEW) },
+                { icon: 'i-Lock-User', name: 'role_profile', state: 'management/role-and-profile', type: 'link', disabled: !this.authSrv.hasPermission(Permission.ROLE_VIEW) },
             ]
         },
-        // {
-        //     name: 'templates',
-        //     description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
-        //     type: 'dropDown',
-        //     icon: 'i-Duplicate-Layer',
-        //     sub: [
-        //         {
-        //             name: 'Dashboard',
-        //             type: 'dropDown',
-        //             icon: 'i-Bar-Chart',
-        //             sub: [
-        //                 { icon: 'i-Clock-3', name: 'Version 1', state: '/dashboard/v1', type: 'link' },
-        //                 { icon: 'i-Clock-4', name: 'Version 2', state: '/dashboard/v2', type: 'link' },
-        //                 { icon: 'i-Over-Time', name: 'Version 3', state: '/dashboard/v3', type: 'link' },
-        //                 { icon: 'i-Clock', name: 'Version 4', state: '/dashboard/v4', type: 'link' },
-        //             ]
-        //         },
-        //         {
-        //             name: 'UI kits',
-        //             type: 'dropDown',
-        //             icon: 'i-Library',
-        //             sub: [
-        //                 { icon: 'i-Bell', name: 'Alerts', state: '/uikits/alerts', type: 'link' },
-        //                 { icon: 'i-Split-Horizontal-2-Window', name: 'Accordions', state: '/uikits/accordions', type: 'link' },
-        //                 { icon: 'i-Medal-2', name: 'Badges', state: '/uikits/badges', type: 'link' },
-        //                 {
-        //                     icon: 'i-Arrow-Right-in-Circle',
-        //                     name: 'Buttons',
-        //                     type: 'dropDown',
-        //                     sub: [
-        //                         { name: 'Bootstrap Buttons', state: '/uikits/buttons', type: 'link' },
-        //                         { name: 'Loding Buttons', state: '/uikits/buttons-loading', type: 'link' }
-        //                     ]
-        //                 },
-        //                 { icon: 'i-ID-Card', name: 'Cards', state: '/uikits/cards', type: 'link' },
-        //                 { icon: 'i-Line-Chart-2', name: 'Cards metrics', state: '/uikits/cards-metrics', type: 'link' },
-        //                 { icon: 'i-Credit-Card', name: 'Cards widget', state: '/uikits/cards-widget', type: 'link' },
-        //                 { icon: 'i-Full-Cart', name: 'Cards ecommerce', state: '/uikits/cards-ecommerce', type: 'link' },
-        //                 { icon: 'i-Duplicate-Window', name: 'Modals', state: '/uikits/modals', type: 'link' },
-        //                 { icon: 'i-Speach-Bubble-3', name: 'Popover', state: '/uikits/popover', type: 'link' },
-        //                 { icon: 'i-Like', name: 'Rating', state: '/uikits/rating', type: 'link' },
-        //                 { icon: 'i-Loading-3', name: 'Loaders', state: '/uikits/loaders', type: 'link' },
-        //             ]
-        //         },
-        //         {
-        //             name: 'Apps',
-        //             type: 'dropDown',
-        //             icon: 'i-Computer-Secure',
-        //             sub: [
-        //                 { icon: 'i-Add-File', name: 'Invoice Builder', state: '/invoice', type: 'link' },
-        //                 { icon: 'i-Email', name: 'Inbox', state: '/inbox', type: 'link' },
-        //                 { icon: 'i-Speach-Bubble-3', name: 'Chat', state: '/chat', type: 'link' },
-        //                 { icon: 'i-Calendar', name: 'Calendar', state: '/calendar', type: 'link' },
-        //             ]
-        //         },
-        //         {
-        //             name: 'Forms',
-        //             type: 'dropDown',
-        //             icon: 'i-File-Clipboard-File--Text',
-        //             sub: [
-        //                 { icon: 'i-File-Clipboard-Text--Image', name: 'Basic layouts', state: '/forms/basic', type: 'link' },
-        //                 { icon: 'i-Split-Vertical', name: 'Form layouts', state: '/forms/layouts', type: 'link' },
-        //                 { icon: 'i-Receipt-4', name: 'Input Group', state: '/forms/input-group', type: 'link' },
-        //                 { icon: 'i-File-Edit', name: 'Input Mask', state: '/forms/input-mask', type: 'link' },
-        //                 { icon: 'i-Width-Window', name: 'Wizard', state: '/forms/wizard', type: 'link' },
-        //                 { icon: 'i-Crop-2', name: 'Image Cropper', state: '/forms/img-cropper', type: 'link' },
-        //             ]
-        //         },
-        //         {
-        //             name: 'Data Tables',
-        //             type: 'dropDown',
-        //             icon: 'i-File-Horizontal-Text',
-        //             sub: [
-        //                 { icon: 'i-File-Horizontal-Text', name: 'List', state: '/tables/list', type: 'link' },
-        //                 { icon: 'i-Full-View-Window', name: 'Bootstrap Table', state: '/tables/bootstrap-table-detail', type: 'link' },
-        //             ]
-        //         },
-        //         {
-        //             name: 'Sessions',
-        //             type: 'dropDown',
-        //             icon: 'i-Administrator',
-        //             sub: [
-        //                 { icon: 'i-Add-User', name: 'Sign up', state: '/sessions/signup', type: 'link' },
-        //                 { icon: 'i-Checked-User', name: 'Sign in', state: '/sessions/signin', type: 'link' },
-        //                 { icon: 'i-Find-User', name: 'Forgot', state: '/sessions/forgot', type: 'link' }
-        //             ]
-        //         },
-        //         {
-        //             name: 'Pages',
-        //             type: 'dropDown',
-        //             icon: 'i-Windows-2',
-        //             sub: [
-        //                 { icon: 'i-Male', name: 'User Profile', state: '/pages/profile', type: 'link' }
-        //             ]
-        //         },
-        //         {
-        //             name: 'Icons',
-        //             type: 'link',
-        //             icon: 'i-Cloud-Sun',
-        //             state: '/icons/iconsmind'
-        //         },
-        //         {
-        //             name: 'Others',
-        //             type: 'dropDown',
-        //             icon: 'i-Double-Tap',
-        //             sub: [
-        //                 { icon: 'i-Error-404-Window', name: 'Not found', state: '/others/404', type: 'link' }
-        //             ]
-        //         }
-        //     ]
-        // },
     ];
 
 

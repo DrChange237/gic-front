@@ -17,18 +17,22 @@ import {
 } from "../../../shared/components/confirm-action-modal/confirm-action-modal.component";
 import {ActionResultModalComponent} from "../../../shared/components/action-result-modal/action-result-modal.component";
 import {ActivatedRoute} from "@angular/router";
+import {Permission} from "../../../shared/enums/permission";
+import {HasPermissionDirective} from "../../../shared/directives/permission.directive";
 
 @Component({
   selector: 'app-mgn-agents',
   templateUrl: './mgn-agents.component.html',
   styleUrls: ['./mgn-agents.component.scss'],
   imports: [CommonModule, SharedPipesModule, SharedComponentsModule, FormsModule, NgSelectComponent, NgbHighlight,
-    NgbPagination, ReactiveFormsModule, TranslatePipe, NgbTooltip],
+    NgbPagination, ReactiveFormsModule, TranslatePipe, NgbTooltip, HasPermissionDirective],
   standalone: true
 })
 export class MgnAgentsComponent extends BaseListNonPagedComponent<Cashier> implements OnInit {
 
   listType: string = '';
+
+  protected readonly Permission = Permission;
 
   constructor(
       private modalService: NgbModal,

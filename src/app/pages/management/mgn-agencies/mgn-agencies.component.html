@@ -23,6 +23,7 @@
                             <th scope="col" role="button">{{ 'table.address' | translate }}</th>
                             <th scope="col" role="button">{{ 'table.city' | translate }}</th>
                             <th scope="col" role="button">{{ 'table.last_activity' | translate }}</th>
+                            <th class="text-center"  scope="col" role="button">{{ 'table.availability' | translate }}</th>
                             <th class="text-center"  scope="col" role="button">{{ 'table.status' | translate }}</th>
                             <th class="text-center" scope="col" role="button">{{ 'table.action' | translate }}</th>
                         </tr>
@@ -36,6 +37,11 @@
                                     <td><ngb-highlight [result]="agency.town.name + ' - ' + agency.town.country.name" [term]="searchTerm" /></td>
                                     <td>{{(agency.lastActivity | date: 'dd/MM/yyyy - HH:mm') || 'N/A' }}</td>
                                     <td class="col-status">
+                                        <span class="badge rounded-pill p-2" [ngClass]="agency.avaibility === 'OPEN' ? 'text-bg-primary' : 'text-bg-secondary'">
+                                            {{ 'badge.availability.' + agency.avaibility | translate | uppercase }}
+                                        </span>
+                                    </td>
+                                    <td class="col-status">
                                         <span class="badge rounded-pill p-2 text-bg-{{agency.enabled ? 'success text-white' : 'danger'}}">
                                             {{ 'badge.status.' + agency.enabled | translate | uppercase }}
                                         </span>
@@ -43,16 +49,21 @@
                                     <td class="col-action">
                                         <div class="d-flex justify-content-center gap-2">
                                             <button role="button" class="btn btn-info text-white text-14" [ngbTooltip]="'btn.detail' | translate"
-                                                    (click)="openModal(modalDetailAgency, agency)">
+                                                    (click)="openModal(modalDetailAgency, agency)" *hasPermission="Permission.AGENCY_DETAIL">
                                                 <i class="i-Information fw-medium"></i>
                                             </button>
                                             <button role="button" class="btn btn-primary text-white text-14" [ngbTooltip]="'btn.agent_history' | translate"
-                                                    (click)="viewHistoryAgency(agency)">
+                                                    (click)="viewHistoryAgency(agency)" *hasPermission="Permission.HISTORY_CASHIER_VIEW">
                                                 <i class="i-Receipt fw-medium"></i>
                                             </button>
+                                            <button role="button" class="btn text-14" [ngClass]="agency.avaibility === 'OPEN' ? 'btn-warning' : 'btn-success text-white'"
+                                                    [ngbTooltip]="('btn.agent_available.' + agency.avaibility) | translate"
+                                                    (click)="viewOperationReview(agency)" *hasPermission="Permission.AGENCY_OPEN">
+                                                <i class="fw-medium" [ngClass]="agency.avaibility === 'CLOSE' ? 'i-Power-2' : 'i-Power-2'"></i>
+                                            </button>
                                             <button role="button" class="btn text-14" [ngClass]="{'btn-danger': agency.enabled, 'btn-success text-white': !agency.enabled}"
-                                                    [ngbTooltip]="('btn.agent_active.' + !agency.enabled) | translate"
-                                                    (click)="openConfirmModal(agency)">
+                                                    [ngbTooltip]="('btn.agency_active.' + !agency.enabled) | translate"
+                                                    (click)="openConfirmModal(agency)" *hasPermission="Permission.AGENCY_ENABLE">
                                                 <i class="fw-medium" [ngClass]="{'i-Lock-2': agency.enabled, 'i-Unlock-2': !agency.enabled}"></i>
                                             </button>
                                         </div>
@@ -60,7 +71,7 @@
                                 </tr>
                             } @empty {
                                 <tr>
-                                    <td colspan="7" style="text-align: center">
+                                    <td colspan="8" style="text-align: center">
                                         {{ 'table.empty_data' | translate }}
                                     </td>
                                 </tr>

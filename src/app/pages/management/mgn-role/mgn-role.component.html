@@ -35,11 +35,11 @@
                                     <td class="col-action">
                                         <div class="d-flex gap-2 flex-wrap justify-content-center">
                                             <button role="button" class="btn btn-info text-white text-14" [ngbTooltip]="'btn.detail' | translate"
-                                                    (click)="openModal(modalDetailRole, role, 'DETAIL')">
+                                                    (click)="openModal(modalDetailRole, role, 'DETAIL')" *hasPermission="Permission.ROLE_DETAIL">
                                                 <i class="i-Information fw-medium"></i>
                                             </button>
                                             <button role="button" class="btn btn-primary text-14" [ngbTooltip]="'btn.list_authorities' | translate"
-                                                    (click)="openModal(modalDetailRole, role, 'AUTH')">
+                                                    (click)="openModal(modalDetailRole, role, 'AUTH')" *hasPermission="Permission.ROLE_DETAIL">
                                                 <i class="i-Lock-User fw-medium"></i>
                                             </button>
                                         </div>

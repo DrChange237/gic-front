@@ -13,15 +13,15 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardAgentComponent } from './dashboard-agent/dashboard-agent.component';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
 import {TranslatePipe} from "@ngx-translate/core";
+import {SharedDirectivesModule} from "../../shared/directives/shared-directives.module";
+import {HasPermissionDirective} from "../../shared/directives/permission.directive";
 
 @NgModule({
     imports: [
         CommonModule,
         SharedComponentsModule,
-        // NgxEchartsModule,
-        NgxEchartsModule.forRoot({
-            echarts
-        }),
+        HasPermissionDirective,
+        NgxEchartsModule.forRoot({ echarts }),
         NgbModule,
         NgScrollbarModule,
         DashboardRoutingModule,

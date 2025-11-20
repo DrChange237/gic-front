@@ -14,6 +14,7 @@ export class WizardComponent implements AfterContentInit {
 
   private _steps: Array<WizardStepComponent> = [];
   private _isCompleted = false;
+  private _isNavItemActive = true;
 
   @Input() isCustomNav = false;
 
@@ -33,6 +34,10 @@ export class WizardComponent implements AfterContentInit {
 
   get isCompleted(): boolean {
     return this._isCompleted;
+  }
+
+  get isNavItemActive(): boolean {
+    return this._isNavItemActive;
   }
 
   get activeStep(): WizardStepComponent {
@@ -86,6 +91,10 @@ export class WizardComponent implements AfterContentInit {
   public complete(): void {
     this.activeStep.onComplete.emit();
     this._isCompleted = true;
+  }
+
+  public disableNav(): void {
+    this._isNavItemActive = false;
   }
 
 }

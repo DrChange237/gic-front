@@ -1,8 +1,8 @@
 <app-breadcrumb></app-breadcrumb>
 
 <div class="">
-    <div class="row row-gap-4 mb-4">
-        <div class="col-xxl-5 col-md-6">
+    <div class="row row-gap-4">
+        <div class="col-xxl-5 col-md-6 mb-4" *hasPermission="Permission.BALANCE_OPERATION_VIEW">
             <div class="card account-card operation p-3">
                 <div class="d-flex gap-4 justify-content-between align-items-center mb-2">
                     <div class="w-50">
@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        <div class="col-xxl-5 col-md-6">
+        <div class="col-xxl-5 col-md-6 mb-4" *hasPermission="Permission.BALANCE_COMMISSION_VIEW">
             <div class="card account-card commission p-3">
                 <div class="d-flex gap-4 justify-content-between align-items-center mb-2">
                     <div class="w-50">

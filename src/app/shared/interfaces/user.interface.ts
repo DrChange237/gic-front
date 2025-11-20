@@ -1,6 +1,7 @@
 import { Town } from "./config.interface";
 import {Role} from "./management";
 import {AccountBalance} from "./account.interface";
+import {Permission} from "../enums/permission";
 
 export interface Account {
   id: string;
@@ -35,6 +36,7 @@ export interface Agency {
   account: Account;
   name: string;
   accountCommission: Account;
+  avaibility: string;
   code: string;
   enabled: boolean;
   fixed: boolean;
@@ -47,6 +49,7 @@ export interface Agency {
 
 export interface Authority {
   id: string;
+  code: Permission
   name: string;
   description: string;
 }

@@ -17,7 +17,7 @@
     padding: 2rem  2rem 0;
     position: relative;
     min-height: calc(100vh - #{$topbar-height});
-    background: theme.$white;
+    background: theme.$gray-100;
     &.sidenav-open {
         width: calc(100% - #{$sidebar-left-width});
     }

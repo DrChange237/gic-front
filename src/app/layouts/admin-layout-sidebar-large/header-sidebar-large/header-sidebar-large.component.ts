@@ -30,7 +30,7 @@ export class HeaderSidebarLargeComponent implements OnInit {
     ) { }
   
     ngOnInit() {
-      this.user = this.authSrv.getUser();
+      this.user = this.authSrv.user;
       if (this.authSrv.authenticated) this.getAccount();
     }
   

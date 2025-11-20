@@ -17,19 +17,23 @@ import {AccountService} from "../../../core/services/account.service";
 import {ActionResultModalComponent} from "../../../shared/components/action-result-modal/action-result-modal.component";
 import {NgScrollbar} from "ngx-scrollbar";
 import {TableDetailComponent} from "../../../shared/components/table-detail/table-detail.component";
+import {Permission} from "../../../shared/enums/permission";
+import {HasPermissionDirective} from "../../../shared/directives/permission.directive";
 
 @Component({
   selector: 'app-mgn-agencies',
   templateUrl: './mgn-agencies.component.html',
   styleUrls: ['./mgn-agencies.component.scss'],
   imports: [CommonModule, SharedComponentsModule, FormsModule, NgSelectComponent, NgbHighlight, NgbPagination, TranslatePipe,
-    NgbTooltip, NgScrollbar, TableDetailComponent],
+    NgbTooltip, NgScrollbar, TableDetailComponent, HasPermissionDirective],
   standalone: true
 })
 export class MgnAgenciesComponent extends BaseListNonPagedComponent<Agency> implements OnInit {
 
   currAgency: Agency;
   datasAgency: { key: string; label: string; value: string }[] = [];
+
+  protected readonly Permission = Permission;
 
   constructor(
       private modalService: NgbModal,
@@ -61,6 +65,11 @@ export class MgnAgenciesComponent extends BaseListNonPagedComponent<Agency> impl
   viewHistoryAgency(agency: Agency){
     const param = this.commonSrv.secureSrv.encryptParams({id: agency.id, name: agency.name});
     this.commonSrv.router.navigate(['transactions/history/agency', param])
+  }
+
+  viewOperationReview(agency: Agency){
+    const param = this.commonSrv.secureSrv.encryptParams({id: agency.id, name: agency.name});
+    this.commonSrv.router.navigate(['management/operation-review', param])
   }
 
   openConfirmModal(agency: Agency) {
@@ -136,5 +145,4 @@ export class MgnAgenciesComponent extends BaseListNonPagedComponent<Agency> impl
 
     return [ agencyCode, accountNumber, accountKey, balance, currency ];
   }
-
 }

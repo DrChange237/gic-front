@@ -38,6 +38,10 @@
     "REJECTED": "Rejected",
     "SUCCESS": "Successful",
     "WAITING": "Processing",
+    "availability": {
+      "CLOSE": "Close",
+      "OPEN": "Open"
+    },
     "service_unavailable": "Unavailable",
     "status": {
       "false": "Disable",
@@ -53,6 +57,10 @@
     "agent_active": {
       "false": "Disable agent",
       "true": "Enable agent"
+    },
+    "agent_available": {
+      "CLOSE": "Open agency",
+      "OPEN": "Close agency"
     },
     "agent_history": "Agent history",
     "back_to_home": "Go back to home",
@@ -131,6 +139,7 @@
     "management": "Management",
     "my_agents": "My agents",
     "my_history": "My history",
+    "operation_review": "Operations review",
     "profile": "Profile",
     "reporting": "Reporting",
     "role_profile": "Role & Profile",
@@ -164,6 +173,7 @@
     "agent": "Agent",
     "amount": "Amount",
     "authorities": "Authorities",
+    "availability": "Availability",
     "boolean": {
       "false": "No",
       "true": "Yes"

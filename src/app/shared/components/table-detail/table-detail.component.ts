@@ -5,6 +5,8 @@ import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {TranslatePipe} from "@ngx-translate/core";
 import {FormsModule} from "@angular/forms";
 
+type RowData = Record<string, string>
+
 @Component({
   selector: 'app-table-detail',
   templateUrl: './table-detail.component.html',
@@ -14,13 +16,13 @@ import {FormsModule} from "@angular/forms";
 })
 export class TableDetailComponent implements OnChanges {
 
-  @Input() data: { key: string; label: string; value: string }[] = [];
+  @Input() data: RowData[] = [];
   @Input() pageSize: number = 5;
   @Input() paginate: boolean = false;
   @Input() columns: string[] = ['label', 'value'];
 
   currentPage = 1;
-  pagedData: { key: string; label: string; value: string }[] = [];
+  pagedData: RowData[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data'] || changes['pageSize'] || changes['paginate']) {

@@ -43,12 +43,12 @@
                                     <td class="col-action">
                                         <div class="d-flex justify-content-center gap-2">
                                             <button role="button" class="btn btn-primary text-white text-14" [ngbTooltip]="'btn.agent_history' | translate"
-                                                    (click)="viewHistoryAgent(agent)">
+                                                    (click)="viewHistoryAgent(agent)" *hasPermission="Permission.HISTORY_CASHIER_VIEW">
                                                 <i class="i-Receipt fw-medium"></i>
                                             </button>
                                             <button role="button" class="btn text-14" [ngClass]="{'btn-danger': agent.enabled, 'btn-success text-white': !agent.enabled}"
                                                     [ngbTooltip]="('btn.agent_active.' + !agent.enabled) | translate"
-                                                    (click)="openConfirmModal(agent)">
+                                                    (click)="openConfirmModal(agent)" *hasPermission="Permission.CASHIER_ENABLE">
                                                 <i class="fw-medium" [ngClass]="{'i-Lock-2': agent.enabled, 'i-Unlock-2': !agent.enabled}"></i>
                                             </button>
                                         </div>

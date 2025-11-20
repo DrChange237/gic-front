@@ -13,12 +13,14 @@ import {Role,} from "../../../shared/interfaces";
 import {AccountService} from "../../../core/services/account.service";
 import {CommonService} from "../../../core/services/common.service";
 import {TableDetailComponent} from "../../../shared/components/table-detail/table-detail.component";
+import {Permission} from "../../../shared/enums/permission";
+import {HasPermissionDirective} from "../../../shared/directives/permission.directive";
 
 @Component({
   selector: 'app-mgn-role',
   templateUrl: './mgn-role.component.html',
   styleUrls: ['./mgn-role.component.scss'],
-  imports: [CommonModule, SharedComponentsModule, FormsModule, NgSelectComponent, NgbHighlight, NgbPagination, TranslatePipe, NgbTooltip, NgScrollbar, TableDetailComponent],
+  imports: [CommonModule, SharedComponentsModule, FormsModule, NgSelectComponent, NgbHighlight, NgbPagination, TranslatePipe, NgbTooltip, NgScrollbar, TableDetailComponent, HasPermissionDirective],
   standalone: true
 })
 export class MgnRoleComponent extends BaseListNonPagedComponent<Role> implements OnInit {
@@ -26,7 +28,9 @@ export class MgnRoleComponent extends BaseListNonPagedComponent<Role> implements
   currRole: Role;
   modalAction: string = '';
   datasRole: { key: string; label: string; value: string }[];
-  authorities: { key: string; label: string, value: string }[];
+  authorities: { key: string; label: string, description: string }[];
+
+  protected readonly Permission = Permission;
 
   constructor(
       private modalService: NgbModal,
@@ -70,7 +74,7 @@ export class MgnRoleComponent extends BaseListNonPagedComponent<Role> implements
         }
 
         if (action === 'AUTH') {
-          this.authorities = role.authorities.map(r => ({ key: r.id, label: r.name, value: r.description }));
+          this.authorities = role.authorities.map(r => ({ key: r.id, label: r.name, description: r.description }));
         }
         this.modalService.open(content, { size: "lg", ariaLabelledBy: 'modal-basic-title', centered: true })
       },

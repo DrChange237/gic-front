@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {forkJoin} from "rxjs";
+//
 import { echartStyles } from '../../../shared/echart-styles';
 import {AccountService} from "../../../core/services/account.service";
-import {forkJoin} from "rxjs";
 import {AccountBalance} from "../../../shared/interfaces";
+import {Permission} from "../../../shared/enums/permission";
 
 @Component({
     selector: 'app-dashboard-agent',
@@ -20,6 +22,8 @@ export class DashboardAgentComponent implements OnInit {
     operationAcc: AccountBalance;
     commissionAcc: AccountBalance;
     date = new Date();
+
+    protected readonly Permission = Permission;
 
 	constructor(
         private accountSrv: AccountService,

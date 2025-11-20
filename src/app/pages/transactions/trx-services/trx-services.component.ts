@@ -85,7 +85,7 @@ export class TrxServicesComponent implements OnInit {
   }
 
   loadBalance(service: string) {
-    this.factorySrv.getBalanceOperationAccount(this.authSrv.getUser()?.agency?.code, service).subscribe({
+    this.factorySrv.getBalanceOperationAccount(this.authSrv.user?.agency?.code, service).subscribe({
       next: res => { this.balanceAccount = res },
       error: err => this.commonSrv.errorHandle(err, 'account.get_balance_trx_failed', 'transactions.service')
     });
@@ -208,7 +208,7 @@ export class TrxServicesComponent implements OnInit {
   }
 
   onConfirmStep() {
-    this.wizard.complete();
+    this.wizard.disableNav();
   }
 
   openModal(content: TemplateRef<never>) {
