@@ -9,3 +9,16 @@ export interface AccountBalance {
   balance: number;
   currency: Currency;
 }
+
+export interface StatsService {
+  serviceId: string,
+  serviceName: string,
+  totalAmount: number,
+  percentage: number
+}
+
+export interface StatsOperation {
+  month: number,
+  totalAmount: number,
+  totalCommission: number
+}

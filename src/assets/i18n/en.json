@@ -17,6 +17,7 @@
     "get_detail_agent_failed": "Failed to retrieve agent details",
     "get_detail_role_failed": "Failed to retrieve role details",
     "get_role_list_failed": "List agent loading failed",
+    "holder": "Holder",
     "opened_on": "Opened on",
     "operation_review": "Account balance",
     "role": "Role",
@@ -85,6 +86,10 @@
     "search": "Search",
     "search_loading": "Search in progress",
     "update_role_agent": "Update role"
+  },
+  "dashboard": {
+    "stats_by_services": "Service statistics",
+    "stats_monthly": "Monthly statistics"
   },
   "error": {
     "404_text": "Sorry! The page you were looking for doesn't exist.",

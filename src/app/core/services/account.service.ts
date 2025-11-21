@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import {BaseApiService} from "./base-api.service";
 import {HttpClient} from "@angular/common/http";
-import {AccountBalance, Agency, Cashier, OperationAccount, Role} from "../../shared/interfaces";
+import {
+    AccountBalance,
+    Agency,
+    Cashier,
+    OperationAccount,
+    Role,
+    StatsOperation,
+    StatsService
+} from "../../shared/interfaces";
 import {catchError, of, tap} from "rxjs";
 import {CommonService} from "./common.service";
 
@@ -19,25 +27,43 @@ export class AccountService extends BaseApiService {
     super(http)
   }
 
-  getAccountOperation() {
-    return this.get<AccountBalance>('cashier/balance').pipe(
-      tap(res => this.accountOperation = res),
-      catchError(error => {
-        this.commonSrv.errorHandle(error, 'account.get_balance_trx_failed', 'account.account_balance')
-        return of(null);
-      })
-    );
-  }
+    getAccountOperation() {
+        return this.get<AccountBalance>('cashier/balance').pipe(
+            tap(res => this.accountOperation = res),
+            catchError(error => {
+                this.commonSrv.errorHandle(error, 'account.get_balance_trx_failed', 'account.account_balance')
+                return of(null);
+            })
+        );
+    }
 
-  getAccountCommission() {
-    return this.get<AccountBalance>('cashier/balance').pipe(
-        tap(res => this.accountCommission = res),
-        catchError(error => {
-          this.commonSrv.errorHandle(error, 'account.get_balance_fees_failed', 'account.account_balance')
-          return of(null);
-        })
-    );
-  }
+    getAccountCommission() {
+        return this.get<AccountBalance>('cashier/balance').pipe(
+            tap(res => this.accountCommission = res),
+            catchError(error => {
+                this.commonSrv.errorHandle(error, 'account.get_balance_fees_failed', 'account.account_balance')
+                return of(null);
+            })
+        );
+    }
+
+    getStatsByService() {
+        return this.get<StatsService[]>('dashboard/statsByBiller').pipe(
+            catchError(error => {
+                this.commonSrv.errorHandle(error, '', 'navigation.dashboard')
+                return of(null);
+            })
+        );
+    }
+
+    getStatsMonths() {
+        return this.get<StatsOperation[]>('dashboard/statsMonths').pipe(
+            catchError(error => {
+                this.commonSrv.errorHandle(error, '', 'navigation.dashboard')
+                return of(null);
+            })
+        );
+    }
 
   getListAgents(type: string) {
       const url = type === 'all' ? 'getCashiers' : 'getMyCashiers';

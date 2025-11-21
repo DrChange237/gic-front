@@ -9,7 +9,6 @@ import {CommonModule} from "@angular/common";
 //
 import {SharedComponentsModule} from "../../../shared/components/shared-components.module";
 import {CommonService} from "../../../core/services/common.service";
-import {FactoryService} from "../../../core/services/factory.service";
 import {AuthService} from "../../../core/services/auth.service";
 import {BaseListNonPagedComponent} from "../../../core/utils/base-list/base-list-unpaged.component";
 import {OperationAccount} from "../../../shared/interfaces";
@@ -97,9 +96,7 @@ export class MgnOperationReviewComponent extends BaseListNonPagedComponent<Opera
 
         resultModal.componentInstance.isSuccess = true;
 
-        resultModal.result.then(res => {
-          this.commonSrv.router.navigateByUrl('management/agencies')
-        });
+        resultModal.result.then(() => { this.commonSrv.router.navigateByUrl('management/agencies') });
       },
       error: err => this.commonSrv.errorHandle(err,  'account.update_availability_agency_failed', 'account.agency')
     });

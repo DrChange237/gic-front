@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {forkJoin} from "rxjs";
 //
-import { echartStyles } from '../../../shared/echart-styles';
 import {AccountService} from "../../../core/services/account.service";
-import {AccountBalance} from "../../../shared/interfaces";
+import {AccountBalance, StatsOperation, StatsService} from "../../../shared/interfaces";
 import {Permission} from "../../../shared/enums/permission";
+import {CommonService} from "../../../core/services/common.service";
 
 @Component({
     selector: 'app-dashboard-agent',
@@ -13,11 +13,8 @@ import {Permission} from "../../../shared/enums/permission";
     standalone: false
 })
 export class DashboardAgentComponent implements OnInit {
-	chartLineOption1: any;
-	chartLineOption2: any;
-	chartLineOption3: any;
-    salesChartBar: any;
-    salesChartPie: any;
+    monthsChartBar: any;
+    servicesChartPie: any;
 
     operationAcc: AccountBalance;
     commissionAcc: AccountBalance;
@@ -26,104 +23,37 @@ export class DashboardAgentComponent implements OnInit {
     protected readonly Permission = Permission;
 
 	constructor(
+        private commonSrv: CommonService,
         private accountSrv: AccountService,
     ) { }
 
 	ngOnInit() {
         forkJoin([
             this.accountSrv.getAccountOperation(),
-            this.accountSrv.getAccountCommission(),
-        ]).subscribe(([operation, commission]) => {
+            this.accountSrv.getAccountOperation(),
+            this.accountSrv.getStatsByService(),
+            this.accountSrv.getStatsMonths(),
+        ]).subscribe(([operation, commission, stats1, stats2]) => {
             this.operationAcc = operation;
             this.commissionAcc = commission;
+            this.setCharServicesStats(stats1);
+            this.setCharMonthStats(stats2);
         })
+	}
 
-		this.chartLineOption1 = {
-			...echartStyles.lineFullWidth, ...{
-				series: [{
-                    type: 'line',
-					data: [30, 40, 20, 50, 40, 80, 90],
-					smooth: true,
-					markArea: {
-						label: {
-							show: true
-						}
-					},
-					areaStyle: {
-						color: 'rgba(110, 58, 150, .2)',
-						origin: 'start'
-					},
-					lineStyle: {
-						color: '#6E3A96',
-					},
-					itemStyle: {
-						color: '#6E3A96'
-					}
-				}]
-			}
-		};
-		this.chartLineOption2 = {
-			...echartStyles.lineFullWidth, ...{
-                xAxis: {
-                    type: "category",
-                    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-                },
-				series: [{
-                    type: 'line',
-					data: [30, 10, 40, 10, 40, 20, 90],
-					smooth: true,
-					markArea: {
-						label: {
-							show: true
-						}
-					},
-					areaStyle: {
-						color: 'rgba(255, 193, 7, 0.2)',
-						origin: 'start'
-					},
-					lineStyle: {
-						color: '#FFC107'
-					},
-					itemStyle: {
-						color: '#FFC107'
-					}
-				}]
-			}
-		};
+    setCharMonthStats(data: StatsOperation[]) {
+        const value = Math.max(...data.map(item => item.totalAmount));
+        const maxTotalAmount = Math.round(value / 5) * 5;
 
-		this.chartLineOption3 = {
-			...echartStyles.lineNoAxis, ...{
-                xAxis: {
-                    type: "category",
-                    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-                },
-				series: [{
-					data: [40, 80, 20, 90, 30, 80, 40, 90, 20, 80, 30, 45, 50, 110, 90, 145, 120, 135, 120, 140],
-					lineStyle: {
-						color: 'rgba(102, 51, 153, 0.86)',
-						width: 3,
-						...echartStyles.lineShadow
-					},
-					label: { show: true, color: '#212121' },
-					type: 'line',
-					smooth: true,
-					itemStyle: {
-						borderColor: 'rgba(102, 51, 153, 1)'
-					}
-				}]
-			}
-		};
-		// this.chartLineOption3.xAxis = [{data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']}];
-        this.salesChartBar = {
+        this.monthsChartBar = {
             legend: {
                 borderRadius: 0,
                 orient: 'horizontal',
-                // x: 'right',
-                data: ['Online', 'Offline']
+                data: ['Operation', 'Commission']
             },
             grid: {
-                left: '8px',
-                right: '8px',
+                left: '6px',
+                right: '6px',
                 bottom: '0',
                 containLabel: true
             },
@@ -147,14 +77,15 @@ export class DashboardAgentComponent implements OnInit {
                     show: true
                 }
             }],
-            yAxis: [{
+            yAxis: [
+                {
                     type: 'value',
                     axisLabel: {
-                        formatter: '${value}'
+                        formatter: '{value} XAF'
                     },
                     min: 0,
-                    max: 100000,
-                    interval: 25000,
+                    max: maxTotalAmount,
+                    interval: maxTotalAmount / 5,
                     axisLine: {
                         show: false
                     },
@@ -163,33 +94,42 @@ export class DashboardAgentComponent implements OnInit {
                         interval: 'auto'
                     }
                 }
-
             ],
 
-            series: [{
-                    name: 'Online',
-                    data: [35000, 69000, 22500, 60000, 50000, 50000, 30000, 80000, 70000, 60000, 20000, 30005],
-                    label: { show: false, color: '#bcbbdd' },
-                    type: 'bar',
-                    barGap: 0,
-                    color: '#bcbbdd',
-                    // smooth: true,
-
-                },
+            series: [
                 {
-                    name: 'Offline',
-                    data: [45000, 82000, 35000, 93000, 71000, 89000, 49000, 91000, 80200, 86000, 35000, 40050],
+                    name: 'Operation',
+                    data: data.map(s => s.totalAmount),
                     label: { show: false, color: '#6E3A96' },
                     type: 'bar',
                     color: '#6E3A96',
                     // smooth: true
+                },
+                {
+                    name: 'Commission',
+                    data: data.map(s => s.totalCommission),
+                    label: { show: false, color: '#bcbbdd' },
+                    type: 'bar',
+                    barGap: 0,
+                    color: '#4CAF50',
+                    smooth: true,
                 }
 
             ]
         };
+    }
 
-        this.salesChartPie = {
-            color: ['#6E3A96', '#058EFC', '#4CAF50', '#8877bd', '#FFC107', '#d22346'],
+    setCharServicesStats(data: StatsService[]) {
+        const colors = [
+            // Violet, Vert, Bleu, Orange
+            "#8A2EC4", "#A0D92C", "#058EFC", "#FF8E1A",
+            "#6E3A96", "#96C33A", "#3DA7F2", "#F2A03D",
+            "#9C6EC4", "#B0D760", "#6FC1FF", "#FFBE6F",
+            "#4E2670",  "#7FA02A", "#1E82C5", "#C77E23",
+            "#D9C7EC", "#C9E48A", "#A5DAFF", "#FFD7A5",
+        ]
+        this.servicesChartPie = {
+            color: colors.slice(0, data.length),
             tooltip: {
                 show: true,
                 backgroundColor: 'rgba(0, 0, 0, .8)',
@@ -199,47 +139,33 @@ export class DashboardAgentComponent implements OnInit {
             },
 
             xAxis: [{
-                    axisLine: {
-                        show: false
-                    },
-                    splitLine: {
-                        show: false
-                    }
+                axisLine: {
+                    show: false
+                },
+                splitLine: {
+                    show: false
                 }
+            }
 
             ],
             yAxis: [{
-                    axisLine: {
-                        show: false
-                    },
-                    splitLine: {
-                        show: false
-                    }
+                axisLine: {
+                    show: false
+                },
+                splitLine: {
+                    show: false
                 }
+            }
             ],
             series: [{
-                    name: 'Sales by Country',
-                    type: 'pie',
-                    radius: '75%',
-                    center: ['50%', '50%'],
-                    data: [
-                        { value: 535, name: 'USA' },
-                        { value: 310, name: 'Brazil' },
-                        { value: 234, name: 'France' },
-                        { value: 155, name: 'Germany' },
-                        { value: 130, name: 'UK' },
-                        { value: 348, name: 'India' }
-                    ],
-                    itemStyle: {
-                        // emphasis: {
-                        //     shadowBlur: 10,
-                        //     shadowOffsetX: 0,
-                        //     shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        // }
-                    }
-                }
+                name: this.commonSrv.translate.instant('dashboard.stats_by_services'),
+                type: 'pie',
+                radius: '75%',
+                center: ['50%', '50%'],
+                data: data.map(s => ({ value: s.totalAmount, name: s.serviceName })),
+                itemStyle: {}
+            }
             ]
         };
-	}
-
+    }
 }

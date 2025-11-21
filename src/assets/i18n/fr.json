@@ -17,6 +17,7 @@
     "get_detail_agent_failed": "Chargement des détails du agent échoué",
     "get_detail_role_failed": "Chargement des détails du role échoué",
     "get_role_list_failed": "Chargement de la liste des agents échoué",
+    "holder": "Titulaire",
     "opened_on": "Ouvert le",
     "operation_review": "Bilan des comptes",
     "role": "Rôle",
@@ -85,6 +86,10 @@
     "search": "Rechercher",
     "search_loading": "Recherche en cours",
     "update_role_agent": "Mettre à jour le rôle"
+  },
+  "dashboard": {
+    "stats_by_services": "Statistiques sur les services",
+    "stats_monthly": "Statistiques mensuelles"
   },
   "error": {
     "404_text": "Désolé, la page que vous demandé n'existe pas.",
