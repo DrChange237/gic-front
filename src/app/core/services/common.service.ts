@@ -27,7 +27,7 @@ export class CommonService {
         ? file
         : URL.createObjectURL(file);
 
-    if (download) {
+    if (!download) {
       window.open(url, '_blank');
     } else {
       const a = document.createElement('a');
@@ -97,7 +97,7 @@ export class CommonService {
 
           if (value === null || value === undefined || value === 'undefined') {
             formattedValue = 'N/A';
-          } else if (typeof value === 'number' && ['amount'].includes(key)) {
+          } else if (typeof value === 'number' && ['amount', 'clientFees', 'clientFees', 'balance'].includes(key)) {
             formattedValue = currencyPipe.transform(value, 'XAF') || 'N/A';
           } else if (typeof value === 'number') {
             formattedValue = decimalPipe.transform(value, '1.0-2') || value.toString();
