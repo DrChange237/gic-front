@@ -9,7 +9,7 @@ import {
 } from 'rxjs';
 import {Directive, OnInit} from '@angular/core';
 import {map} from "rxjs/operators";
-import {FormGroup} from "@angular/forms";
+import {UntypedFormGroup} from "@angular/forms";
 
 export interface Pagination {
   page: number;
@@ -38,7 +38,7 @@ export abstract class BaseListComponent<T> implements OnInit {
     totalItems: 0,
   });
   protected _query: ListQuery = {};
-  filterForm: FormGroup = new FormGroup({});
+  filterForm: UntypedFormGroup = new UntypedFormGroup({});
 
   pageSizeOptions = [5, 10, 25, 50];
   searchTerm: string = '';

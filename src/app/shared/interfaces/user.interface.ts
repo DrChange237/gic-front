@@ -21,6 +21,7 @@ export interface Group {
 export interface Agent {
   id: string;
   code: string;
+  logo: string;
   name: string;
   parent: string;
   group: Group;
@@ -71,4 +72,3 @@ export interface Cashier {
   lang: Lang;
   enabled: boolean;
 }
-

@@ -98,6 +98,7 @@
     "amount_label": "Amount",
     "amount_plh": "Transaction amount",
     "bad_credentials": "Bad credentials",
+    "confirm_password_label": "Confirm password",
     "description": "Description",
     "description_plh": "Transaction description",
     "email_label": "Email ",
@@ -105,6 +106,8 @@
     "end_date_label": "End date",
     "fund_transfert_data": "Transfer information",
     "label_label": "Label",
+    "new_password_label": "New password",
+    "new_password_plh": "Enter the new password",
     "password_label": "Password",
     "password_plh": "Enter your password",
     "pin_code_label": "PIN Code",
@@ -201,6 +204,7 @@
     "empty_data": "No data available",
     "item_per_page": "Items per page",
     "label": "Label",
+    "language": "Language",
     "last_activity": "Last activity",
     "name": "Name",
     "number_authorities": "Number authorities",
@@ -250,5 +254,20 @@
     "service_instructions": "Service instructions",
     "service_type": "Service Type",
     "transfert_fund_transaction_failed": "Failed to execute fund transfer"
+  },
+  "user": {
+    "agency_information": "Agency Informations",
+    "general": "General",
+    "get_user_information": "Failed to retrieve personal information",
+    "new_password_identical_to_old": "The new password is identical to the old one",
+    "new_password_not_match": "New password differs from confirmation password",
+    "partner": "Organisation",
+    "partner_code": "Code",
+    "personal_information": "Personals Informations",
+    "profile": "Profile",
+    "security": "Security",
+    "update_password": "Change Password",
+    "update_password_failed": "Update password failed",
+    "update_password_successful": "Update password successful"
   }
 }

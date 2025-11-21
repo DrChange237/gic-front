@@ -101,7 +101,7 @@ export class MgnOperationReviewComponent extends BaseListNonPagedComponent<Opera
           this.commonSrv.router.navigateByUrl('management/agencies')
         });
       },
-      error: err => this.commonSrv.errorHandle(err,  'account.get_account.account_review_list_failed', 'account.agency')
+      error: err => this.commonSrv.errorHandle(err,  'account.update_availability_agency_failed', 'account.agency')
     });
   }
 

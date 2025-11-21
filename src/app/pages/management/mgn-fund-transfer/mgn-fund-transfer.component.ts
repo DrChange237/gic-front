@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {FormGroup, ReactiveFormsModule, UntypedFormBuilder, Validators} from "@angular/forms";
+import {UntypedFormGroup, ReactiveFormsModule, UntypedFormBuilder, Validators} from "@angular/forms";
 //
 import {SharedComponentsModule} from "../../../shared/components/shared-components.module";
 import {CommonService} from "../../../core/services/common.service";
@@ -23,7 +23,7 @@ import {NgSelectComponent} from "@ng-select/ng-select";
   standalone: true
 })
 export class MgnFundTransfer implements OnInit {
-  transfertForm: FormGroup
+  transfertForm: UntypedFormGroup
   isSubmitted: boolean = false;
 
   agencies$: Agency[]

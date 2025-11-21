@@ -68,6 +68,14 @@ export class AuthService extends BaseApiService {
     )
   }
 
+  getUserData() {
+    return this.get<Cashier>('cashier/info')
+  }
+
+  updatePassword(data: { username: string, secret: string, newSecret: string }) {
+    return this.post<any>('cashier/updateSecret', data);
+  }
+
   signOutLocal() {
       this.authenticated = false;
       this.store.clear();

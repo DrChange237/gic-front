@@ -65,7 +65,7 @@
     },
     "agent_available": {
       "CLOSE": "Ouvrir l'agence",
-      "OPEN": "Fermer l'agence"
+      "OPEN": "Clôturer l'agence"
     },
     "agent_history": "Historique de l'agent",
     "back_to_home": "Retourner à l'accueil",
@@ -98,6 +98,7 @@
     "amount_label": "Montant",
     "amount_plh": "Montant de la transaction",
     "bad_credentials": "Identifiants incorrects",
+    "confirm_password_label": "Confirmation du mot de passe",
     "description": "Description",
     "description_plh": "Description de la transaction",
     "email_label": "Email ",
@@ -105,6 +106,8 @@
     "end_date_label": "Date de fin",
     "fund_transfert_data": "Information de transfert",
     "label_label": "Libellé",
+    "new_password_label": "Nouveau mot de passe",
+    "new_password_plh": "Entrez le nouveau mot de passe",
     "password_label": "Mot de passe",
     "password_plh": "Entrez votre mot de passe",
     "pin_code_label": "Code PIN",
@@ -201,6 +204,7 @@
     "empty_data": "Aucune donnée disponible",
     "item_per_page": "Affichés par page",
     "label": "Libellé",
+    "language": "Langue",
     "last_activity": "Dernière activité",
     "name": "Nom",
     "number_authorities": "Nombre d'autorités",
@@ -250,5 +254,20 @@
     "service_instructions": "Instructions sur le service",
     "service_type": "Type de Service",
     "transfert_fund_transaction_failed": "Exécution du transfert de fond échoué"
+  },
+  "user": {
+    "agency_information": "Informations de l'Agence",
+    "general": "Général",
+    "get_user_information": "Récupération des informations personnelles échouée",
+    "new_password_identical_to_old": "Le nouveau mot de passe est identique à l'ancien",
+    "new_password_not_match": "Nouveaux mot de passe diffèrent du mot de passe de confirmation",
+    "partner": "Organisation",
+    "partner_code": "Code",
+    "personal_information": "Informations Personnelles",
+    "profile": "Profil",
+    "security": "Sécurité",
+    "update_password": "Modification du Mot de Passe",
+    "update_password_failed": "Mise à jour du mot de passe échouée",
+    "update_password_successful": "Mise à jour du mot de passe réussie"
   }
 }
