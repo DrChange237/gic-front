@@ -45,7 +45,7 @@
     "SUCCESS": "Réussie",
     "WAITING": "En cours",
     "availability": {
-      "CLOSE": "Fermer",
+      "CLOSED": "Fermer",
       "OPEN": "Ouvert"
     },
     "service_unavailable": "Indisponible",
@@ -65,7 +65,7 @@
       "true": "Activé agent"
     },
     "agent_available": {
-      "CLOSE": "Ouvrir l'agence",
+      "CLOSED": "Ouvrir l'agence",
       "OPEN": "Clôturer l'agence"
     },
     "agent_history": "Historique de l'agent",

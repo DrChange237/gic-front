@@ -84,7 +84,7 @@ export class MgnOperationReviewComponent extends BaseListNonPagedComponent<Opera
   updateAvailability(code: string) {
     const data = {
       agencyId: this.paramsFilter.id,
-      avaibility: this.paramsFilter.availability === 'OPEN' ? 'CLOSE' : 'OPEN',
+      avaibility: this.paramsFilter.availability === 'OPEN' ? 'CLOSED' : 'OPEN',
       password: code
     };
 

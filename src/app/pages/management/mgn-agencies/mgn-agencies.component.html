@@ -59,7 +59,7 @@
                                             <button role="button" class="btn text-14" [ngClass]="agency.avaibility === 'OPEN' ? 'btn-warning' : 'btn-success text-white'"
                                                     [ngbTooltip]="('btn.agent_available.' + agency.avaibility) | translate"
                                                     (click)="viewOperationReview(agency)" *hasPermission="Permission.AGENCY_OPEN">
-                                                <i class="fw-medium" [ngClass]="agency.avaibility === 'CLOSE' ? 'i-Power-2' : 'i-Power-2'"></i>
+                                                <i class="fw-medium" [ngClass]="agency.avaibility === 'CLOSED' ? 'i-Power-2' : 'i-Power-2'"></i>
                                             </button>
                                             <button role="button" class="btn text-14" [ngClass]="{'btn-danger': agency.enabled, 'btn-success text-white': !agency.enabled}"
                                                     [ngbTooltip]="('btn.agency_active.' + !agency.enabled) | translate"

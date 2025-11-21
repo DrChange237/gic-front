@@ -45,7 +45,7 @@
     "SUCCESS": "Successful",
     "WAITING": "Processing",
     "availability": {
-      "CLOSE": "Close",
+      "CLOSED": "Close",
       "OPEN": "Open"
     },
     "service_unavailable": "Unavailable",
@@ -65,7 +65,7 @@
       "true": "Enable agent"
     },
     "agent_available": {
-      "CLOSE": "Open agency",
+      "CLOSED": "Open agency",
       "OPEN": "Close agency"
     },
     "agent_history": "Agent history",
