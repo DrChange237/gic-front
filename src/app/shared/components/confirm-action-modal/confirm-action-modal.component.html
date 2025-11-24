@@ -20,10 +20,11 @@
                     [placeholder]="(requirePin ? 'form.pin_code_plh' : 'form.password_plh') | translate"
             />
         </div>
-
-        <div *ngIf="errorMessage" class="alert alert-danger rounded-2 mt-3 py-2">
-            <i class="i-Information text-16 me-1"></i> {{ errorMessage }}
-        </div>
+        @if (errorMessage) {
+            <div class="alert alert-danger rounded-2 mt-3 py-2">
+                <i class="i-Information text-16 me-1"></i> {{ errorMessage }}
+            </div>
+        }
     }
 </div>
 

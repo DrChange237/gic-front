@@ -33,7 +33,8 @@
   },
   "app": {
     "language_en": "English",
-    "language_fr": "French"
+    "language_fr": "French",
+    "select_language": "Select language"
   },
   "badge": {
     "DEBITED": "Debited",

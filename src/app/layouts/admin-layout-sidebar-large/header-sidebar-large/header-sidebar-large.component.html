@@ -73,11 +73,13 @@
         <img [src]="'assets/images/flags/' + translate.getCurrentLang() + '.png'" alt="" class="language-rounded">
       </div>
       <div ngbDropdownMenu aria-labelledby="languageDropdown" class="header-account-dropdown">
-        <button class="dropdown-item" *ngFor="let lang of languages; first as isFirst" (click)="changeLanguage(lang)"
+        @for (lang of languages; track lang; let isFirst = $first) {
+          <button class="dropdown-item" (click)="changeLanguage(lang)"
                 [ngClass]="{'border-top border-light-subtle': !isFirst}">
-          <img [src]="'assets/images/flags/' + lang + '.png'" alt="">
-          <span>{{('app.language_' + lang) | translate}}</span>
-        </button>
+              <img [src]="'assets/images/flags/' + lang + '.png'" alt="">
+              <span>{{('app.language_' + lang) | translate}}</span>
+          </button>
+        }
       </div>
     </div>
 

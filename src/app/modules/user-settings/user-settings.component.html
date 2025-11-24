@@ -165,9 +165,11 @@
                         <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" class="p-4 rounded border bg-body-tertiary">
                             <h4>{{ 'user.update_password' | translate }}</h4>
                             <hr class="mt-0 mb-4">
-                            <div *ngIf="errorMessage" class="alert alert-danger shadow-sm rounded-2 py-3">
-                               <i class="i-Information text-16 me-1"></i> {{ errorMessage | translate }}
-                            </div>
+                            @if (errorMessage) {
+                                <div class="alert alert-danger shadow-sm rounded-2 py-3">
+                                   <i class="i-Information text-16 me-1"></i> {{ errorMessage | translate }}
+                                </div>
+                            }
                             <div class="row">
                                 <div class="form-group col-sm-12">
                                     <label>

@@ -6,6 +6,7 @@ import { SharedAnimations } from 'src/app/shared/animations/shared-animations';
 import {CommonService} from "../../../core/services/common.service";
 import {AuthService} from "../../../core/services/auth.service";
 import {finalize} from "rxjs";
+import {Language} from "../../../shared/enums";
 
 @Component({
     selector: 'app-signin',
@@ -24,11 +25,13 @@ export class SigninComponent implements OnInit {
         type: ''
     };
 
+    protected languages: string[] = Object.values(Language);
+
     constructor(
         private fb: UntypedFormBuilder,
         private auth: AuthService,
         private router: Router,
-        private commonSrv: CommonService
+        public commonSrv: CommonService
     ) { }
 
     ngOnInit() {
@@ -44,9 +47,14 @@ export class SigninComponent implements OnInit {
         });
 
         this.signinForm = this.fb.group({
-            email: ['admin@cca-bank.com', Validators.required],
-            password: ['12345', Validators.required]
+            email: ['', Validators.required],
+            password: ['', Validators.required]
         });
+    }
+
+    changeLanguage(code: string) {
+        this.commonSrv.toggleLanguage(code);
+        window.location.reload();
     }
 
     signIn() {

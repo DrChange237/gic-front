@@ -102,9 +102,11 @@
             <ng-select [items]="roles" class="custom" [(ngModel)]="cashierRole" bindLabel="name" [clearable]="false"
                    [placeholder]="'form.role_plh' | translate" [ngClass]="{'is-invalid': errorMessage}" (change)="errorMessage = ''">
             </ng-select>
-            <div *ngIf="errorMessage" class="invalid-feedback py-1 fst-italic">
-                {{ errorMessage | translate }}
-            </div>
+            @if (errorMessage) {
+                <div class="invalid-feedback py-1 fst-italic">
+                    {{ errorMessage | translate }}
+                </div>
+            }
         </div>
     </div>
 

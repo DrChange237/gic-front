@@ -8,7 +8,7 @@ import { ForgotComponent } from './forgot/forgot.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgbAlert} from "@ng-bootstrap/ng-bootstrap";
+import {NgbAlert, NgbDropdown, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
     imports: [
@@ -19,7 +19,10 @@ import {NgbAlert} from "@ng-bootstrap/ng-bootstrap";
         SharedComponentsModule,
         AuthRoutingModule,
         TranslatePipe,
-        NgbAlert
+        NgbAlert,
+        NgbDropdown,
+        NgbDropdownMenu,
+        NgbDropdownToggle
     ],
   declarations: [SigninComponent, ForgotComponent]
 })

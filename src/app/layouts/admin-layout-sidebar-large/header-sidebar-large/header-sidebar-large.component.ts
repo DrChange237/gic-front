@@ -20,7 +20,9 @@ export class HeaderSidebarLargeComponent implements OnInit {
 
     user: Cashier;
     notifications: INotifications[] = [];
-    languages: string[] = Object.values(Language);
+
+    protected languages: string[] = Object.values(Language);
+    protected readonly Permission = Permission;
 
     constructor(
       public navService: NavigationService,
@@ -72,6 +74,4 @@ export class HeaderSidebarLargeComponent implements OnInit {
     getAccount() {
         this.accountSrv.getAccountOperation().subscribe();
     }
-
-    protected readonly Permission = Permission;
 }
