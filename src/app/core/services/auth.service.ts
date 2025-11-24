@@ -79,6 +79,7 @@ export class AuthService extends BaseApiService {
   signOutLocal() {
       this.authenticated = false;
       this.store.clear();
+      this._permissions.set([]);
       this.router.navigateByUrl("/sessions/signin");
   }
 

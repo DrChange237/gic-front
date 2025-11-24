@@ -1,0 +1,204 @@
+<app-breadcrumb></app-breadcrumb>
+
+<div id="scroll-container">
+    <div class="card user-profile o-hidden mb-4">
+        <div class="header-cover" style="background-image: url('assets/images/photo-wide-5.png')"></div>
+        <div class="user-info">
+<!--            <img class="profile-picture avatar-lg mb-2" src="assets/images/faces/1.jpg" alt="">-->
+            <div class="profile-picture avatar-lg bg-white center mb-2">
+                <i class="i-Male-21 text-70 text-primary"></i>
+            </div>
+            <p class="m-0 text-24">{{user?.name}}</p>
+            <p class="text-muted m-0">{{user?.username}}</p>
+        </div>
+        <div class="card-body nav-center">
+            <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                <li ngbNavItem title="About">
+                    <a ngbNavLink>{{ 'user.general' | translate }}</a>
+                    <ng-template ngbNavContent>
+                        <div class="row">
+                            <div class="col-lg-4 p-0">
+                                <div class="card card-profile-1 position-relative border shadow-none bg-body-tertiary mb-4 me-lg-4">
+                                    <div class="card-body p-4">
+                                        <div class="avatar upper center border border-2 border-primary box-shadow-2 mb-3">
+                                            @if (user?.agency?.agent?.logo) {
+                                                <img [src]="user?.agency?.agent?.logo | prefixImgUrl" [alt]="">
+                                            } @else {
+                                                <i class="i-University1 text-78 mb-2 text-primary"></i>
+                                            }
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-3 justify-content-between">
+                                            <div class="">
+                                                <h5 class="m-0 fw-semibold text-primary">{{ user?.agency?.agent?.name }}</h5>
+                                                <span class="text-muted">{{'user.partner' | translate}}</span>
+                                            </div>
+                                            <div class="">
+                                                <h5 class="m-0 fw-semibold text-primary">{{ user?.agency?.agent?.code }}</h5>
+                                                <span class="text-muted">{{'user.partner_code' | translate}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="position-absolute top-0 end-0 mt-3 me-3">
+                                        <span class="badge px-3 py-2 text-bg-{{user?.agency?.agent?.enabled ? 'success text-white' : 'danger'}}" >
+                                            {{ 'badge.status.' + user?.agency?.agent?.enabled | translate | uppercase }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8 bg-body-tertiary p-4 rounded border">
+                                <h4>{{ 'user.personal_information' | translate }}</h4>
+                                <hr class="mt-0 mb-4">
+                                <div class="row">
+                                    <div class="col-lg-4 col-6">
+                                        <div class="mb-4">
+                                            <p class="text-primary mb-1">
+                                                <i class="i-Fingerprint-2 text-16 me-1"></i> {{ 'table.username' | translate }}
+                                            </p>
+                                            <span>{{ user?.username }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-6">
+                                        <div class="mb-4">
+                                            <p class="text-primary mb-1">
+                                                <i class="i-Business-Man text-16 me-1"></i> {{ 'table.name' | translate }}
+                                            </p>
+                                            <span>{{ user?.name }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-6">
+                                        <div class="mb-4">
+                                            <p class="text-primary mb-1">
+                                                <i class="i-Information text-16 me-1"></i> {{ 'table.status' | translate }}
+                                            </p>
+                                            <span>{{ 'badge.status.' + user?.enabled | translate }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-6">
+                                        <div class="mb-4">
+                                            <p class="text-primary mb-1">
+                                                <i class="i-Lock-User text-16 me-1"></i> {{ 'table.role' | translate }}
+                                            </p>
+                                            <span>{{ user?.role?.name }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-6">
+                                        <div class="mb-4">
+                                            <p class="text-primary mb-1">
+                                                <i class="i-Globe text-16 me-1"></i> {{ 'table.language' | translate }}
+                                            </p>
+                                            <span>{{ user?.lang?.name || 'N/A' }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-6">
+                                        <div class="mb-4">
+                                            <p class="text-primary mb-1">
+                                                <i class="i-Calendar-3 text-16 me-1"></i> {{ 'table.last_activity' | translate }}
+                                            </p>
+                                            <span>{{ (user?.lastActivity | date: 'dd/MM/yyyy - HH:mm') || 'N/A' }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <h4>{{ 'user.agency_information' | translate }}</h4>
+                                <hr class="mt-0 mb-4">
+                                <div class="row">
+                                    <div class="col-lg-4 col-6">
+                                        <div class="mb-4">
+                                            <p class="text-primary mb-1">
+                                                <i class="i-Fingerprint-2 text-16 me-1"></i> {{ 'table.code' | translate }}
+                                            </p>
+                                            <span>{{ user?.agency?.code }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-6">
+                                        <div class="mb-4">
+                                            <p class="text-primary mb-1">
+                                                <i class="i-University1 text-16 me-1"></i> {{ 'table.agency' | translate }}
+                                            </p>
+                                            <span>{{ user?.agency?.name }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-6">
+                                        <div class="mb-4">
+                                            <p class="text-primary mb-1">
+                                                <i class="i-Information text-16 me-1"></i> {{ 'table.status' | translate }}
+                                            </p>
+                                            <span>{{ 'badge.status.' + user?.agency?.enabled | translate }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-6">
+                                        <div class="mb-4">
+                                            <p class="text-primary mb-1">
+                                                <i class="i-Map-Marker text-16 me-1"></i> {{ 'table.city' | translate }}
+                                            </p>
+                                            <span>
+                                                {{user?.agency?.town?.name || 'N/A'}} - {{user?.agency?.town?.country?.name || 'N/A'}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-6">
+                                        <div class="mb-4">
+                                            <p class="text-primary mb-1">
+                                                <i class="i-Map2 text-16 me-1"></i> {{ 'table.address' | translate }}
+                                            </p>
+                                            <span>{{ user?.agency?.address || 'N/A' }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-6">
+                                        <div class="mb-4">
+                                            <p class="text-primary mb-1">
+                                                <i class="i-Information text-16 me-1"></i> {{ 'table.availability' | translate }}
+                                            </p>
+                                            <span>{{ 'badge.availability.' + user?.agency?.avaibility | translate }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+                <li ngbNavItem title="Timeline">
+                    <a ngbNavLink>{{ 'user.security' | translate }}</a>
+                    <ng-template ngbNavContent>
+                        <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" class="p-4 rounded border bg-body-tertiary">
+                            <h4>{{ 'user.update_password' | translate }}</h4>
+                            <hr class="mt-0 mb-4">
+                            <div *ngIf="errorMessage" class="alert alert-danger shadow-sm rounded-2 py-3">
+                               <i class="i-Information text-16 me-1"></i> {{ errorMessage | translate }}
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-12">
+                                    <label>
+                                        {{ 'form.password_label' |translate }} <span class="text-danger"> *</span>
+                                    </label>
+                                    <input class="form-control bg-white" formControlName="secret" type="password" [placeholder]="'form.password_plh' | translate"
+                                           [ngClass]="{ 'is-invalid': isSubmitted && uf?.secret?.invalid}">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label>
+                                        {{ 'form.new_password_label' |translate }} <span class="text-danger"> *</span>
+                                    </label>
+                                    <input class="form-control bg-white" formControlName="newSecret" type="password" [placeholder]="'form.new_password_plh' | translate"
+                                           [ngClass]="{ 'is-invalid': isSubmitted && uf?.newSecret?.invalid}">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label>
+                                        {{ 'form.confirm_password_label' |translate }} <span class="text-danger"> *</span>
+                                    </label>
+                                    <input class="form-control bg-white" formControlName="confirmSecret" type="password" [placeholder]="'form.new_password_plh' | translate"
+                                           [ngClass]="{ 'is-invalid': isSubmitted && uf?.confirmSecret?.invalid}">
+                                </div>
+                                <div class="col-md-12 mt-3 text-end">
+                                    <button class="btn btn-primary" type="submit">{{ 'btn.confirm' | translate }}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </ng-template>
+                </li>
+            </ul>
+            <div [ngbNavOutlet]="nav"></div>
+        </div>
+    </div>
+</div>

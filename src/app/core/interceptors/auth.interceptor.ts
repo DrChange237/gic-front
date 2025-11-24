@@ -16,7 +16,8 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     const token = this.authService.getAccessToken();
-    const lang = this.authService.getLanguage();
+    const lang = this.authService.getLanguage() || 'fr';
+
     const isWhitelisted = this.whiteList.some(item =>
         req.url.includes(item.url) && req.method.toUpperCase() === item.method.toUpperCase()
     );
@@ -25,15 +26,16 @@ export class AuthInterceptor implements HttpInterceptor {
 
     if (token && !isWhitelisted) {
       clonedRequest = req.clone({
-        setHeaders: { Authorization: `${token}`, lang: lang || 'fr' }
+        setHeaders: { Authorization: `${token}`, lang: lang }
       });
     }
 
     return next.handle(clonedRequest).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) { this.authService.signOutLocal() }
-
-        return throwError(() => error);
+        if (error.status === 401 && this.authService.authenticated) {
+          this.authService.signOutLocal();
+          return throwError(() => error);
+        }
       })
     );
   }

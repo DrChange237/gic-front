@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import {CommonService} from "../../../core/services/common.service";
 import {Cashier} from "../../../shared/interfaces";
 import {AccountService} from "../../../core/services/account.service";
+import {Permission} from "../../../shared/enums/permission";
 
 @Component({
     selector: 'app-header-sidebar-large',
@@ -71,4 +72,6 @@ export class HeaderSidebarLargeComponent implements OnInit {
     getAccount() {
         this.accountSrv.getAccountOperation().subscribe();
     }
+
+    protected readonly Permission = Permission;
 }

@@ -28,6 +28,7 @@
     justify-content: space-between;
     background: theme.$background;
     z-index: 100;
+    transition: all .24s ease-in-out;
     .menu-toggle {
         width: 90px;
         display: flex;

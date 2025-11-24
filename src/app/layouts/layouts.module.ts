@@ -15,6 +15,7 @@ import { SidebarLargeComponent } from './admin-layout-sidebar-large/sidebar-larg
 import {SharedComponentsModule} from "../shared/components/shared-components.module";
 import {SharedPipesModule} from "../shared/pipes/shared-pipes.module";
 import {SharedDirectivesModule} from "../shared/directives/shared-directives.module";
+import {HasPermissionDirective} from "../shared/directives/permission.directive";
 
 // Regular layouts for declaration
 const components = [
@@ -39,6 +40,7 @@ const components = [
         SharedComponentsModule,
         SharedPipesModule,
         SharedDirectivesModule,
+        HasPermissionDirective,
         // Import standalone layouts
     ],
   declarations: components,

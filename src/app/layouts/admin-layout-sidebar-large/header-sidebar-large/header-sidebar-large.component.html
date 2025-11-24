@@ -11,7 +11,7 @@
   </div>
 
     @if (!authSrv.isBankUser) {
-      <div class="d-none d-md-inline-flex align-items-center">
+      <div class="d-none d-md-inline-flex align-items-center" *hasPermission="Permission.BALANCE_VIEW">
         <h3 class="balance-bar m-0 px-3 py-1 fw-bold">
           <i class="i-Coins pe-3"></i>
           <span>

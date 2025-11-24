@@ -17,7 +17,7 @@ const routes: Routes = [
     children: [
       {
         path: 'sessions',
-        loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
+        loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
       }
     ]
   },
@@ -27,7 +27,7 @@ const routes: Routes = [
     children: [
       {
         path: 'others',
-        loadChildren: () => import('./pages/others/others.module').then(m => m.OthersModule)
+        loadChildren: () => import('./modules/others/others.module').then(m => m.OthersModule)
       }
     ]
   },
@@ -35,7 +35,7 @@ const routes: Routes = [
     path: '',
     component: AdminLayoutSidebarLargeComponent,
     canActivate: [AuthGuard],
-    loadChildren:  () => import('./pages/pages.module').then(m => m.PagesModule)
+    loadChildren:  () => import('./modules/views.module').then(m => m.ViewsModule)
   },
   {
     path: '**',

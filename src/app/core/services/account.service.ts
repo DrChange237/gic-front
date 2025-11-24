@@ -38,7 +38,7 @@ export class AccountService extends BaseApiService {
     }
 
     getAccountCommission() {
-        return this.get<AccountBalance>('cashier/balance').pipe(
+        return this.get<AccountBalance>('cashier/commission').pipe(
             tap(res => this.accountCommission = res),
             catchError(error => {
                 this.commonSrv.errorHandle(error, 'account.get_balance_fees_failed', 'account.account_balance')

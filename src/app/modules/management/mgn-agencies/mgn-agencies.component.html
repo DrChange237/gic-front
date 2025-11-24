@@ -1,0 +1,117 @@
+<app-breadcrumb></app-breadcrumb>
+
+<div class="row" id="scroll-container">
+    <div class="col-md-12">
+        <div class="card o-hidden">
+            <div class="p-4">
+                <div class="mb-4 row">
+                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-3">
+                        <input id="table-complete-search" type="text" class="form-control" name="searchTerm" [(ngModel)]="searchTerm"
+                               (input)="filterUpdate($event)" [placeholder]="'form.search_plh' | translate"/>
+                    </div>
+                    @if (loading$ | async) {
+                        <span class="col col-form-label">Loading...</span>
+                    }
+                </div>
+
+                <div class="rounded-table overflow-x-auto">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th class="px-3" scope="col" role="button">{{ 'table.code' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.name' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.address' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.city' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.last_activity' | translate }}</th>
+                            <th class="text-center"  scope="col" role="button">{{ 'table.availability' | translate }}</th>
+                            <th class="text-center"  scope="col" role="button">{{ 'table.status' | translate }}</th>
+                            <th class="text-center" scope="col" role="button">{{ 'table.action' | translate }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @for (agency of items$ | async; track agency.id) {
+                                <tr>
+                                    <td class="px-3"><ngb-highlight [result]="agency.code" [term]="searchTerm" /></td>
+                                    <td><ngb-highlight [result]="agency.name" [term]="searchTerm" /></td>
+                                    <td><ngb-highlight [result]="agency.address" [term]="searchTerm" /></td>
+                                    <td><ngb-highlight [result]="agency.town.name + ' - ' + agency.town.country.name" [term]="searchTerm" /></td>
+                                    <td>{{(agency.lastActivity | date: 'dd/MM/yyyy - HH:mm') || 'N/A' }}</td>
+                                    <td class="col-status">
+                                        <span class="badge rounded-pill p-2" [ngClass]="agency.avaibility === 'OPEN' ? 'text-bg-primary' : 'text-bg-secondary'">
+                                            {{ 'badge.availability.' + agency.avaibility | translate | uppercase }}
+                                        </span>
+                                    </td>
+                                    <td class="col-status">
+                                        <span class="badge rounded-pill p-2 text-bg-{{agency.enabled ? 'success text-white' : 'danger'}}">
+                                            {{ 'badge.status.' + agency.enabled | translate | uppercase }}
+                                        </span>
+                                    </td>
+                                    <td class="col-action">
+                                        <div class="d-flex justify-content-center gap-2">
+                                            <button role="button" class="btn btn-info text-white text-14" [ngbTooltip]="'btn.detail' | translate"
+                                                    (click)="openModal(modalDetailAgency, agency)" *hasPermission="Permission.AGENCY_DETAIL">
+                                                <i class="i-Information fw-medium"></i>
+                                            </button>
+                                            <button role="button" class="btn btn-primary text-white text-14" [ngbTooltip]="'btn.agent_history' | translate"
+                                                    (click)="viewHistoryAgency(agency)" *hasPermission="Permission.HISTORY_CASHIER_VIEW">
+                                                <i class="i-Receipt fw-medium"></i>
+                                            </button>
+                                            <button role="button" class="btn text-14" [ngClass]="agency.avaibility === 'OPEN' ? 'btn-warning' : 'btn-success text-white'"
+                                                    [ngbTooltip]="('btn.agent_available.' + agency.avaibility) | translate"
+                                                    (click)="viewOperationReview(agency)" *hasPermission="Permission.AGENCY_OPEN">
+                                                <i class="fw-medium" [ngClass]="agency.avaibility === 'CLOSED' ? 'i-Power-2' : 'i-Power-2'"></i>
+                                            </button>
+                                            <button role="button" class="btn text-14" [ngClass]="{'btn-danger': agency.enabled, 'btn-success text-white': !agency.enabled}"
+                                                    [ngbTooltip]="('btn.agency_active.' + !agency.enabled) | translate"
+                                                    (click)="openConfirmModal(agency)" *hasPermission="Permission.AGENCY_ENABLE">
+                                                <i class="fw-medium" [ngClass]="{'i-Lock-2': agency.enabled, 'i-Unlock-2': !agency.enabled}"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            } @empty {
+                                <tr>
+                                    <td colspan="8" style="text-align: center">
+                                        {{ 'table.empty_data' | translate }}
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3 justify-content-between py-2">
+                    <ngb-pagination [collectionSize]="pagination?.totalItems || 0" [page]="pagination?.page"
+                                    [pageSize]="pagination?.pageSize" (pageChange)="setPage($event)" [boundaryLinks]="true">
+                    </ngb-pagination>
+
+                    <div class="d-flex">
+                        <label class="text-14 fw-medium py-2 pe-3">
+                            {{ 'table.item_per_page' | translate }}
+                        </label>
+                        <ng-select [items]="pageSizeOptions" class="custom" [dropdownPosition]="'top'" [clearable]="false" name="pageSize"
+                                   (change)="setPageSize($event)" [ngModel]="pagination?.pageSize">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #modalDetailAgency let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title fw-semibold" id="modal-payment-instructions">
+            {{ 'account.agency_detail' | translate }}
+        </h4>
+        <a role="button" class="btn btn-close" aria-label="Close" (click)="modal.close()"></a>
+    </div>
+    <div class="modal-body">
+        <ng-scrollbar visibility="hover" style="height: max-content">
+            <app-table-detail [pageSize]="5" [data]="datasAgency" [paginate]="true"></app-table-detail>
+        </ng-scrollbar>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-dark" (click)="modal.close()">{{ 'btn.close' | translate }}</button>
+    </div>
+</ng-template>
