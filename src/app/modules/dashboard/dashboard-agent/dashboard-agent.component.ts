@@ -43,7 +43,7 @@ export class DashboardAgentComponent implements OnInit {
 
     setCharMonthStats(data: StatsOperation[]) {
         const value = Math.max(...data.map(item => item.totalAmount));
-        const maxTotalAmount = Math.round(value / 5) * 5;
+        const maxTotalAmount = Math.ceil(value / 100000) * 100000;
 
         this.monthsChartBar = {
             legend: {
