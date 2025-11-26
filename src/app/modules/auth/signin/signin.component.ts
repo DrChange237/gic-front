@@ -47,8 +47,8 @@ export class SigninComponent implements OnInit {
         });
 
         this.signinForm = this.fb.group({
-            email: ['', Validators.required],
-            password: ['', Validators.required]
+            email: ['admin@cca-bank.com', Validators.required],
+            password: ['12345', Validators.required]
         });
     }
 
