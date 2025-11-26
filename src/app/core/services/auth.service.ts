@@ -7,6 +7,7 @@ import {Authority, AuthResponse, Cashier, Credentials} from "../../shared/interf
 import { LocalStoreService } from "./local-store.service";
 import {BaseApiService} from "./base-api.service";
 import {Permission} from "../../shared/enums/permission";
+import {KeyStore} from "../../shared/enums";
 
 @Injectable({
   providedIn: "root"
@@ -40,15 +41,15 @@ export class AuthService extends BaseApiService {
   }
 
   getUser(): Cashier | null {
-    return this.store.getItem('user');
+    return this.store.getItem(KeyStore.USER);
   }
 
   getAccessToken(): string {
-    return this.store.getItem('access_token');
+    return this.store.getItem(KeyStore.ACCESS_TOKEN);
   }
 
   getLanguage(): string {
-    return this.store.getItem('lang');
+    return this.store.getItem(KeyStore.LANG);
   }
 
   signIn(credentials: Credentials) {
@@ -56,8 +57,10 @@ export class AuthService extends BaseApiService {
       tap(res => {
         this.authenticated = true;
         this.setUserAndPermission(res.cashier);
-        this.store.setItem('user', res.cashier);
-        this.store.setItem('access_token', res.token);
+        this.store.generateSecret(res.token).then(() => {
+          this.store.setItem(KeyStore.USER, res.cashier);
+          this.store.setItem(KeyStore.ACCESS_TOKEN, res.token);
+        });
       })
     );
   }
@@ -78,7 +81,7 @@ export class AuthService extends BaseApiService {
 
   signOutLocal() {
       this.authenticated = false;
-      this.store.clear();
+      // this.store.clear();
       this._permissions.set([]);
       this.router.navigateByUrl("/sessions/signin");
   }

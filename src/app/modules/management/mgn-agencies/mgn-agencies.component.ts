@@ -19,6 +19,7 @@ import {NgScrollbar} from "ngx-scrollbar";
 import {TableDetailComponent} from "../../../shared/components/table-detail/table-detail.component";
 import {Permission} from "../../../shared/enums/permission";
 import {HasPermissionDirective} from "../../../shared/directives/permission.directive";
+import {SecureDataService} from "../../../core/services/secure-data.service";
 
 @Component({
   selector: 'app-mgn-agencies',
@@ -38,7 +39,8 @@ export class MgnAgenciesComponent extends BaseListNonPagedComponent<Agency> impl
   constructor(
       private modalService: NgbModal,
       private accountSrv: AccountService,
-      private commonSrv: CommonService
+      private commonSrv: CommonService,
+      private secureSrv: SecureDataService,
   ) {
     super();
   }
@@ -63,12 +65,12 @@ export class MgnAgenciesComponent extends BaseListNonPagedComponent<Agency> impl
   }
 
   viewHistoryAgency(agency: Agency){
-    const param = this.commonSrv.secureSrv.encryptParams({id: agency.id, name: agency.name});
+    const param = this.secureSrv.encryptParams({id: agency.id, name: agency.name});
     this.commonSrv.router.navigate(['transactions/history/agency', param])
   }
 
   viewOperationReview(agency: Agency){
-    const param = this.commonSrv.secureSrv.encryptParams(
+    const param = this.secureSrv.encryptParams(
         { id: agency.id, name: agency.name, availability: agency.avaibility }
     );
     this.commonSrv.router.navigate(['management/operation-review', param])

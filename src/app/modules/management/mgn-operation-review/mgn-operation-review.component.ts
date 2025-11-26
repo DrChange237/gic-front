@@ -20,6 +20,7 @@ import {
 import {ActionResultModalComponent} from "../../../shared/components/action-result-modal/action-result-modal.component";
 import {AccountService} from "../../../core/services/account.service";
 import {Permission} from "../../../shared/enums/permission";
+import {SecureDataService} from "../../../core/services/secure-data.service";
 
 @Component({
   selector: 'app-mgn-operation-review',
@@ -38,6 +39,7 @@ export class MgnOperationReviewComponent extends BaseListNonPagedComponent<Opera
       private commonSrv: CommonService,
       private accountSrv: AccountService,
       private authSrv: AuthService,
+      private secureSrv: SecureDataService,
   ) {
     super();
     this.initParams();
@@ -45,7 +47,7 @@ export class MgnOperationReviewComponent extends BaseListNonPagedComponent<Opera
 
   initParams() {
     const param = this.route.snapshot.paramMap.get('data');
-    if (param) this.paramsFilter = this.commonSrv.secureSrv.decryptParams(param);
+    if (param) this.paramsFilter = this.secureSrv.decryptParams(param);
   }
 
   fetchData(): Observable<OperationAccount[]> {

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
+import {CurrencyPipe, DatePipe, DecimalPipe, Location, TitleCasePipe} from "@angular/common";
+import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
 import {TranslateService} from "@ngx-translate/core";
-import {LocalStoreService} from "./local-store.service";
-import {SecureDataService} from "./secure-data.service";
-import {ToastOptions} from "../../shared/interfaces";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Router} from "@angular/router";
-import {CurrencyPipe, DatePipe, DecimalPipe, Location, TitleCasePipe} from "@angular/common";
+//
+import {ToastOptions} from "../../shared/interfaces";
+import {LocalStoreService} from "./local-store.service";
+import {KeyStore} from "../../shared/enums";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,6 @@ export class CommonService {
       public toastSrv: ToastrService,
       public translate: TranslateService,
       public store: LocalStoreService,
-      public secureSrv: SecureDataService,
       public router: Router,
       public location: Location,
   ) {}
@@ -78,7 +78,7 @@ export class CommonService {
   }
 
   toggleLanguage(lang: string) {
-    this.store.setItem('lang', lang);
+    this.store.setItem(KeyStore.LANG, lang);
     this.translate.use(lang);
   }
 

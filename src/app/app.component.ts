@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {CommonService} from "./core/services/common.service";
-import {Language} from "./shared/enums";
+import {KeyStore, Language} from "./shared/enums";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -21,7 +21,7 @@ export class AppComponent {
   }
 
   setLanguage() {
-      const lang = this.commonSrv.store.getItem('lang');
+      const lang = this.commonSrv.store.getItem(KeyStore.LANG);
       (Object.values(Language).includes(lang)) && this.commonSrv.toggleLanguage(lang);
   }
 

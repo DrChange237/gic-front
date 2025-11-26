@@ -23,6 +23,7 @@ import {Transaction} from "../../../shared/interfaces";
 import {TableDetailComponent} from "../../../shared/components/table-detail/table-detail.component";
 import {Permission} from "../../../shared/enums/permission";
 import {HasPermissionDirective} from "../../../shared/directives/permission.directive";
+import {SecureDataService} from "../../../core/services/secure-data.service";
 
 @Component({
   selector: 'app-trx-history',
@@ -50,6 +51,7 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
       private route: ActivatedRoute,
       private commonSrv: CommonService,
       private factorySrv: FactoryService,
+      private secureSrv: SecureDataService,
   ) {
     super();
     this.initializeForm();
@@ -64,7 +66,7 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
     });
 
     const param = this.route.snapshot.paramMap.get('data');
-    if (param) this.paramsFilter = this.commonSrv.secureSrv.decryptParams(param);
+    if (param) this.paramsFilter = this.secureSrv.decryptParams(param);
   }
 
   override search() {

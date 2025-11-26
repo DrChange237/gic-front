@@ -8,7 +8,11 @@ export class SecureDataService {
 
   private secretKey = 'MaCléSuperSecrète123!';
   
-  constructor() { }
+  constructor() {}
+
+  setSecret(value: string) { this.secretKey = value; }
+
+  getSecret() { return this.secretKey; }
 
   encrypt(data: any): string {
     const text = typeof data === 'string' ? data : JSON.stringify(data);
@@ -19,17 +23,13 @@ export class SecureDataService {
     try {
       const bytes = CryptoJS.AES.decrypt(cipherText, this.secretKey);
       const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
-      return JSON.parse(decryptedText);
+      return typeof decryptedText === 'string' ? decryptedText : JSON.parse(decryptedText);
     } catch (e) {
       return null;
     }
   }
 
-  hashMD5(value: string): string {
-    return CryptoJS.MD5(value).toString();
-  }
-
-  hashSHA256(value: string): string {
+  hash(value: string): string {
     return CryptoJS.SHA256(value).toString();
   }
 

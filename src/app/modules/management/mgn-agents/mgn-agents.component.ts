@@ -19,6 +19,7 @@ import {ActionResultModalComponent} from "../../../shared/components/action-resu
 import {ActivatedRoute} from "@angular/router";
 import {Permission} from "../../../shared/enums/permission";
 import {HasPermissionDirective} from "../../../shared/directives/permission.directive";
+import {SecureDataService} from "../../../core/services/secure-data.service";
 
 @Component({
   selector: 'app-mgn-agents',
@@ -44,6 +45,7 @@ export class MgnAgentsComponent extends BaseListNonPagedComponent<Cashier> imple
       private commonSrv: CommonService,
       private accountSrv: AccountService,
       private route: ActivatedRoute,
+      private secureSrv: SecureDataService,
   ) {
     super();
     this.listType = this.route.snapshot.data['all'];
@@ -69,7 +71,7 @@ export class MgnAgentsComponent extends BaseListNonPagedComponent<Cashier> imple
   }
 
   viewHistoryAgent(cashier: Cashier){
-    const param = this.commonSrv.secureSrv.encryptParams({id: cashier.id, name: cashier.name});
+    const param = this.secureSrv.encryptParams({id: cashier.id, name: cashier.name});
     this.commonSrv.router.navigate(['transactions/history/agent', param])
   }
 
