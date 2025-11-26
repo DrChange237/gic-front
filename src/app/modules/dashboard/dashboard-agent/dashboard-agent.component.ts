@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {forkJoin} from "rxjs";
 //
 import {AccountService} from "../../../core/services/account.service";
 import {AccountBalance, StatsOperation, StatsService} from "../../../shared/interfaces";
 import {Permission} from "../../../shared/enums/permission";
 import {CommonService} from "../../../core/services/common.service";
+import {AuthService} from "../../../core/services/auth.service";
 
 @Component({
     selector: 'app-dashboard-agent',
@@ -18,27 +18,21 @@ export class DashboardAgentComponent implements OnInit {
 
     operationAcc: AccountBalance;
     commissionAcc: AccountBalance;
-    date = new Date();
 
     protected readonly Permission = Permission;
 
 	constructor(
+        public authSrv: AuthService,
         private commonSrv: CommonService,
         private accountSrv: AccountService,
     ) { }
 
 	ngOnInit() {
-        forkJoin([
-            this.accountSrv.getAccountOperation(),
-            this.accountSrv.getAccountCommission(),
-            this.accountSrv.getStatsByService(),
-            this.accountSrv.getStatsMonths(),
-        ]).subscribe(([operation, commission, stats1, stats2]) => {
-            this.operationAcc = operation;
-            this.commissionAcc = commission;
-            this.setCharServicesStats(stats1);
-            this.setCharMonthStats(stats2);
-        })
+        this.accountSrv.getAccountOperation().subscribe(res => this.operationAcc = res);
+        this.accountSrv.getAccountCommission().subscribe(res => this.commissionAcc = res);
+
+        this.accountSrv.getStatsByService().subscribe(res => this.setCharServicesStats(res));
+        this.accountSrv.getStatsMonths().subscribe(res => this.setCharMonthStats(res));
 	}
 
     setCharMonthStats(data: StatsOperation[]) {

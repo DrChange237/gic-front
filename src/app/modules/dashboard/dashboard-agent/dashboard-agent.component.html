@@ -1,6 +1,7 @@
 <app-breadcrumb></app-breadcrumb>
 
 <div class="">
+    @if (!authSrv.isBankUser) {
     <div class="row row-gap-4">
         <div class="col-xxl-4 col-md-6 mb-4" *hasPermission="Permission.ACCOUNT_OPERATION_VIEW">
             <div class="card account-card operation p-3">
@@ -44,6 +45,7 @@
             </div>
         </div>
     </div>
+    }
 
     <div class="row">
         <div class="col-lg-8 col-md-12">

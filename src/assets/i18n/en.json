@@ -32,6 +32,7 @@
     "update_status_agent_failed": "Agent status change failed"
   },
   "app": {
+    "copyright": "All rights reserved",
     "language_en": "English",
     "language_fr": "French",
     "select_language": "Select language"

@@ -39,7 +39,7 @@ export class CommonService {
   }
 
   errorHandle(err: any, message: string, title: string = 'toast.error', override?: Partial<ToastOptions>) {
-    let messageTr = err?.error?.message || this.translate.instant(message);
+    let messageTr = err?.error?.message || this.translate.instant(message || 'toast.default_error');
     let titleTr = err?.error?.error || this.translate.instant(title);
 
     if (err instanceof HttpErrorResponse) {

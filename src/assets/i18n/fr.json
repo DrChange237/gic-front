@@ -32,6 +32,7 @@
     "update_status_agent_failed": "Modification du statut de l'agent échoué"
   },
   "app": {
+    "copyright": "Tous droits reservés",
     "language_en": "Anglais",
     "language_fr": "Français",
     "select_language": "Sélectionnez la langue"

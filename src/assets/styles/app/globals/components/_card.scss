@@ -149,7 +149,7 @@
         transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         cursor: pointer;
         &:hover {
-           transform: scale(1.0375);
+           box-shadow: 0 1rem 3rem rgba(theme.$black, .175);;
         }
 
         .avatar {

@@ -26,8 +26,8 @@ export class UserSettingsComponent implements OnInit {
   passwordForm: UntypedFormGroup
 
   constructor(
+      public authSrv: AuthService,
       private fb: UntypedFormBuilder,
-      private authSrv: AuthService,
       private commonSrv: CommonService,
   ) {
     this.initializeForm();

@@ -159,7 +159,8 @@
                         </div>
                     </ng-template>
                 </li>
-                <li ngbNavItem title="Timeline">
+                @if (!authSrv.isBankUser) {
+                <li ngbNavItem title="Security">
                     <a ngbNavLink>{{ 'user.security' | translate }}</a>
                     <ng-template ngbNavContent>
                         <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()" class="p-4 rounded border bg-body-tertiary">
@@ -199,6 +200,7 @@
                         </form>
                     </ng-template>
                 </li>
+                }
             </ul>
             <div [ngbNavOutlet]="nav"></div>
         </div>
