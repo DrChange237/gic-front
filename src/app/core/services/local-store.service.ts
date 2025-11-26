@@ -34,7 +34,7 @@ export class LocalStoreService {
 
     const eKey = this.secure.hash(key);
     const eData =  this.session.getItem(eKey);
-F
+
     return eData ? this.secure.decrypt(eData) : null;
   }
 
