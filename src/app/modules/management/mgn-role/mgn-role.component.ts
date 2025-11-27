@@ -43,7 +43,7 @@ export class MgnRoleComponent extends BaseListNonPagedComponent<Role> implements
   override fetchData(): Observable<Role[]> {
     return this.accountSrv.getListRoles().pipe(
         catchError(err => {
-          this.commonSrv.errorHandle(err, 'account.get_agent_list_failed', 'account.role');
+          err && this.commonSrv.errorHandle(err, 'account.get_agent_list_failed', 'account.role');
           return of(null);
         })
     );

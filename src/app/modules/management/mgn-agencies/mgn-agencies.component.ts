@@ -48,7 +48,7 @@ export class MgnAgenciesComponent extends BaseListNonPagedComponent<Agency> impl
   override fetchData() {
     return this.accountSrv.getListAgencies().pipe(
         catchError(err => {
-          this.commonSrv.errorHandle(err, 'account.get_agency_list_failed', 'account.role');
+          err && this.commonSrv.errorHandle(err, 'account.get_agency_list_failed', 'account.role');
           return of(null);
         })
     );

@@ -54,7 +54,7 @@ export class MgnAgentsComponent extends BaseListNonPagedComponent<Cashier> imple
   override fetchData() {
     return this.accountSrv.getListAgents(this.listType).pipe(
         catchError(err => {
-          this.commonSrv.errorHandle(err, 'account.get_agent_list_failed', 'account.agent');
+          err && this.commonSrv.errorHandle(err, 'account.get_agent_list_failed', 'account.agent');
           return of(null);
         })
     );

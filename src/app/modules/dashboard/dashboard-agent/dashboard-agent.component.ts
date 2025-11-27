@@ -29,17 +29,29 @@ export class DashboardAgentComponent implements OnInit {
 
 	ngOnInit() {
         if (!this.authSrv.isBankUser) { this.getAccounts(); }
-        this.accountSrv.getStatsByService().subscribe(res => this.setCharServicesStats(res));
-        this.accountSrv.getStatsMonths().subscribe(res => this.setCharMonthStats(res));
+        this.accountSrv.getStatsByService().subscribe({
+            next: res  => this.setCharServicesStats(res),
+            error: err => this.commonSrv.errorHandle(err, '', 'navigation.dashboard')
+        });
+        this.accountSrv.getStatsMonths().subscribe({
+            next: res => this.setCharMonthStats(res),
+            error: err => this.commonSrv.errorHandle(err, '', 'navigation.dashboard')
+        });
 	}
 
     getAccounts() {
         if (this.authSrv.hasPermission(Permission.ACCOUNT_OPERATION_VIEW)) {
-          this.accountSrv.getAccountOperation().subscribe(res => this.operationAcc = res);
+          this.accountSrv.getAccountOperation().subscribe({
+              next: res => { this.operationAcc = res },
+              error: err => this.commonSrv.errorHandle(err, 'account.get_balance_trx_failed', 'account.account_balance')
+          });
         }
 
         if (this.authSrv.hasPermission(Permission.ACCOUNT_COMMISSION_VIEW)) {
-          this.accountSrv.getAccountCommission().subscribe(res => this.commissionAcc = res);
+          this.accountSrv.getAccountCommission().subscribe({
+              next: res => { this.commissionAcc = res },
+              error: err => this.commonSrv.errorHandle(err,  'account.get_balance_fees_failed', 'account.account_balance')
+          });
         }
 
     }

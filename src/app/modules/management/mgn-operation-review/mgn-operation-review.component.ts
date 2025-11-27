@@ -55,7 +55,7 @@ export class MgnOperationReviewComponent extends BaseListNonPagedComponent<Opera
 
     return this.accountSrv.getOperationAccount(agencyId).pipe(
       catchError(err => {
-        this.commonSrv.errorHandle(err, 'account.get_account_review_list_failed', 'account.operation_review');
+        err && this.commonSrv.errorHandle(err, 'account.get_account_review_list_failed', 'account.operation_review');
         return of(null);
       })
     );

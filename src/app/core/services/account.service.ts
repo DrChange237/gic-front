@@ -10,8 +10,8 @@ import {
     StatsOperation,
     StatsService
 } from "../../shared/interfaces";
-import {catchError, of, tap} from "rxjs";
 import {CommonService} from "./common.service";
+import {tap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -29,40 +29,22 @@ export class AccountService extends BaseApiService {
 
     getAccountOperation() {
         return this.get<AccountBalance>('cashier/balance').pipe(
-            tap(res => this.accountOperation = res),
-            catchError(error => {
-                this.commonSrv.errorHandle(error, 'account.get_balance_trx_failed', 'account.account_balance')
-                return of(null);
-            })
+            tap(res => this.accountOperation = res)
         );
     }
 
     getAccountCommission() {
         return this.get<AccountBalance>('cashier/commission').pipe(
-            tap(res => this.accountCommission = res),
-            catchError(error => {
-                this.commonSrv.errorHandle(error, 'account.get_balance_fees_failed', 'account.account_balance')
-                return of(null);
-            })
+            tap(res => this.accountCommission = res)
         );
     }
 
     getStatsByService() {
-        return this.get<StatsService[]>('dashboard/statsByBiller').pipe(
-            catchError(error => {
-                this.commonSrv.errorHandle(error, '', 'navigation.dashboard')
-                return of(null);
-            })
-        );
+        return this.get<StatsService[]>('dashboard/statsByBiller');
     }
 
     getStatsMonths() {
-        return this.get<StatsOperation[]>('dashboard/statsMonths').pipe(
-            catchError(error => {
-                this.commonSrv.errorHandle(error, '', 'navigation.dashboard')
-                return of(null);
-            })
-        );
+        return this.get<StatsOperation[]>('dashboard/statsMonths');
     }
 
   getListAgents(type: string) {

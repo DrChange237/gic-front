@@ -72,6 +72,8 @@ export class HeaderSidebarLargeComponent implements OnInit {
     }
 
     getAccount() {
-        this.accountSrv.getAccountOperation().subscribe();
+        this.accountSrv.getAccountOperation().subscribe({
+            error: _err => {}
+        });
     }
 }

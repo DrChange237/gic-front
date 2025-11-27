@@ -48,7 +48,7 @@ export class ReportingComponent extends BaseListComponent<Report> implements OnI
   override fetchData(query: ListQuery) {
     return this.reportingSrv.getReporting(query).pipe(
       catchError(err => {
-        this.commonSrv.errorHandle(err, 'reporting.get_history_report_failed', 'reporting.report');
+        err && this.commonSrv.errorHandle(err, 'reporting.get_history_report_failed', 'reporting.report');
         return of(null);
       })
     );

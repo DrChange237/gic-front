@@ -81,7 +81,7 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
   override fetchData(query: ListQuery) {
     return this.factorySrv.getTrxHistory(query, this.historyType, this.paramsFilter?.id).pipe(
       catchError(err => {
-        this.commonSrv.errorHandle(err, 'transactions.get_history_transaction_failed', 'transactions.history');
+        err && this.commonSrv.errorHandle(err, 'transactions.get_history_transaction_failed', 'transactions.history');
         return of(null);
       })
     );
