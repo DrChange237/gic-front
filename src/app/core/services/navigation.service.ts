@@ -90,8 +90,8 @@ export class NavigationService {
             icon: 'i-Management',
             disabled: !this.authSrv.hasAnyPermission([...GROUP_PERMISSIONS.MANAGEMENT]),
             sub: [
-                { icon: 'i-Token-', name: 'operation_review', state: 'management/operation-review', type: 'link', disabled: !this.authSrv.isBankUser || !this.authSrv.hasPermission(Permission.FUNDS_TRANSFER_VIEW)  },
-                { icon: 'i-Financial', name: 'transfer_fund', state: 'management/transfer-fund', type: 'link', disabled: this.authSrv.isBankUser || !this.authSrv.hasPermission(Permission.FUNDS_TRANSFER_VIEW)  },
+                { icon: 'i-Token-', name: 'operation_review', state: 'management/operation-review', type: 'link', disabled: !(this.authSrv.isBankUser && this.authSrv.hasPermission(Permission.FUNDS_TRANSFER_VIEW))  },
+                { icon: 'i-Financial', name: 'transfer_fund', state: 'management/transfer-fund', type: 'link', disabled: !(!this.authSrv.isBankUser && this.authSrv.hasPermission(Permission.FUNDS_TRANSFER_VIEW))  },
                 { icon: 'i-Business-ManWoman', name: 'agents', state: 'management/agents/all', type: 'link', disabled: !this.authSrv.hasPermission(Permission.CASHIER_ALL_VIEW) },
                 { icon: 'i-Business-ManWoman', name: 'my_agents', state: 'management/agency/agents', type: 'link', disabled: !this.authSrv.hasPermission(Permission.CASHIER_VIEW) },
                 { icon: 'i-University1', name: 'agencies', state: 'management/agencies', type: 'link', disabled: !this.authSrv.hasPermission(Permission.AGENCY_VIEW) },

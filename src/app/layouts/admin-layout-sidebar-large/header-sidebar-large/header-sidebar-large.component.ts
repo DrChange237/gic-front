@@ -34,7 +34,7 @@ export class HeaderSidebarLargeComponent implements OnInit {
   
     ngOnInit() {
       this.user = this.authSrv.user;
-      if (this.authSrv.authenticated) this.getAccount();
+      if (this.authSrv.authenticated && !this.authSrv.isBankUser) this.getAccount();
     }
   
     toggleSidebar() {

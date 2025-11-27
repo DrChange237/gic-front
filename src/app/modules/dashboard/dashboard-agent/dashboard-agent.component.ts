@@ -28,7 +28,7 @@ export class DashboardAgentComponent implements OnInit {
     ) { }
 
 	ngOnInit() {
-        this.getAccounts();
+        if (!this.authSrv.isBankUser) { this.getAccounts(); }
         this.accountSrv.getStatsByService().subscribe(res => this.setCharServicesStats(res));
         this.accountSrv.getStatsMonths().subscribe(res => this.setCharMonthStats(res));
 	}
