@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import {SecureDataService} from "./secure-data.service";
 import {KeyStore} from "../../shared/enums";
 
-const SECRET_KEY = 'SECRET_KEY';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -14,8 +12,7 @@ export class LocalStoreService {
   private ls = localStorage;
 
   constructor(private secure: SecureDataService) {
-    this.secure.setSecret(this.session.getItem(this.secure.hash(SECRET_KEY)) || SECRET_KEY);
-    if (this.secure.getSecret() === SECRET_KEY) { this.clear(); }
+    if (this.checkSecret()) { this.clear(); }
   }
 
   public setItem(key: string, value: any) {
@@ -29,7 +26,7 @@ export class LocalStoreService {
   public getItem(key) {
     if (this.whiteList.includes(key)) {
       const data = this.ls.getItem(key);
-      return !data || typeof data === 'string' ? data : JSON.stringify(data);
+      return this.parse(data);
     }
 
     const eKey = this.secure.hash(key);
@@ -47,14 +44,31 @@ export class LocalStoreService {
     this.session.clear();
   }
 
-  public async generateSecret(secret: string): Promise<void> {
+  public async setSecret(secret: string): Promise<void> {
     const encoder = new TextEncoder();
     const data = encoder.encode(secret);
 
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
-    this.session.setItem(this.secure.hash(SECRET_KEY), hashHex);
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    const eHashHex = this.secure.encryptParams(hashHex);
+
+    this.secure.setSecret(hashHex);
+    this.session.setItem(this.secure.hash(KeyStore.SECRET), eHashHex);
+  }
+
+  private checkSecret() {
+    const value = this.session.getItem(this.secure.hash(KeyStore.SECRET));
+    if (!value) return true
+
+    this.secure.setSecret(this.secure.decryptParams(value));
+  }
+
+  private parse(value: string) {
+    if (!value || !(value.startsWith('{') || value.startsWith('['))) {
+      return value;
+    }
+    return JSON.parse(value);
   }
 }

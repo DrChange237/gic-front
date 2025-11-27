@@ -1,7 +1,7 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable, signal} from "@angular/core";
 import { Router } from "@angular/router";
-import {tap} from "rxjs";
+import {concatMap, tap} from "rxjs";
 //
 import {Authority, AuthResponse, Cashier, Credentials} from "../../shared/interfaces";
 import { LocalStoreService } from "./local-store.service";
@@ -25,19 +25,15 @@ export class AuthService extends BaseApiService {
       protected http: HttpClient
   ) {
     super(http)
-    this.checkAuth();
     this.setUserAndPermission();
   }
 
-  checkAuth() {
-    this.authenticated = !!this.getUser();
-  }
-
   setUserAndPermission(user?: Cashier) {
-    this.user = user ?? this.getUser();
+    this.user = user || this.getUser();
     this.isBankUser = this.user && this.user?.role?.agent?.mode === 'BANK';
+    this.authenticated = !!this.user;
 
-    if (this.user) { this.setPermissions(this.user.role.authorities) }
+    if (this.user && this.user.role) { this.setPermissions(this.user.role.authorities) }
   }
 
   getUser(): Cashier | null {
@@ -54,10 +50,11 @@ export class AuthService extends BaseApiService {
 
   signIn(credentials: Credentials) {
     return this.post<AuthResponse>('login', credentials).pipe(
-      tap(res => {
+      concatMap(res => {
         this.authenticated = true;
         this.setUserAndPermission(res.cashier);
-        this.store.generateSecret(res.token).then(() => {
+
+        return this.store.setSecret(res.token).then(() => {
           this.store.setItem(KeyStore.USER, res.cashier);
           this.store.setItem(KeyStore.ACCESS_TOKEN, res.token);
         });

@@ -4,5 +4,5 @@
   </h1>
   <p class="text-36 subheading mb-3">{{ 'error.404_title' | translate }}</p>
   <p class="mb-5  text-muted text-18">{{ 'error.404_text' | translate }}</p>
-  <button class="btn btn-lg btn-primary btn-rounded" routerLink="/">{{ 'btn.back_to_home' | translate }}</button>
+  <button class="btn btn-lg btn-primary btn-rounded" [routerLink]="getUrlRedirect()">{{ 'btn.back_to_home' | translate }}</button>
 </div>

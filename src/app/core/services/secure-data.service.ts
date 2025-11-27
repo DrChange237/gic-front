@@ -12,8 +12,6 @@ export class SecureDataService {
 
   setSecret(value: string) { this.secretKey = value; }
 
-  getSecret() { return this.secretKey; }
-
   encrypt(data: any): string {
     const text = typeof data === 'string' ? data : JSON.stringify(data);
     return CryptoJS.AES.encrypt(text, this.secretKey).toString();
@@ -23,7 +21,7 @@ export class SecureDataService {
     try {
       const bytes = CryptoJS.AES.decrypt(cipherText, this.secretKey);
       const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
-      return typeof decryptedText === 'string' ? decryptedText : JSON.parse(decryptedText);
+      return this.parse(decryptedText);
     } catch (e) {
       return null;
     }
@@ -42,10 +40,17 @@ export class SecureDataService {
     try {
       const bytes = CryptoJS.Rabbit.decrypt(cipherText, 'filter-data-params');
       const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
-      return JSON.parse(decryptedText);
+      return this.parse(decryptedText);
     } catch (e) {
       return null;
     }
+  }
+
+  private parse(value: string) {
+    if (!value || !(value.startsWith('{') || value.startsWith('['))) {
+      return value;
+    }
+    return JSON.parse(value);
   }
 
 }

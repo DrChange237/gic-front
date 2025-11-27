@@ -6,21 +6,22 @@ import {TranslateService} from "@ngx-translate/core";
 import {HttpErrorResponse} from "@angular/common/http";
 //
 import {ToastOptions} from "../../shared/interfaces";
-import {LocalStoreService} from "./local-store.service";
-import {KeyStore} from "../../shared/enums";
+import {KeyStore, Language} from "../../shared/enums";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
+  private store = localStorage;
 
   constructor(
       public toastSrv: ToastrService,
       public translate: TranslateService,
-      public store: LocalStoreService,
       public router: Router,
       public location: Location,
-  ) {}
+  ) {
+    this.checkLanguage();
+  }
 
   openFileOnBlank(file: Blob | string, download: boolean = false, name?: string) {
     const url = typeof file === 'string'
@@ -75,6 +76,12 @@ export class CommonService {
       case 'success': this.toastSrv.success(data.message, data.title, override); break;
       case 'warning': this.toastSrv.warning(data.message, data.title, override); break;
     }
+  }
+
+
+  checkLanguage() {
+    const lang = this.store.getItem(KeyStore.LANG) as Language;
+    (Object.values(Language).includes(lang)) && this.toggleLanguage(lang);
   }
 
   toggleLanguage(lang: string) {

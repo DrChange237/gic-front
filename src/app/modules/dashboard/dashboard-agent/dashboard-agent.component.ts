@@ -28,12 +28,21 @@ export class DashboardAgentComponent implements OnInit {
     ) { }
 
 	ngOnInit() {
-        this.accountSrv.getAccountOperation().subscribe(res => this.operationAcc = res);
-        this.accountSrv.getAccountCommission().subscribe(res => this.commissionAcc = res);
-
+        this.getAccounts();
         this.accountSrv.getStatsByService().subscribe(res => this.setCharServicesStats(res));
         this.accountSrv.getStatsMonths().subscribe(res => this.setCharMonthStats(res));
 	}
+
+    getAccounts() {
+        if (this.authSrv.hasPermission(Permission.ACCOUNT_OPERATION_VIEW)) {
+          this.accountSrv.getAccountOperation().subscribe(res => this.operationAcc = res);
+        }
+
+        if (this.authSrv.hasPermission(Permission.ACCOUNT_COMMISSION_VIEW)) {
+          this.accountSrv.getAccountCommission().subscribe(res => this.commissionAcc = res);
+        }
+
+    }
 
     setCharMonthStats(data: StatsOperation[]) {
         const value = Math.max(...data.map(item => item.totalAmount));

@@ -7,6 +7,7 @@ import {CommonService} from "../../../core/services/common.service";
 import {AuthService} from "../../../core/services/auth.service";
 import {finalize} from "rxjs";
 import {Language} from "../../../shared/enums";
+import {Permission} from "../../../shared/enums/permission";
 
 @Component({
     selector: 'app-signin',
@@ -75,12 +76,16 @@ export class SigninComponent implements OnInit {
                 next: () => {
                     this.alert = { show: false, message: '', type: 'success' };
                     this.commonSrv.alert('success', 'sessions.sign_in_success', 'sessions.session');
-                    this.router.navigateByUrl('/dashboard');
+                    this.router.navigateByUrl(this.getUrlRedirect());
                 },
                 error: err => {
                     this.alert = { show: true, message: err?.error?.message || 'sessions.sign_in_failed', type: 'danger' };
                     this.commonSrv.errorHandle(err, 'sessions.sign_in_failed', 'sessions.session');
                 },
         });
+    }
+
+    private getUrlRedirect() {
+        return this.auth.hasPermission(Permission.DASHBOARD_VIEW) ? '/dashboard' : '/transactions';
     }
 }

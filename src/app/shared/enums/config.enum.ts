@@ -6,5 +6,6 @@ export enum Language {
 export enum KeyStore {
     ACCESS_TOKEN= 'T',
     USER = 'U',
-    LANG = 'L'
+    LANG = 'L',
+    SECRET = 'IN_0U',
 }

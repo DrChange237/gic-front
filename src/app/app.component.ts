@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {CommonService} from "./core/services/common.service";
-import {KeyStore, Language} from "./shared/enums";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -12,17 +10,8 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 export class AppComponent {
   title = 'bootDash';
 
-  constructor(
-      private commonSrv: CommonService,
-      private modalService: NgbModal,
-  ) {
+  constructor(private modalService: NgbModal) {
       modalService.dismissAll();
-      this.setLanguage();
-  }
-
-  setLanguage() {
-      const lang = this.commonSrv.store.getItem(KeyStore.LANG);
-      (Object.values(Language).includes(lang)) && this.commonSrv.toggleLanguage(lang);
   }
 
 }

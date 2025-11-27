@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Permission} from "../../../shared/enums/permission";
+import {AuthService} from "../../../core/services/auth.service";
 
 @Component({
     selector: 'app-not-found',
@@ -8,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotFoundComponent implements OnInit {
 
-  constructor() { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit() {
+  }
+
+  getUrlRedirect() {
+      return !this.auth.hasPermission(Permission.DASHBOARD_VIEW) ? '/dashboard' : '/transactions';
   }
 
 }
