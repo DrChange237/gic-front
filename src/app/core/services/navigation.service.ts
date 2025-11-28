@@ -1,4 +1,4 @@
-import {inject, Injectable} from '@angular/core';
+import {effect, inject, Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {AuthService} from "./auth.service";
 import {GROUP_PERMISSIONS, Permission} from "../../shared/enums/permission";
@@ -51,60 +51,115 @@ export class NavigationService {
 
     protected authSrv: AuthService = inject(AuthService);
 
+    private menuItems = new BehaviorSubject<IMenuItem[]>(this.buildMenu());
+    public menuItems$ = this.menuItems.asObservable();
+
     constructor() {
+        effect(() => {
+            const user = this.authSrv._permissions();
+            this.menuItems.next(this.buildMenu());
+        });
     }
 
-    defaultMenu: IMenuItem[] = [
-        {
-            name: 'dashboard',
-            type: 'link',
-            icon: 'i-Bar-Chart',
-            state: '/dashboard'
-        },
-        {
-            name: 'services',
-            type: 'link',
-            icon: 'i-Shop-4',
-            state: 'transactions/services'
-        },
-        {
-            name: 'history',
-            type: 'dropDown',
-            icon: 'i-Money-2',
-            sub: [
-                { icon: 'i-Business-Man', name: 'my_history', state: 'transactions/history/agent', type: 'link' },
-                { icon: 'i-Business-Mens', name: 'history_agency', state: 'transactions/history/agency', type: 'link', disabled: !this.authSrv.hasPermission(Permission.HISTORY_AGENCY_VIEW) },
-                { icon: 'i-University1', name: 'history_global', state: 'transactions/history/all', type: 'link', disabled: !this.authSrv.hasPermission(Permission.HISTORY_CASHIER_VIEW) },
-            ]
-        },
-        {
-            name: 'reporting',
-            type: 'link',
-            icon: 'i-Statistic',
-            state: 'reporting',
-            disabled: !this.authSrv.hasPermission(Permission.REPORT_VIEW)
-        },
-        {
-            name: 'management',
-            type: 'dropDown',
-            icon: 'i-Management',
-            disabled: !this.authSrv.hasAnyPermission([...GROUP_PERMISSIONS.MANAGEMENT]),
-            sub: [
-                { icon: 'i-Token-', name: 'operation_review', state: 'management/operation-review', type: 'link', disabled: !(this.authSrv.isBankUser && this.authSrv.hasPermission(Permission.FUNDS_TRANSFER_VIEW))  },
-                { icon: 'i-Financial', name: 'transfer_fund', state: 'management/transfer-fund', type: 'link', disabled: !(!this.authSrv.isBankUser && this.authSrv.hasPermission(Permission.FUNDS_TRANSFER_VIEW))  },
-                { icon: 'i-Business-ManWoman', name: 'agents', state: 'management/agents/all', type: 'link', disabled: !this.authSrv.hasPermission(Permission.CASHIER_ALL_VIEW) },
-                { icon: 'i-Business-ManWoman', name: 'my_agents', state: 'management/agency/agents', type: 'link', disabled: !this.authSrv.hasPermission(Permission.CASHIER_VIEW) },
-                { icon: 'i-University1', name: 'agencies', state: 'management/agencies', type: 'link', disabled: !this.authSrv.hasPermission(Permission.AGENCY_VIEW) },
-                { icon: 'i-Lock-User', name: 'role_profile', state: 'management/role-and-profile', type: 'link', disabled: !this.authSrv.hasPermission(Permission.ROLE_VIEW) },
-            ]
-        },
-    ];
+    private buildMenu(): IMenuItem[] {
+        return [
+            {
+                name: 'dashboard',
+                type: 'link',
+                icon: 'i-Bar-Chart',
+                state: '/dashboard'
+            },
+            {
+                name: 'services',
+                type: 'link',
+                icon: 'i-Shop-4',
+                state: 'transactions/services'
+            },
+            {
+                name: 'history',
+                type: 'dropDown',
+                icon: 'i-Money-2',
+                sub: [
+                    {icon: 'i-Business-Man', name: 'my_history', state: 'transactions/history/agent', type: 'link'},
+                    {
+                        icon: 'i-Business-Mens',
+                        name: 'history_agency',
+                        state: 'transactions/history/agency',
+                        type: 'link',
+                        disabled: !this.authSrv.hasPermission(Permission.HISTORY_AGENCY_VIEW)
+                    },
+                    {
+                        icon: 'i-University1',
+                        name: 'history_global',
+                        state: 'transactions/history/all',
+                        type: 'link',
+                        disabled: !this.authSrv.hasPermission(Permission.HISTORY_CASHIER_VIEW)
+                    },
+                ]
+            },
+            {
+                name: 'reporting',
+                type: 'link',
+                icon: 'i-Statistic',
+                state: 'reporting',
+                disabled: !this.authSrv.hasPermission(Permission.REPORT_VIEW)
+            },
+            {
+                name: 'management',
+                type: 'dropDown',
+                icon: 'i-Management',
+                disabled: !this.authSrv.hasAnyPermission([...GROUP_PERMISSIONS.MANAGEMENT]),
+                sub: [
+                    {
+                        icon: 'i-Token-',
+                        name: 'operation_review',
+                        state: 'management/operation-review',
+                        type: 'link',
+                        disabled: !(this.authSrv.isBankUser && this.authSrv.hasPermission(Permission.FUNDS_TRANSFER_VIEW))
+                    },
+                    {
+                        icon: 'i-Financial',
+                        name: 'transfer_fund',
+                        state: 'management/transfer-fund',
+                        type: 'link',
+                        disabled: !(!this.authSrv.isBankUser && this.authSrv.hasPermission(Permission.FUNDS_TRANSFER_VIEW))
+                    },
+                    {
+                        icon: 'i-Business-ManWoman',
+                        name: 'agents',
+                        state: 'management/agents/all',
+                        type: 'link',
+                        disabled: !this.authSrv.hasPermission(Permission.CASHIER_ALL_VIEW)
+                    },
+                    {
+                        icon: 'i-Business-ManWoman',
+                        name: 'my_agents',
+                        state: 'management/agency/agents',
+                        type: 'link',
+                        disabled: !this.authSrv.hasPermission(Permission.CASHIER_VIEW)
+                    },
+                    {
+                        icon: 'i-University1',
+                        name: 'agencies',
+                        state: 'management/agencies',
+                        type: 'link',
+                        disabled: !this.authSrv.hasPermission(Permission.AGENCY_VIEW)
+                    },
+                    {
+                        icon: 'i-Lock-User',
+                        name: 'role_profile',
+                        state: 'management/role-and-profile',
+                        type: 'link',
+                        disabled: !this.authSrv.hasPermission(Permission.ROLE_VIEW)
+                    },
+                ]
+            },
+        ];
+    }
 
-
-    // sets iconMenu as default;
-    menuItems = new BehaviorSubject<IMenuItem[]>(this.defaultMenu);
-    // navigation component has subscribed to this Observable
-    menuItems$ = this.menuItems.asObservable();
+    public getMenu() {
+        return this.menuItems.value;
+    }
 
     // You can customize this method to supply different menu for
     // different user type.

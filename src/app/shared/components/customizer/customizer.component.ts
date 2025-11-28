@@ -24,7 +24,7 @@ export class CustomizerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.nav = [...this.navService.defaultMenu];
+    this.nav = [...this.navService.getMenu()];
     this.layouts = this.customizer.layouts;
     this.colors = this.customizer.colors;
     if (!this.customizer.selectedLayout) {

@@ -17,7 +17,7 @@ export class AuthService extends BaseApiService {
   authenticated = false;
   isBankUser: boolean = false;
 
-  private _permissions = signal<Permission[]>([]);
+  _permissions = signal<Permission[]>([]);
 
   constructor(
       private store: LocalStoreService,
@@ -79,7 +79,7 @@ export class AuthService extends BaseApiService {
   signOutLocal() {
       this.authenticated = false;
       this.store.clear();
-      this._permissions.set([]);
+      this.setPermissions([]);
       this.router.navigateByUrl("/sessions/signin");
   }
 
