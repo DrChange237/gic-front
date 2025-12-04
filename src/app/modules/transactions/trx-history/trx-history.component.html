@@ -66,8 +66,8 @@
                     <table class="table table-hover mb-0">
                         <thead>
                         <tr>
-                            <th scope="col" role="button" class="px-3">{{ '#ID' | translate }}</th>
-                            <th scope="col" role="button">{{ 'table.reference' | translate }}</th>
+                            <th scope="col" role="button" class="px-3">{{ 'table.reference' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.service_reference' | translate }}</th>
                             <th scope="col" role="button">{{ 'table.service' | translate }}</th>
                             @if (historyType) {
                                 <th scope="col" role="button">{{ 'table.agent' | translate }}</th>
@@ -76,7 +76,7 @@
                                 <th scope="col" role="button">{{ 'table.agency' | translate }}</th>
                             }
                             <th class="text-end pe-3" scope="col" role="button">{{ 'table.amount' | translate }}</th>
-                            <th scope="col" role="button">{{ 'table.trx_date' | translate }}</th>
+                            <th class="text-center" scope="col" role="button">{{ 'table.trx_date' | translate }}</th>
                             <th class="text-center" scope="col" role="button">{{ 'table.status' | translate }}</th>
                             <th class="text-center" scope="col" role="button">{{ 'table.action' | translate }}</th>
                         </tr>
@@ -104,23 +104,28 @@
                                         </td>
                                     }
                                     <td class="text-end pe-3">
-                                        <ngb-highlight [result]="transaction.amount | currency: 'XAF'" [term]="searchTerm" />
+                                        <ngb-highlight [result]="(transaction.amount | number: '1.0-0') + ' XAF'" [term]="searchTerm" />
                                     </td>
-                                    <td>{{(transaction.date | date: 'dd/MM/yyyy - HH:mm') || 'N/A' }}</td>
+                                    <td class="text-center">{{(transaction.date | date: 'medium') || 'N/A' }}</td>
                                     <td class="col-status">
                                         <span class="badge rounded-pill p-2 text-bg-{{ transaction.status | statusBadge }}">
                                             {{ 'badge.' + transaction.status | translate | uppercase }}
                                         </span>
                                     </td>
-                                    <td class="col-action">
-                                        <div class="d-flex flex-wrap gap-2 justify-content-center">
-                                            <button role="button" class="btn btn-info text-white text-14" [ngbTooltip]="'btn.detail' | translate"
-                                                    (click)="openDetailTrx(modalDetailTrx, transaction)" *hasPermission="Permission.HISTORY_CASHIER_DETAIL">
-                                                <i class="i-Information fw-medium"></i>
+                                    <td class="col-action" ngbDropdown>
+                                        <button role="button" class="btn bg-white border-0 visible-none" id="actionDropdown" ngbDropdownToggle>
+                                            <span class="line-height-1 text-14 fw-bolder">...</span>
+                                        </button>
+
+                                        <div ngbDropdownMenu aria-labelledby="actionDropdown">
+                                            <button role="button" class="dropdown-item" (click)="openDetailTrx(transaction)"
+                                                    *hasPermission="Permission.HISTORY_CASHIER_DETAIL">
+                                                <i class="i-Information text-14 pe-1"></i>
+                                                {{ 'btn.detail' | translate }}
                                             </button>
-                                            <button role="button" class="btn btn-primary text-14" [ngbTooltip]="'btn.download_receipt' | translate"
-                                                    (click)="downloadReceipt(transaction)">
-                                                <i class="i-Download-from-Cloud fw-medium"></i>
+                                            <button role="button" class="dropdown-item" (click)="downloadReceipt(transaction)">
+                                                <i class="i-Download-from-Cloud text-14 pe-1"></i>
+                                                {{'btn.download_receipt' | translate}}
                                             </button>
                                         </div>
                                     </td>
@@ -154,18 +159,3 @@
         </div>
     </div>
 </div>
-
-<ng-template #modalDetailTrx let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title fw-semibold" id="modal-payment-instructions">{{ 'transactions.detail_transaction' | translate }}</h4>
-        <a role="button" class="btn btn-close" aria-label="Close" (click)="modal.close()"></a>
-    </div>
-    <div class="modal-body">
-        <ng-scrollbar visibility="hover" style="height: max-content;">
-            <app-table-detail [data]="datasTransaction" [pageSize]="5" [paginate]="true"></app-table-detail>
-        </ng-scrollbar>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-dark" (click)="modal.close()">{{ 'btn.close' | translate }}</button>
-    </div>
-</ng-template>

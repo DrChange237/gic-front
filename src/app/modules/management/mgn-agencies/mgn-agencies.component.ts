@@ -3,7 +3,7 @@ import {CommonModule, CurrencyPipe} from "@angular/common";
 import {catchError, of} from "rxjs";
 import {FormsModule} from "@angular/forms";
 import {NgSelectComponent} from "@ng-select/ng-select";
-import {NgbHighlight, NgbModal, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {TranslatePipe} from "@ngx-translate/core";
 //
 import {
@@ -25,8 +25,8 @@ import {SecureDataService} from "../../../core/services/secure-data.service";
   selector: 'app-mgn-agencies',
   templateUrl: './mgn-agencies.component.html',
   styleUrls: ['./mgn-agencies.component.scss'],
-  imports: [CommonModule, SharedComponentsModule, FormsModule, NgSelectComponent, NgbHighlight, NgbPagination, TranslatePipe,
-    NgbTooltip, NgScrollbar, TableDetailComponent, HasPermissionDirective],
+  imports: [CommonModule, SharedComponentsModule, FormsModule, NgSelectComponent, NgbModule, TranslatePipe, NgScrollbar,
+    TableDetailComponent, HasPermissionDirective],
   standalone: true
 })
 export class MgnAgenciesComponent extends BaseListNonPagedComponent<Agency> implements OnInit {

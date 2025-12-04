@@ -14,17 +14,23 @@ import { DashboardAgentComponent } from './dashboard-agent/dashboard-agent.compo
 import { SharedComponentsModule } from 'src/app/shared/components/shared-components.module';
 import {TranslatePipe} from "@ngx-translate/core";
 import {HasPermissionDirective} from "../../shared/directives/permission.directive";
+import {FormsModule} from "@angular/forms";
+import {NgSelectComponent} from "@ng-select/ng-select";
+import {SharedPipesModule} from "../../shared/pipes/shared-pipes.module";
 
 @NgModule({
     imports: [
         CommonModule,
         SharedComponentsModule,
         HasPermissionDirective,
-        NgxEchartsModule.forRoot({ echarts }),
+        NgxEchartsModule.forRoot({echarts}),
         NgbModule,
         NgScrollbarModule,
         DashboardRoutingModule,
-        TranslatePipe
+        TranslatePipe,
+        FormsModule,
+        NgSelectComponent,
+        SharedPipesModule
     ],
   declarations: [DashboardAgentComponent]
 })

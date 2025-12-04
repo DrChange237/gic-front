@@ -6,7 +6,7 @@
     </h1>
     @if (breadcrumbs.length > 1) {
         <ul>
-            @for (bc of breadcrumbs; track bc; let isLast = $last) {
+            @for (bc of breadcrumbs; track bc.url; let isLast = $last) {
                 @if (!isLast) {
                     <li><a [routerLink]="bc.url">{{ bc.label | translate}}</a></li>
                 } @else {

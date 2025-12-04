@@ -8,7 +8,7 @@
                 <div class="d-md-flex gap-3 justify-content-between align-items-center mb-2">
                     <h5 class="mb-2 mb-md-0 text-white">{{ operationAcc?.title || 'N/A' }}</h5>
                     <div>
-                        <span class="badge px-3 text-12 line-height-1 text-bg-warning rounded-5">
+                        <span class="badge px-3 text-12 line-height-1 text-bg-warning bg-white rounded-5">
                           {{ 'account.type_operation' | translate  }}
                         </span>
                     </div>
@@ -29,7 +29,7 @@
                 <div class="d-md-flex gap-3 justify-content-between align-items-center mb-2">
                     <h5 class="mb-2 mb-md-0 text-white">{{ commissionAcc?.title || 'N/A' }}</h5>
                     <div>
-                        <span class="badge px-3 text-12 line-height-1 text-bg-warning rounded-5">
+                        <span class="badge px-3 text-12 line-height-1 text-bg-light bg-white rounded-5">
                           {{ 'account.type_commission' | translate  }}
                         </span>
                     </div>
@@ -61,6 +61,59 @@
                 <div class="card-body">
                     <div class="card-title">{{ 'dashboard.stats_by_services' | translate }} (XAF)</div>
                     <div echarts [options]="servicesChartPie" [autoResize]="true" style="height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="card o-hidden">
+            <div class="card-body">
+                <div class="card-title">{{ 'dashboard.last_transaction' | translate }}</div>
+                <div class="rounded-table overflow-x-auto">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                        <tr>
+                            <th scope="col" role="button" class="px-3">{{ 'table.reference' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.service_reference' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.service' | translate }}</th>
+                            <th scope="col" role="button">{{ 'table.agency' | translate }}</th>
+                            <th class="text-end pe-3" scope="col" role="button">{{ 'table.amount' | translate }}</th>
+                            <th class="text-center" scope="col" role="button">{{ 'table.trx_date' | translate }}</th>
+                            <th class="text-center" scope="col" role="button">{{ 'table.status' | translate }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @for (transaction of transactions; track transaction.id) {
+                                <tr>
+                                    <td class="col-reference text-truncate px-3">
+                                        {{ transaction.receiptId || 'N/A' }}
+                                    </td>
+                                    <td>{{ transaction.reference || 'N/A' }}</td>
+                                    <td>
+                                        <img [src]="transaction.serviceLogo | prefixImgUrl" [alt]="" class="me-2" style="width: 30px"/>
+                                        {{ transaction.serviceName }}
+                                    </td>
+                                    <td>{{ transaction.cashier.agency.name }}</td>
+                                    <td class="text-end pe-3">
+                                        {{ (transaction.amount | number: '1.0-0') +' XAF' }}
+                                    </td>
+                                    <td class="text-center">{{(transaction.date | date: 'medium') || 'N/A' }}</td>
+                                    <td class="col-status">
+                                        <span class="badge rounded-pill p-2 text-bg-{{ transaction.status | statusBadge }}">
+                                            {{ 'badge.' + transaction.status | translate | uppercase }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            } @empty {
+                                <tr>
+                                    <td colspan="7" style="text-align: center">
+                                        {{ 'table.empty_data' | translate }}
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

@@ -1,16 +1,9 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {
-  NgbHighlight,
-  NgbInputDatepicker,
-  NgbModal,
-  NgbPagination,
-  NgbTooltip
-} from "@ng-bootstrap/ng-bootstrap";
+import {Component, OnInit, TemplateRef} from '@angular/core';
+import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {CommonModule, formatDate} from "@angular/common";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {TranslatePipe} from "@ngx-translate/core";
 import {ActivatedRoute} from "@angular/router";
-import {NgScrollbar} from "ngx-scrollbar";
 import {catchError, of} from "rxjs";
 import {FormsModule, ReactiveFormsModule, UntypedFormBuilder} from "@angular/forms";
 //
@@ -24,24 +17,20 @@ import {TableDetailComponent} from "../../../shared/components/table-detail/tabl
 import {Permission} from "../../../shared/enums/permission";
 import {HasPermissionDirective} from "../../../shared/directives/permission.directive";
 import {SecureDataService} from "../../../core/services/secure-data.service";
+import {TrxDetailModalComponent} from "../trx-detail-modal/trx-detail-modal.component";
 
 @Component({
   selector: 'app-trx-history',
   templateUrl: './trx-history.component.html',
   styleUrls: ['./trx-history.component.scss'],
-  imports: [CommonModule, SharedPipesModule, SharedComponentsModule, NgbPagination, FormsModule, NgbHighlight, NgSelectModule,
-    TranslatePipe, NgbTooltip, TableDetailComponent, NgScrollbar, NgbInputDatepicker, ReactiveFormsModule, HasPermissionDirective],
+  imports: [CommonModule, SharedPipesModule, SharedComponentsModule, FormsModule, NgbModule, NgSelectModule,
+    TranslatePipe, TableDetailComponent, ReactiveFormsModule, HasPermissionDirective],
   standalone: true,
 })
 export class TrxHistoryComponent extends BaseListComponent<Transaction> implements OnInit {
 
   paramsFilter: { id: string, name: string } | null = null;
   historyType: string = '';
-
-  currTransaction: Transaction;
-  datasTransaction: { key: string; label: string, value: string }[];
-
-  @ViewChild(NgScrollbar) scrollbarRef!: NgScrollbar;
 
   protected readonly Permission = Permission;
 
@@ -109,15 +98,14 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
     });
   }
 
-  openDetailTrx(content: TemplateRef<never>, transaction: Transaction) {
+  openDetailTrx(transaction: Transaction) {
     if (!transaction) return;
     this.factorySrv.getTrxDetail(transaction.id).subscribe({
       next: res => {
-        this.currTransaction = res
-        this.datasTransaction = this.commonSrv.objectToDisplayList(res, ['id', 'choice', 'serviceLogo']);
-        this.modalService
-            .open(content, { size: "lg", ariaLabelledBy: 'modal-basic-title', centered: true })
-            .shown.subscribe(() => { this.scrollbarRef?.scrollTo({top: 0}).then();  });
+        const modalRef = this.modalService.open(
+            TrxDetailModalComponent, { size: "lg", ariaLabelledBy: 'modal-basic-title', centered: true }
+        );
+        modalRef.componentInstance.transaction = res;
       },
       error: err => this.commonSrv.errorHandle(err, 'transactions.get_detail_transaction_failed', 'transactions.history')
     });

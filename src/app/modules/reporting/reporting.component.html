@@ -82,11 +82,16 @@
                                     </td>
                                     <td><ngb-highlight [result]="report.description" [term]="searchTerm" /></td>
                                     <td>{{(report.creationDate | date: 'dd/MM/yyyy - HH:mm') || 'N/A' }}</td>
-                                    <td class="col-action">
-                                        <button role="button" class="btn btn-primary text-14" [ngbTooltip]="'btn.download_report' | translate"
-                                                (click)="downloadReport(report)">
-                                            <i class="i-Download-from-Cloud fw-medium"></i>
+                                    <td class="col-action" ngbDropdown>
+                                        <button role="button" class="btn bg-white border-0 visible-none" id="actionDropdown" ngbDropdownToggle>
+                                            <span class="line-height-1 text-14 fw-bolder">...</span>
                                         </button>
+                                        <div ngbDropdownMenu aria-labelledby="actionDropdown">
+                                            <button role="button" class="dropdown-item" (click)="downloadReport(report)">
+                                                <i class="i-Download-from-Cloud text-14 pe-1"></i>
+                                                {{'btn.download_report' | translate}}
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             } @empty {

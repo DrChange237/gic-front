@@ -1,8 +1,9 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import {NgbHighlight, NgbModal, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgSelectComponent} from "@ng-select/ng-select";
 import {TranslatePipe} from "@ngx-translate/core";
+import {ActivatedRoute} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {catchError, of} from "rxjs";
 //
@@ -16,7 +17,6 @@ import {
   ConfirmActionModalComponent
 } from "../../../shared/components/confirm-action-modal/confirm-action-modal.component";
 import {ActionResultModalComponent} from "../../../shared/components/action-result-modal/action-result-modal.component";
-import {ActivatedRoute} from "@angular/router";
 import {Permission} from "../../../shared/enums/permission";
 import {HasPermissionDirective} from "../../../shared/directives/permission.directive";
 import {SecureDataService} from "../../../core/services/secure-data.service";
@@ -25,8 +25,8 @@ import {SecureDataService} from "../../../core/services/secure-data.service";
   selector: 'app-mgn-agents',
   templateUrl: './mgn-agents.component.html',
   styleUrls: ['./mgn-agents.component.scss'],
-  imports: [CommonModule, SharedPipesModule, SharedComponentsModule, FormsModule, NgSelectComponent, NgbHighlight,
-    NgbPagination, ReactiveFormsModule, TranslatePipe, NgbTooltip, HasPermissionDirective],
+  imports: [CommonModule, SharedPipesModule, SharedComponentsModule, FormsModule, NgSelectComponent, NgbModule,
+    ReactiveFormsModule, TranslatePipe, HasPermissionDirective],
   standalone: true
 })
 export class MgnAgentsComponent extends BaseListNonPagedComponent<Cashier> implements OnInit {

@@ -44,11 +44,14 @@
     "PENDING": "En attente",
     "QUOTE": "Devis généré",
     "REJECTED": "Rejeté",
-    "SUCCESS": "Réussie",
+    "SUCCESS": "Succès",
     "WAITING": "En cours",
     "availability": {
       "CLOSED": "Fermer",
       "OPEN": "Ouvert"
+    },
+    "commission": {
+      "true": "PAYÉ"
     },
     "service_unavailable": "Indisponible",
     "status": {
@@ -90,6 +93,7 @@
     "update_role_agent": "Mettre à jour le rôle"
   },
   "dashboard": {
+    "last_transaction": "Dernières transactions",
     "stats_by_services": "Statistiques sur les services",
     "stats_monthly": "Statistiques mensuelles"
   },
@@ -170,6 +174,7 @@
     "role_profile": "Rôle & Profil",
     "services": "Services",
     "templates": "Templates",
+    "transaction_detail": "Détails de transaction",
     "transaction_history": "Historiques de Transaction",
     "transfer_fund": "Transfert de fonds"
   },
@@ -206,9 +211,12 @@
     "city": "Ville",
     "client_fees": "Frais client",
     "code": "Code",
+    "commission": "Commission",
+    "commission_paid": "Commission versée",
     "created_date": "Date de création",
     "description": "Description",
     "empty_data": "Aucune donnée disponible",
+    "info": "Information",
     "item_per_page": "Affichés par page",
     "label": "Libellé",
     "language": "Langue",
@@ -217,11 +225,13 @@
     "number_authorities": "Nombre d'autorités",
     "operation_account": "Compte d'opération",
     "operation_account_balance": "Solde compte d'opération",
-    "reference": "Référence",
+    "reference": "Réf. Transaction",
     "role": "Rôle",
     "service": "Service",
+    "service_reference": "Réf. Paiement",
     "status": "Statut",
     "total_amount": "Montant total",
+    "transaction_id": "Transaction ID",
     "transit_account": "Compte de transit",
     "transit_account_balance": "Solde compte de transit",
     "trx_date": "Date",
@@ -260,6 +270,7 @@
     "service": "Service",
     "service_instructions": "Instructions sur le service",
     "service_type": "Type de Service",
+    "transaction_info": "Données de transaction",
     "transfert_fund_transaction_failed": "Exécution du transfert de fond échoué"
   },
   "user": {

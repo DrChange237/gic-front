@@ -10,6 +10,11 @@
         top: calc(50% - 2px);
         right: 10px !important;
     }
+    &.visible-none {
+        &::after {
+            border-color: transparent;
+        }
+    }
 }
 .dropdown-menu {
     border: 0;

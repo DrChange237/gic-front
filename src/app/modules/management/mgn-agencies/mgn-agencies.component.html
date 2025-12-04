@@ -46,25 +46,31 @@
                                             {{ 'badge.status.' + agency.enabled | translate | uppercase }}
                                         </span>
                                     </td>
-                                    <td class="col-action">
-                                        <div class="d-flex justify-content-center gap-2">
-                                            <button role="button" class="btn btn-info text-white text-14" [ngbTooltip]="'btn.detail' | translate"
-                                                    (click)="openModal(modalDetailAgency, agency)" *hasPermission="Permission.AGENCY_DETAIL">
-                                                <i class="i-Information fw-medium"></i>
+                                    <td class="col-action" ngbDropdown>
+                                        <button role="button" class="btn bg-white border-0 visible-none" id="actionDropdown" ngbDropdownToggle>
+                                            <span class="line-height-1 text-14 fw-bolder">...</span>
+                                        </button>
+
+                                        <div ngbDropdownMenu aria-labelledby="actionDropdown">
+                                            <button role="button" class="dropdown-item" (click)="openModal(modalDetailAgency, agency)"
+                                                    *hasPermission="Permission.AGENCY_DETAIL">
+                                                <i class="i-Information text-14 pe-1"></i>
+                                                {{'btn.detail' | translate}}
                                             </button>
-                                            <button role="button" class="btn btn-primary text-white text-14" [ngbTooltip]="'btn.agent_history' | translate"
-                                                    (click)="viewHistoryAgency(agency)" *hasPermission="Permission.HISTORY_CASHIER_VIEW">
-                                                <i class="i-Receipt fw-medium"></i>
+                                            <button role="button" class="dropdown-item" (click)="viewHistoryAgency(agency)"
+                                                    *hasPermission="Permission.HISTORY_CASHIER_VIEW">
+                                                <i class="i-Receipt text-14 pe-1"></i>
+                                                {{'btn.agent_history' | translate}}
                                             </button>
-                                            <button role="button" class="btn text-14" [ngClass]="agency.avaibility === 'OPEN' ? 'btn-warning' : 'btn-success text-white'"
-                                                    [ngbTooltip]="('btn.agent_available.' + agency.avaibility) | translate"
-                                                    (click)="viewOperationReview(agency)" *hasPermission="Permission.AGENCY_OPEN">
-                                                <i class="fw-medium" [ngClass]="agency.avaibility === 'CLOSED' ? 'i-Power-2' : 'i-Power-2'"></i>
+                                            <button role="button" class="dropdown-item" (click)="viewOperationReview(agency)"
+                                                    *hasPermission="Permission.AGENCY_OPEN">
+                                                <i class="i-Power-2 text-14 pe-1"></i>
+                                                {{('btn.agent_available.' + agency.avaibility) | translate}}
                                             </button>
-                                            <button role="button" class="btn text-14" [ngClass]="{'btn-danger': agency.enabled, 'btn-success text-white': !agency.enabled}"
-                                                    [ngbTooltip]="('btn.agency_active.' + !agency.enabled) | translate"
-                                                    (click)="openConfirmModal(agency)" *hasPermission="Permission.AGENCY_ENABLE">
-                                                <i class="fw-medium" [ngClass]="{'i-Lock-2': agency.enabled, 'i-Unlock-2': !agency.enabled}"></i>
+                                            <button role="button" class="dropdown-item" (click)="openConfirmModal(agency)"
+                                                    *hasPermission="Permission.AGENCY_ENABLE">
+                                                <i class="i-Lock-2 text-14 pe-1"></i>
+                                                {{('btn.agency_active.' + !agency.enabled) | translate}}
                                             </button>
                                         </div>
                                     </td>

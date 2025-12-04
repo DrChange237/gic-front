@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 //
 import {AccountService} from "../../../core/services/account.service";
-import {AccountBalance, StatsOperation, StatsService} from "../../../shared/interfaces";
+import {AccountBalance, StatsOperation, StatsService, Transaction} from "../../../shared/interfaces";
 import {Permission} from "../../../shared/enums/permission";
 import {CommonService} from "../../../core/services/common.service";
 import {AuthService} from "../../../core/services/auth.service";
+import {FactoryService} from "../../../core/services/factory.service";
 
 @Component({
     selector: 'app-dashboard-agent',
@@ -18,6 +19,7 @@ export class DashboardAgentComponent implements OnInit {
 
     operationAcc: AccountBalance;
     commissionAcc: AccountBalance;
+    transactions: Transaction[];
 
     protected readonly Permission = Permission;
 
@@ -25,10 +27,25 @@ export class DashboardAgentComponent implements OnInit {
         public authSrv: AuthService,
         private commonSrv: CommonService,
         private accountSrv: AccountService,
+        private factorySrv: FactoryService,
     ) { }
 
 	ngOnInit() {
         if (!this.authSrv.isBankUser) { this.getAccounts(); }
+        this.getStatistics();
+        this.getLastTransaction();
+	}
+
+    getLastTransaction(){
+        this.factorySrv.getTrxHistory({page: 1, size: 5}).subscribe({
+            next: res => { this.transactions = res.content },
+            error: err => {
+                err && this.commonSrv.errorHandle(err, 'transactions.get_history_transaction_failed', 'transactions.history');
+            }
+        });
+    }
+
+    getStatistics() {
         this.accountSrv.getStatsByService().subscribe({
             next: res  => this.setCharServicesStats(res),
             error: err => this.commonSrv.errorHandle(err, '', 'navigation.dashboard')
@@ -37,7 +54,7 @@ export class DashboardAgentComponent implements OnInit {
             next: res => this.setCharMonthStats(res),
             error: err => this.commonSrv.errorHandle(err, '', 'navigation.dashboard')
         });
-	}
+    }
 
     getAccounts() {
         if (this.authSrv.hasPermission(Permission.ACCOUNT_OPERATION_VIEW)) {

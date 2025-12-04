@@ -83,8 +83,8 @@
       </div>
     </div>
 
-    <div ngbDropdown [placement]="'bottom-right'" class="user col align-self-end pl-2">
-      <div class="d-inline-flex align-items-center" id="userDropdown" role="button" ngbDropdownToggle>
+    <div ngbDropdown #profileDrop="ngbDropdown" [placement]="'bottom-right'" class="user col align-self-end pl-2">
+      <div class="d-inline-flex align-items-center" role="button" (click)="$event.stopPropagation(); profileDrop.open()">
         <div class="d-flex flex-column">
           <span>{{ (user.name || user.username) | truncateString: 20 }}</span>
           <span class="badge rounded-pill text-bg-primary">{{ user.role.name }}</span>
@@ -92,6 +92,7 @@
 
         <i class="i-Male-21 text-35 bg-user-img ms-2"></i>
       </div>
+      <div class="visible-none" id="userDropdown" ngbDropdownToggle></div>
 
       <div ngbDropdownMenu aria-labelledby="userDropdown" class="header-account-dropdown">
         <div class="dropdown-header">

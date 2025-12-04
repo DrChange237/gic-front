@@ -14,6 +14,7 @@ export interface Transaction {
     reference: string,
     receiptId: string,
     serviceName: string,
+    biller: ServiceType,
     serviceLogo: string,
     description: string,
     info: string,

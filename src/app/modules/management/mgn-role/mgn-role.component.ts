@@ -1,6 +1,6 @@
 import {Component, OnInit, TemplateRef,} from '@angular/core';
 import {NgSelectComponent} from "@ng-select/ng-select";
-import {NgbHighlight, NgbModal, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {TranslatePipe} from "@ngx-translate/core";
 import {catchError, Observable, of} from "rxjs";
 import {CommonModule} from "@angular/common";
@@ -20,7 +20,8 @@ import {HasPermissionDirective} from "../../../shared/directives/permission.dire
   selector: 'app-mgn-role',
   templateUrl: './mgn-role.component.html',
   styleUrls: ['./mgn-role.component.scss'],
-  imports: [CommonModule, SharedComponentsModule, FormsModule, NgSelectComponent, NgbHighlight, NgbPagination, TranslatePipe, NgbTooltip, NgScrollbar, TableDetailComponent, HasPermissionDirective],
+  imports: [CommonModule, SharedComponentsModule, FormsModule, NgSelectComponent, TranslatePipe, NgbModule, NgScrollbar,
+    TableDetailComponent, HasPermissionDirective],
   standalone: true
 })
 export class MgnRoleComponent extends BaseListNonPagedComponent<Role> implements OnInit {

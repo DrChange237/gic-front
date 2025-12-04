@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormsModule, ReactiveFormsModule, UntypedFormBuilder} from "@angular/forms";
-import {NgbHighlight, NgbInputDatepicker, NgbPagination, NgbTooltip} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {CommonModule, formatDate} from "@angular/common";
 import {NgSelectComponent} from "@ng-select/ng-select";
 import {TranslatePipe} from "@ngx-translate/core";
@@ -17,8 +17,8 @@ import {SharedPipesModule} from "../../shared/pipes/shared-pipes.module";
   selector: 'app-reporting',
   templateUrl: './reporting.component.html',
   styleUrls: ['./reporting.component.scss'],
-  imports: [CommonModule, SharedComponentsModule, FormsModule, NgSelectComponent, NgbHighlight, NgbInputDatepicker, NgbPagination,
-    ReactiveFormsModule, SharedPipesModule, TranslatePipe, NgbTooltip],
+  imports: [CommonModule, SharedComponentsModule, SharedPipesModule, FormsModule, NgSelectComponent, NgbModule,
+    ReactiveFormsModule, TranslatePipe],
   standalone: true,
 })
 export class ReportingComponent extends BaseListComponent<Report> implements OnInit {

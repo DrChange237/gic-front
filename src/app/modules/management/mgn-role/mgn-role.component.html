@@ -32,15 +32,20 @@
                                     </td>
                                     <td><ngb-highlight [result]="role.description || 'N/A'" [term]="searchTerm" /></td>
                                     <td><ngb-highlight [result]="role.authorities.length.toString()" [term]="searchTerm" /></td>
-                                    <td class="col-action">
-                                        <div class="d-flex gap-2 flex-wrap justify-content-center">
-                                            <button role="button" class="btn btn-info text-white text-14" [ngbTooltip]="'btn.detail' | translate"
-                                                    (click)="openModal(modalDetailRole, role, 'DETAIL')" *hasPermission="Permission.ROLE_DETAIL">
-                                                <i class="i-Information fw-medium"></i>
+                                    <td class="col-action" ngbDropdown>
+                                        <button role="button" class="btn bg-white border-0 visible-none" id="actionDropdown" ngbDropdownToggle>
+                                            <span class="line-height-1 text-14 fw-bolder">...</span>
+                                        </button>
+                                        <div ngbDropdownMenu aria-labelledby="actionDropdown">
+                                            <button role="button" class="dropdown-item" (click)="openModal(modalDetailRole, role, 'DETAIL')"
+                                                    *hasPermission="Permission.ROLE_DETAIL">
+                                                <i class="i-Information text-14 pe-1"></i>
+                                                {{'btn.detail' | translate}}
                                             </button>
-                                            <button role="button" class="btn btn-primary text-14" [ngbTooltip]="'btn.list_authorities' | translate"
-                                                    (click)="openModal(modalDetailRole, role, 'AUTH')" *hasPermission="Permission.ROLE_DETAIL">
-                                                <i class="i-Lock-User fw-medium"></i>
+                                            <button role="button" class="dropdown-item" (click)="openModal(modalDetailRole, role, 'AUTH')"
+                                                    *hasPermission="Permission.ROLE_DETAIL">
+                                                <i class="i-Lock-User text-14 pe-1"></i>
+                                                {{'btn.list_authorities' | translate}}
                                             </button>
                                         </div>
                                     </td>
