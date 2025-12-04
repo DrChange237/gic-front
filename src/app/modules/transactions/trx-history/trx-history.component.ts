@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {CommonModule, formatDate} from "@angular/common";
 import {NgSelectModule} from "@ng-select/ng-select";
