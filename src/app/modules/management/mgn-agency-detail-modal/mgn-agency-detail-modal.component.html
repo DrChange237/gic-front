@@ -1,0 +1,165 @@
+<div class="modal-header">
+    <h4 class="modal-title fw-semibold" id="modal-payment-instructions">
+        {{ 'account.agency_detail' | translate }} - {{ agency?.code }}
+    </h4>
+    <a role="button" class="btn btn-close" aria-label="Close" (click)="close()"></a>
+</div>
+
+<div class="modal-body">
+    <div class="row gap-3 px-sm-3">
+        <div class="col-12">
+            <div class="d-flex justify-content-between w-100 gap-3">
+                <div class="d-flex gap-3">
+                    <img class="avatar border rounded-full mb-2" [src]="agency?.agent?.logo | prefixImgUrl" alt="">
+                    <div class="">
+                        <p class="m-0 fw-semibold text-18">{{agency?.name}}</p>
+                        <p class="text-muted m-0">
+                            {{'table.last_activity' | translate}}: {{ agency?.lastActivity | date: 'medium' }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="">
+                    <span class="badge rounded-pill p-2 text-bg-{{ agency?.status ? 'success text-white' : 'danger'  }}">
+                        {{ 'badge.status.' + agency.status | translate | uppercase }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <h4 class="mb-3">{{ 'Detail' | translate }}</h4>
+            <div class="row">
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'table.address' | translate }}</p>
+                        <span class="text-14">{{ agency?.address || 'N/A' }}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'Latitude' | translate }}</p>
+                        <span class="text-14">{{ agency?.lattitude || 'N/A' }}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'Longitude' | translate }}</p>
+                        <span class="text-14">{{ agency?.longitude || 'N/A' }}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'table.city' | translate }}</p>
+                        <span class="text-14">{{ agency?.town.name || 'N/A' }}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'table.country' | translate }}</p>
+                        <span class="text-14">{{ agency?.town?.country?.name || 'N/A' }}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'table.availability' | translate }}</p>
+                        <span class="badge rounded-pill text-12 px-3 " [ngClass]="agency.avaibility === 'OPEN' ? 'text-bg-primary' : 'text-bg-secondary'">
+                            {{ 'badge.availability.' + agency.avaibility | translate | uppercase }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="my-3">{{ 'account.company_info' | translate }}</h4>
+            <div class="row">
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'table.partner' | translate }}</p>
+                        <span class="text-14">{{ agency?.agent?.name || 'N/A' }}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'table.code' | translate }}</p>
+                        <span class="text-14">{{ agency?.agent?.code || 'N/A' }}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'user.partner' | translate }}</p>
+                        <span class="text-14">{{ agency?.agent?.group?.name }}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'table.last_activity' | translate }}</p>
+                        <span class="text-14">{{ agency?.agent?.lastActivity | date: 'medium' }}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'table.status' | translate }}</p>
+                        <span class="badge rounded-pill text-12 px-3 text-bg-{{ agency?.agent?.enabled ? 'success text-white' : 'danger' }}">
+                            {{ 'badge.status.' + agency?.agent?.enabled | translate }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="my-3">{{ 'account.account_info' | translate }}</h4>
+            <div class="row">
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'table.operation_account' | translate }}</p>
+                        <span class="text-14">
+                            {{agency?.account?.agencyCode}}-{{agency?.account?.accountNumber}}-{{agency?.account?.accountKey}}
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'account.account_balance' | translate }}</p>
+                        <span class="text-14">
+                            {{(agency?.account?.balance?.balance | number: '1.0-0') || 'N/A'}}
+                            {{agency?.account?.balance?.currency?.code}}
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'table.label_account' | translate }}</p>
+                        <span class="text-14">{{ agency?.account?.balance?.title || 'N/A' }}</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'table.commission_account' | translate }}</p>
+                        <span class="text-14">
+                            {{agency?.accountCommission?.agencyCode}}-{{agency?.accountCommission?.accountNumber}}-{{agency?.accountCommission?.accountKey}}
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'account.account_balance' | translate }}</p>
+                        <span class="text-14">
+                            {{(agency?.accountCommission?.balance?.balance | number: '1.0-0') || 'N/A'}}
+                            {{agency?.accountCommission?.balance?.currency?.code}}
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <div class="mb-4">
+                        <p class="text-primary mb-0">{{ 'table.label_account' | translate }}</p>
+                        <span class="text-14">{{ agency?.accountCommission?.balance?.title || 'N/A' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-dark" (click)="close()">
+        {{ 'btn.close' | translate }}
+    </button>
+</div>

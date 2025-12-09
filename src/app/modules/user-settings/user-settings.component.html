@@ -95,7 +95,7 @@
                                             <p class="text-primary mb-1">
                                                 <i class="i-Calendar-3 text-16 me-1"></i> {{ 'table.last_activity' | translate }}
                                             </p>
-                                            <span>{{ (user?.lastActivity | date: 'dd/MM/yyyy - HH:mm') || 'N/A' }}</span>
+                                            <span>{{ (user?.lastActivity | date: 'medium') || 'N/A' }}</span>
                                         </div>
                                     </div>
                                 </div>

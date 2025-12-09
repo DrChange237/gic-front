@@ -93,13 +93,13 @@ export class MgnFundTransfer implements OnInit {
           centered: true, backdrop: 'static',
         });
 
-        resultModal.componentInstance.title = 'transaction.fund_transfert';
+        resultModal.componentInstance.title = 'transactions.fund_transfert';
         resultModal.componentInstance.message = 'transactions.payment_successful';
         resultModal.componentInstance.isSuccess = true;
 
         this.resetForm();
       },
-      error: err => this.commonSrv.errorHandle(err, 'transactions.transfert_fund_transaction_failed', 'transaction.fund_transfert')
+      error: err => this.commonSrv.errorHandle(err, 'transactions.transfert_fund_transaction_failed', 'transactions.fund_transfert')
     });
   }
 

@@ -1,15 +1,13 @@
-import {Component, OnInit, TemplateRef} from '@angular/core';
-import {CommonModule, CurrencyPipe} from "@angular/common";
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from "@angular/common";
 import {catchError, of} from "rxjs";
 import {FormsModule} from "@angular/forms";
 import {NgSelectComponent} from "@ng-select/ng-select";
 import {NgbModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {TranslatePipe} from "@ngx-translate/core";
 //
-import {
-  ConfirmActionModalComponent
-} from "../../../shared/components/confirm-action-modal/confirm-action-modal.component";
-import {Account, Agency} from "../../../shared/interfaces";
+import {ConfirmActionModalComponent} from "../../../shared/components/confirm-action-modal/confirm-action-modal.component";
+import {Agency} from "../../../shared/interfaces";
 import { SharedComponentsModule } from "src/app/shared/components/shared-components.module";
 import {BaseListNonPagedComponent} from "../../../core/utils/base-list/base-list-unpaged.component";
 import {CommonService} from "../../../core/services/common.service";
@@ -20,6 +18,7 @@ import {TableDetailComponent} from "../../../shared/components/table-detail/tabl
 import {Permission} from "../../../shared/enums/permission";
 import {HasPermissionDirective} from "../../../shared/directives/permission.directive";
 import {SecureDataService} from "../../../core/services/secure-data.service";
+import {MgnAgencyDetailModalComponent} from "../mgn-agency-detail-modal/mgn-agency-detail-modal.component";
 
 @Component({
   selector: 'app-mgn-agencies',
@@ -30,9 +29,6 @@ import {SecureDataService} from "../../../core/services/secure-data.service";
   standalone: true
 })
 export class MgnAgenciesComponent extends BaseListNonPagedComponent<Agency> implements OnInit {
-
-  currAgency: Agency;
-  datasAgency: { key: string; label: string; value: string }[] = [];
 
   protected readonly Permission = Permission;
 
@@ -114,36 +110,19 @@ export class MgnAgenciesComponent extends BaseListNonPagedComponent<Agency> impl
       });
   }
 
-  openModal(content: TemplateRef<never>,  agency: Agency) {
+  openModal(agency: Agency) {
     if (!agency) return;
 
-    const currencyPipe = new CurrencyPipe('fr-FR');
     this.accountSrv.getDetailAgency(agency.id).subscribe({
       next: res => {
-        this.currAgency = res;
-        this.datasAgency = this.commonSrv.objectToDisplayList(
-          agency,
-          ['id', 'agent', 'account', 'accountCommission', 'status', 'fixed']
+        const modalRef = this.modalService.open(
+            MgnAgencyDetailModalComponent, { size: "lg", ariaLabelledBy: 'modal-basic-title', centered: true }
         );
 
-        const [code, number, key, balance, currency ] = this.getAccountData(res.account);
-        this.datasAgency.push({key: 'account', label: 'Account', value: `${code}-${number}-${key}`});
-        this.datasAgency.push({key: 'accountBalance', label: 'Account Balance', value: currencyPipe.transform(balance, currency)});
-
-        const [code2, number2, key2, balance2, currency2 ] = this.getAccountData(res.accountCommission);
-        this.datasAgency.push({key: 'accountCommission', label: 'Account Commission', value: `${code2}-${number2}-${key2}`});
-        this.datasAgency.push({key: 'accountCommissionBalance', label: 'Account Commission Balance', value: currencyPipe.transform(balance2, currency2)});
-
-        this.modalService.open(content, { size: "lg", ariaLabelledBy: 'modal-basic-title', centered: true })
+        modalRef.componentInstance.agency = res;
       },
-      error: err => this.commonSrv.errorHandle(err, 'transactions.get_detail_transaction_failed', 'account.role')
+      error: err => {
+        console.log(err); this.commonSrv.errorHandle(err, 'transactions.get_detail_transaction_failed', 'account.role') }
     });
-  }
-
-  private getAccountData(account: Account) {
-    const { balance: accBalance, agencyCode, accountNumber, accountKey } = account;
-    const [balance, currency] = [accBalance?.balance?.toString(), accBalance?.currency?.code];
-
-    return [ agencyCode, accountNumber, accountKey, balance, currency ];
   }
 }

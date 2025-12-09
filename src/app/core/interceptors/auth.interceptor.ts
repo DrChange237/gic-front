@@ -34,8 +34,8 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 && this.authService.authenticated) {
           this.authService.signOutLocal();
-          return throwError(() => error);
         }
+        return throwError(() => error);
       })
     );
   }

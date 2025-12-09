@@ -12,7 +12,7 @@ import {BaseListNonPagedComponent} from "../../../core/utils/base-list/base-list
 import {Role,} from "../../../shared/interfaces";
 import {AccountService} from "../../../core/services/account.service";
 import {CommonService} from "../../../core/services/common.service";
-import {TableDetailComponent} from "../../../shared/components/table-detail/table-detail.component";
+import {RowData, TableDetailComponent} from "../../../shared/components/table-detail/table-detail.component";
 import {Permission} from "../../../shared/enums/permission";
 import {HasPermissionDirective} from "../../../shared/directives/permission.directive";
 
@@ -28,8 +28,7 @@ export class MgnRoleComponent extends BaseListNonPagedComponent<Role> implements
 
   currRole: Role;
   modalAction: string = '';
-  datasRole: { key: string; label: string; value: string }[];
-  authorities: { key: string; label: string, description: string }[];
+  datasRole: RowData[];
 
   protected readonly Permission = Permission;
 
@@ -75,7 +74,7 @@ export class MgnRoleComponent extends BaseListNonPagedComponent<Role> implements
         }
 
         if (action === 'AUTH') {
-          this.authorities = role.authorities.map(r => ({ key: r.id, label: r.name, description: r.description }));
+          this.datasRole = role.authorities.map(r => ({ key: r.id, label: r.name, description: r.description }));
         }
         this.modalService.open(content, { size: "lg", ariaLabelledBy: 'modal-basic-title', centered: true })
       },

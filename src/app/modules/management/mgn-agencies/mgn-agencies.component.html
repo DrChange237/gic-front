@@ -35,7 +35,7 @@
                                     <td><ngb-highlight [result]="agency.name" [term]="searchTerm" /></td>
                                     <td><ngb-highlight [result]="agency.address" [term]="searchTerm" /></td>
                                     <td><ngb-highlight [result]="agency.town.name + ' - ' + agency.town.country.name" [term]="searchTerm" /></td>
-                                    <td>{{(agency.lastActivity | date: 'dd/MM/yyyy - HH:mm') || 'N/A' }}</td>
+                                    <td>{{(agency.lastActivity | date: 'medium') || 'N/A' }}</td>
                                     <td class="col-status">
                                         <span class="badge rounded-pill p-2" [ngClass]="agency.avaibility === 'OPEN' ? 'text-bg-primary' : 'text-bg-secondary'">
                                             {{ 'badge.availability.' + agency.avaibility | translate | uppercase }}
@@ -46,13 +46,13 @@
                                             {{ 'badge.status.' + agency.enabled | translate | uppercase }}
                                         </span>
                                     </td>
-                                    <td class="col-action" ngbDropdown>
+                                    <td class="col-action" ngbDropdown container="body">
                                         <button role="button" class="btn bg-white border-0 visible-none" id="actionDropdown" ngbDropdownToggle>
                                             <span class="line-height-1 text-14 fw-bolder">...</span>
                                         </button>
 
                                         <div ngbDropdownMenu aria-labelledby="actionDropdown">
-                                            <button role="button" class="dropdown-item" (click)="openModal(modalDetailAgency, agency)"
+                                            <button role="button" class="dropdown-item" (click)="openModal(agency)"
                                                     *hasPermission="Permission.AGENCY_DETAIL">
                                                 <i class="i-Information text-14 pe-1"></i>
                                                 {{'btn.detail' | translate}}
@@ -104,20 +104,3 @@
         </div>
     </div>
 </div>
-
-<ng-template #modalDetailAgency let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title fw-semibold" id="modal-payment-instructions">
-            {{ 'account.agency_detail' | translate }}
-        </h4>
-        <a role="button" class="btn btn-close" aria-label="Close" (click)="modal.close()"></a>
-    </div>
-    <div class="modal-body">
-        <ng-scrollbar visibility="hover" style="height: max-content">
-            <app-table-detail [pageSize]="5" [data]="datasAgency" [paginate]="true"></app-table-detail>
-        </ng-scrollbar>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-dark" (click)="modal.close()">{{ 'btn.close' | translate }}</button>
-    </div>
-</ng-template>

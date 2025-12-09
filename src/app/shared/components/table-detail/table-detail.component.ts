@@ -5,7 +5,7 @@ import {NgbPagination} from "@ng-bootstrap/ng-bootstrap";
 import {TranslatePipe} from "@ngx-translate/core";
 import {FormsModule} from "@angular/forms";
 
-type RowData = Record<string, string>
+export type RowData = Record<string, string>
 
 @Component({
   selector: 'app-table-detail',

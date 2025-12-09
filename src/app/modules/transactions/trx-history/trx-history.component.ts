@@ -13,7 +13,6 @@ import {SharedPipesModule} from "../../../shared/pipes/shared-pipes.module";
 import {FactoryService} from "../../../core/services/factory.service";
 import {CommonService} from "../../../core/services/common.service";
 import {Transaction} from "../../../shared/interfaces";
-import {TableDetailComponent} from "../../../shared/components/table-detail/table-detail.component";
 import {Permission} from "../../../shared/enums/permission";
 import {HasPermissionDirective} from "../../../shared/directives/permission.directive";
 import {SecureDataService} from "../../../core/services/secure-data.service";
@@ -24,7 +23,7 @@ import {TrxDetailModalComponent} from "../trx-detail-modal/trx-detail-modal.comp
   templateUrl: './trx-history.component.html',
   styleUrls: ['./trx-history.component.scss'],
   imports: [CommonModule, SharedPipesModule, SharedComponentsModule, FormsModule, NgbModule, NgSelectModule,
-    TranslatePipe, TableDetailComponent, ReactiveFormsModule, HasPermissionDirective],
+    TranslatePipe, ReactiveFormsModule, HasPermissionDirective],
   standalone: true,
 })
 export class TrxHistoryComponent extends BaseListComponent<Transaction> implements OnInit {

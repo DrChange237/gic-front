@@ -37,11 +37,11 @@
                                             <span class="line-height-1 text-14 fw-bolder">...</span>
                                         </button>
                                         <div ngbDropdownMenu aria-labelledby="actionDropdown">
-                                            <button role="button" class="dropdown-item" (click)="openModal(modalDetailRole, role, 'DETAIL')"
-                                                    *hasPermission="Permission.ROLE_DETAIL">
-                                                <i class="i-Information text-14 pe-1"></i>
-                                                {{'btn.detail' | translate}}
-                                            </button>
+<!--                                            <button role="button" class="dropdown-item" (click)="openModal(modalDetailRole, role, 'DETAIL')"-->
+<!--                                                    *hasPermission="Permission.ROLE_DETAIL">-->
+<!--                                                <i class="i-Information text-14 pe-1"></i>-->
+<!--                                                {{'btn.detail' | translate}}-->
+<!--                                            </button>-->
                                             <button role="button" class="dropdown-item" (click)="openModal(modalDetailRole, role, 'AUTH')"
                                                     *hasPermission="Permission.ROLE_DETAIL">
                                                 <i class="i-Lock-User text-14 pe-1"></i>
@@ -90,7 +90,8 @@
     <div class="modal-body">
         <ng-scrollbar visibility="hover" style="height: max-content">
             <app-table-detail [columns]="['label',  modalAction === 'AUTH' ? 'description' : 'value']" [pageSize]="5"
-                              [data]="(modalAction === 'AUTH' ? authorities : datasRole)" [paginate]="true"></app-table-detail>
+                              [data]="datasRole" [paginate]="datasRole.length > 5 && modalAction === 'AUTH'">
+            </app-table-detail>
         </ng-scrollbar>
     </div>
     <div class="modal-footer">

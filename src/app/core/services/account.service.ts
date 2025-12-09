@@ -10,7 +10,6 @@ import {
     StatsOperation,
     StatsService
 } from "../../shared/interfaces";
-import {CommonService} from "./common.service";
 import {tap} from "rxjs";
 
 @Injectable({
@@ -21,7 +20,6 @@ export class AccountService extends BaseApiService {
   accountCommission: AccountBalance;
 
   constructor(
-      private commonSrv: CommonService,
       protected http: HttpClient
   ) {
     super(http)

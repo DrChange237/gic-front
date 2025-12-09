@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, isDevMode} from '@angular/core';
 import {CurrencyPipe, DatePipe, DecimalPipe, Location, TitleCasePipe} from "@angular/common";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
@@ -43,10 +43,17 @@ export class CommonService {
     let messageTr = err?.error?.message || this.translate.instant(message || 'toast.default_error');
     let titleTr = err?.error?.error || this.translate.instant(title);
 
+    if (isDevMode()) { console.error(err) }
+
     if (err instanceof HttpErrorResponse) {
       switch (err.status) {
         case 500:
           messageTr = this.translate.instant('toast.default_error');
+          titleTr = this.translate.instant(title || 'toast.error');
+          break;
+
+        case 404:
+          messageTr = this.translate.instant('toast.not_found_message');
           titleTr = this.translate.instant(title || 'toast.error');
           break;
 
@@ -58,6 +65,7 @@ export class CommonService {
         case 403:
           titleTr = this.translate.instant('toast.forbidden_title');
           messageTr = this.translate.instant('toast.forbidden_message');
+          break;
       }
     }
 

@@ -1,12 +1,14 @@
 {
   "account": {
-    "account_balance": "Solde de Compte",
+    "account_balance": "Solde de compte",
+    "account_info": "Informations de compte",
     "agency": "Agence",
     "agency_detail": "Détail de l'agence",
     "agent": "Agent",
     "authorities_role": "Privilèges du rôles",
     "balance_available": "Solde disponible",
     "balance_operation": "Solde d'opération",
+    "company_info": "Informations partenaire",
     "detail_role": "Detail du rôle",
     "get_account_review_list_failed": "Chargement de la liste du bilan des opérations échoué",
     "get_agency_list_failed": "Chargement de la liste des agences échoué",
@@ -61,13 +63,13 @@
   },
   "btn": {
     "agency_active": {
-      "false": "Désactivé l'agence",
-      "true": "Activé agence"
+      "false": "Désactiver l'agence",
+      "true": "Activer agence"
     },
     "agency_history": "Historique de l'agence",
     "agent_active": {
-      "false": "Désactivé l'agent",
-      "true": "Activé agent"
+      "false": "Désactiver l'agent",
+      "true": "Activer agent"
     },
     "agent_available": {
       "CLOSED": "Ouvrir l'agence",
@@ -212,19 +214,24 @@
     "client_fees": "Frais client",
     "code": "Code",
     "commission": "Commission",
+    "commission_account": "Compte de commission",
+    "commission_account_balance": "Solde compte de commission",
     "commission_paid": "Commission versée",
+    "country": "Pays",
     "created_date": "Date de création",
     "description": "Description",
     "empty_data": "Aucune donnée disponible",
     "info": "Information",
     "item_per_page": "Affichés par page",
     "label": "Libellé",
+    "label_account": "Intitulé du compte",
     "language": "Langue",
     "last_activity": "Dernière activité",
     "name": "Nom",
     "number_authorities": "Nombre d'autorités",
     "operation_account": "Compte d'opération",
     "operation_account_balance": "Solde compte d'opération",
+    "partner": "Partenaire",
     "reference": "Réf. Transaction",
     "role": "Rôle",
     "service": "Service",
@@ -245,11 +252,9 @@
     "forbidden_message": "Accès à la ressource demandée non autorisé",
     "forbidden_title": "Autorisation",
     "info": "Info",
+    "not_found_message": "Ressource demandée introuvable",
     "success": "Succès",
     "warning": "Attention"
-  },
-  "transaction": {
-    "fund_transfert": "Transfert de fond"
   },
   "transactions": {
     "balance": "Solde",
@@ -257,6 +262,7 @@
     "confirm_payment_failed": "Confirmation de l'exécution de l'opération échouée",
     "detail_transaction": "Détails de la transaction",
     "download_receipt_payment_failed": "Téléchargement du reçu de paiement échoué",
+    "fund_transfert": "Transfert de fond",
     "get_detail_transaction_failed": "Chargement des détails de la transaction échoué",
     "get_history_transaction_failed": "Chargement des données de transaction échoué",
     "get_service_failed": "Détails du service non chargées",
