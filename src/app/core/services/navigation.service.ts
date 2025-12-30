@@ -67,7 +67,8 @@ export class NavigationService {
                 name: 'dashboard',
                 type: 'link',
                 icon: 'i-Bar-Chart',
-                state: '/dashboard'
+                state: '/dashboard',
+                disabled: !this.authSrv.hasPermission(Permission.DASHBOARD_VIEW)
             },
             {
                 name: 'services',
