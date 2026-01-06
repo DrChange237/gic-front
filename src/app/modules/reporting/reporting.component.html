@@ -82,7 +82,7 @@
                                     </td>
                                     <td><ngb-highlight [result]="report.description" [term]="searchTerm" /></td>
                                     <td>{{(report.creationDate | date: 'medium') || 'N/A' }}</td>
-                                    <td class="col-action" ngbDropdown>
+                                    <td class="col-action" ngbDropdown container="body">
                                         <button role="button" class="btn bg-white border-0 visible-none" id="actionDropdown" ngbDropdownToggle>
                                             <span class="line-height-1 text-14 fw-bolder">...</span>
                                         </button>
