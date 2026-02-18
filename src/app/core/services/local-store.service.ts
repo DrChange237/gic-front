@@ -45,7 +45,7 @@ export class LocalStoreService {
   }
 
   public async setSecret(secret: string): Promise<void> {
-    const encoder = new TextEncoder();
+    /*const encoder = new TextEncoder();
     const data = encoder.encode(secret);
 
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
@@ -55,7 +55,7 @@ export class LocalStoreService {
     const eHashHex = this.secure.encryptParams(hashHex);
 
     this.secure.setSecret(hashHex);
-    this.session.setItem(this.secure.hash(KeyStore.SECRET), eHashHex);
+    this.session.setItem(this.secure.hash(KeyStore.SECRET), eHashHex);*/
   }
 
   private checkSecret() {

@@ -30,7 +30,6 @@ export class AuthService extends BaseApiService {
 
   setUserAndPermission(user?: Cashier) {
     this.user = user || this.getUser();
-    this.isBankUser = this.user && this.user?.role?.agent?.mode === 'BANK';
     this.authenticated = !!this.user;
 
     if (this.user && this.user.role) { this.setPermissions(this.user.role.authorities) }
