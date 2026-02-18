@@ -94,6 +94,50 @@ export interface ServiceType {
     file: string
 }
 
+export interface ProcessStartRequest {
+  processDefinitionKey: string;
+  businessKey: string;
+  initiatorUserId: string;
+  formData: { [key: string]: any };
+}
+
+export interface CompleteTask {
+  taskId: string;
+  formData: { [key: string]: any };
+}
+
+export interface ProcessStartResponse {
+  success: boolean;
+  processInstanceId?: string;
+  businessKey?: string;
+  message: string;
+}
+
+export interface TaskModel {
+    id: string,
+    description: string,
+    name: string,
+    assignee: string,
+    createTime: string | Date,
+    dueDate: string | Date,
+    priority : number
+}
+
+export interface ModuleModel {
+    id: string,
+    name: string;
+    key: ServiceType;
+    description: string;
+}
+
+export interface ProcessModel {
+    description: string;
+    id: string;
+    key: string;
+    name: string;
+}
+
+
 export interface ServiceModel {
     id: string;
     type: ServiceType;
@@ -149,4 +193,40 @@ export interface OperationAccount {
         passageAccountKey: string,
     },
     account: Account
+}
+
+
+export interface ProcessVariable {
+  name: string;
+  value: any;
+  type: string;
+}
+
+export interface Document {
+  id: string;
+  name: string;
+  type: string;
+  size: string;
+  uploadDate: Date;
+  url: string;
+}
+
+export interface HistoryStep {
+  id: string;
+  taskName: string;
+  assignee: string;
+  startTime: Date;
+  endTime?: Date;
+  duration?: string;
+  status: 'completed' | 'active' | 'pending';
+}
+
+export interface TaskDetail {
+  id: string;
+  name: string;
+  processInstanceId: string;
+  processDefinitionName: string;
+  assignee: string;
+  created: Date;
+  priority: number;
 }

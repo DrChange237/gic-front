@@ -1,0 +1,335 @@
+<!--app-breadcrumb [subName]="paramsFilter?.name || ''"></app-breadcrumb-->
+
+
+<div class="row" id="scroll-container">
+    <div class="col-md-12">
+        <form-wizard #wizard [isCustomNav]="true">
+
+            <wizard-step [title]="'process.tasklist' | translate" [isValid]="">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <form [formGroup]="filterForm" (ngSubmit)="searchTasks()">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>Numéro de Dossier</label>
+                                    <input  name="businessKey"  class="form-control"
+                                            formControlName="businessKey" placeholder="" >
+                                </div>
+
+                                <div class="col-6 text-end my-2">
+                                    <button type="button" (click)="resetFilter()" class="btn-dark btn me-4">{{
+                                        'btn.reset' | translate }}</button>
+                                    <btn-loading btnClass="btn-primary btn"
+                                        [loadingText]="'btn.search_loading' | translate" [loading]="loading$ | async">
+                                        {{ 'btn.search' | translate }}
+                                    </btn-loading>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class=" o-hidden">
+                        <div class="">
+                            <!--div class="mb-4 row">
+                    <div class="col-xs-3 col-sm-5 col-md-4 col-lg-3">
+                        <input id="table-complete-search" type="text" class="form-control" name="searchTerm"
+                            [(ngModel)]="searchTerm" (input)="filterUpdate($event)"
+                            [placeholder]="'form.search_plh' | translate" />
+                    </div>
+                    @if (loading$ | async) {
+                    <span class="col col-form-label">Loading...</span>
+                    }
+                </div-->
+
+                            <div class="rounded-table overflow-x-auto">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <!--th scope="col" role="button" class="px-3">{{ 'task.id' | translate }}</th-->
+
+                                            <th scope="col" role="button">Dossier</th>
+
+                                            <th scope="col" role="button">{{ 'process.name' | translate }}</th>
+
+                                            <th scope="col" role="button">Tâche</th>
+
+                                            <th class="text-center" scope="col" role="button">{{ 'process.createdate' |
+                                                translate }}
+                                            </th>
+                                            <th class="text-center" scope="col" role="button">{{ 'process.duedate' |
+                                                translate }}
+                                            </th>
+                                             <th class="text-center" scope="col" role="button">{{ 'process.assignee' |
+                                                translate }}
+                                            </th>
+                                            <th class="text-center" scope="col" role="button">{{ 'table.action' |
+                                                translate }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (transaction of tasks$; track transaction.id) {
+                                        <tr>
+                                            <!--td class="col-reference text-truncate px-3">
+                                    <ngb-highlight [ngbTooltip]="(transaction.id || 'N/A')"
+                                        [result]="transaction.id || 'N/A'" [term]="searchTerm" />
+                                </td-->
+                                            
+                                            <td><ngb-highlight [result]="transaction.businessKey || 'N/A'"
+                                                    [term]="searchTerm" /></td>
+
+                                            <td><ngb-highlight [result]="transaction.processDefinitionName || 'N/A'"
+                                                    [term]="searchTerm" /></td>
+
+
+                                            <td><ngb-highlight [result]="transaction.name || 'N/A'"
+                                                    [term]="searchTerm" /></td>
+
+
+                                            <td class="text-center">{{(transaction.createTime | date: 'medium') || 'N/A'
+                                                }}</td>
+                                            <td class="text-center">{{(transaction.dueDate | date: 'medium') || 'N/A' }}
+                                            </td>
+                                             <td class="text-center">{{transaction.assignee}}
+                                            </td>
+
+                                            <td class="text-end">
+                                                @if(transaction.assignee == null){
+                                                <!--button role="button" class="btn btn-primary me-4"
+                                                    (click)="claim(transaction.id)">
+                                                    <i class="i-Download-from-Cloud text-14 pe-1"></i>
+                                                    {{'btn.claim' | translate}}
+                                                </button>
+                                                }@else{
+                                                <button role="button" class="btn btn-primary me-4"
+                                                    (click)="unclaim(transaction.id)">
+                                                    <i class="i-Download-from-Cloud text-14 pe-1"></i>
+                                                    {{'btn.unclaim' | translate}}
+                                                </button-->
+                                                 
+                                                }
+                                                <button role="button" class="btn btn-primary me-4"
+                                                    (click)="openDetailTrx(transaction)">
+                                                    <i class="i-Information text-14 pe-1"></i>
+                                                    {{ 'btn.detail' | translate }}
+                                                </button>
+                                               
+                                            </td>
+
+                                            <!--td class="col-action" ngbDropdown container="body">
+                                    <button role="button" class="btn bg-white border-0 visible-none" id="actionDropdown"
+                                        ngbDropdownToggle>
+                                        <span class="line-height-1 text-14 fw-bolder">...</span>
+                                    </button>
+
+                                    <div ngbDropdownMenu aria-labelledby="actionDropdown">
+                                        
+
+                                    </div>
+                                </td-->
+                                        </tr>
+                                        } @empty {
+                                        <tr>
+                                            <td [attr.colspan]="historyType ? (historyType === 'global' ? 9 : 8) : 7"
+                                                style="text-align: center">
+                                                {{ 'table.empty_data' | translate }}
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="d-flex flex-wrap gap-3 justify-content-between py-2">
+                                <ngb-pagination [collectionSize]="pagination?.totalItems || 0" [page]="pagination?.page"
+                                    [pageSize]="pagination?.pageSize" (pageChange)="setPage($event)"
+                                    [boundaryLinks]="true">
+                                </ngb-pagination>
+
+                                <div class="d-flex">
+                                    <label class="text-14 fw-medium py-2 pe-3">
+                                        {{ 'table.item_per_page' | translate }}
+                                    </label>
+                                    <ng-select [items]="pageSizeOptions" class="custom" [dropdownPosition]="'top'"
+                                        [clearable]="false" name="pageSize" (change)="setPageSize($event)"
+                                        [ngModel]="pagination?.pageSize">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </wizard-step>
+
+            <wizard-step #serviceStepWizard [title]="'process.taskdetail' | translate">
+
+
+
+                <div class="task-detail-container">
+
+
+                    <!-- Task Header Card -->
+                    <div class="task-header" *ngIf="taskDetail">
+                        <div class="task-header-content">
+                            <h2>{{ task.name }}</h2>
+                            <div class="task-meta">
+                                <div class="meta-item">
+                                    <strong>ID de la tâche</strong>
+                                    {{ task.id }}
+                                </div>
+                                <div class="meta-item">
+                                    <strong>Processus</strong>
+                                    {{ taskDetail.processDefinition.name }}
+                                </div>
+                                <div class="meta-item">
+                                    <strong>Assigné à</strong>
+                                    {{ task.assignee }}
+                                </div>
+                                <div class="meta-item">
+                                    <strong>Date de création</strong>
+                                    {{ task.createTime | date:'dd/MM/yyyy à HH:mm' }}
+                                </div>
+                                <div class="meta-item">
+                                    <strong>Priorité</strong>
+                                    <span class="badge-priority">{{ task.priority }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div class="loading" *ngIf="loading">
+                        <div class="spinner"></div>
+                        <p class="text-muted">Chargement des détails...</p>
+                    </div>
+
+                    <!-- Main Content -->
+                    <div class="content" *ngIf="!loading">
+                        <div class="card">
+                            <!-- Navigation Tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" [class.active]="activeTab === 'variables'"
+                                        (click)="setActiveTab('variables')" role="tab">
+                                        Variables
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [class.active]="activeTab === 'documents'"
+                                        (click)="setActiveTab('documents')" role="tab">
+                                        Documents <span class="text-muted">({{ documents.length }})</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [class.active]="activeTab === 'history'"
+                                        (click)="setActiveTab('history')" role="tab">
+                                        Historique
+                                    </a>
+                                </li>
+                               
+                            </ul>
+
+                            <!-- Tab Content -->
+                            <div class="tab-content">
+                                <!-- Variables Tab -->
+                                 @if(taskDetail.activityUserTask){
+                                <div *ngIf="activeTab === 'variables'">
+                                    <div class="row">
+                                        @for (variable of taskDetail.activityUserTask.mapVariable | keyvalue; track
+                                        variable.key) {
+                                        @if(variable.value){
+                                        <div class="col-md-4 col-lg-3">
+                                            <div class="variable-card">
+                                                <div class="variable-name">{{ variable.value }}</div>
+                                                <div class="variable-value">{{ taskDetail.processVariables[variable.key]
+                                                    }}</div>
+                                                <!--span class="variable-type">{{ variable.type }}</span-->
+                                            </div>
+                                        </div>
+                                        }
+                                        }
+                                    </div>
+                                </div>
+                            }
+
+                                <!-- Documents Tab -->
+                                <div *ngIf="activeTab === 'documents'">
+                                    <div class="document-card" *ngFor="let doc of documents">
+                                        <div class="doc-icon">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="#663399" stroke-width="2">
+                                                <path
+                                                    d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M14 2V8H20" stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                        </div>
+                                        <div class="doc-info">
+                                            <div class="doc-name">{{ doc.label }}</div>
+                                            <div class="doc-meta">
+                                                <span>{{ doc.file.type }}</span>
+                                                <span>{{ doc.file.size }} Mo</span>
+                                                <span>{{ doc.file.creationDate | date:'dd/MM/yyyy' }}</span>
+                                            </div>
+                                        </div>
+                                        <button class="btn-download" (click)="downloadDocument(doc)">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"
+                                                    stroke-linecap="round" stroke-linejoin="round" />
+                                            </svg>
+                                            Télécharger
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- History Tab -->
+                                <div *ngIf="activeTab === 'history'">
+
+                                    <div class="container">
+                                        <div class="timeline">
+                                            @for (step of taskDetail.activityHistory; track step.activityId) {
+                                            <div class="timeline-container primary">
+                                                <div class="timeline-icon" [class]="getStatusClass(step)">
+                                                    <i class="far fa-grin-wink"></i>
+                                                </div>
+                                                <div class="timeline-body">
+                                                    <h4 class="timeline-title"><span class="status-badge"
+                                                            [class]="getStatusClass(step)">{{ step.activityName
+                                                            }}</span></h4>
+                                                    Début : <span class="timeline-subtitle">{{ step.startTime |
+                                                        date:'dd/MM/yyyy à HH:mm' }}</span> &nbsp; &nbsp;
+                                                    <span *ngIf="step.endTime"> Fin : <span class="timeline-subtitle">{{
+                                                            step.endTime | date:'dd/MM/yyyy à HH:mm' }}</span> </span>
+                                                    &nbsp; &nbsp;
+                                                    <span *ngIf="step.assignee"> Assigné à : <span
+                                                            class="timeline-subtitle">{{ step.assignee }}</span> </span>
+
+                                                </div>
+                                            </div>
+                                            }
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-12 d-flex justify-content-between mb-4">
+                    <button class="btn btn-dark" (click)="wizard.previous()">{{ 'btn.previous' | translate }}</button>
+                    <!--button class="btn btn-primary" (click)="loadForm(taskDetail.task)">{{ 'btn.next' | translate
+                        }}</button-->
+                </div>
+            </wizard-step>
+
+            
+        </form-wizard>
+
+
+    </div>
+
+
+</div>

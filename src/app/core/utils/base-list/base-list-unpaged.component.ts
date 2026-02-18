@@ -19,11 +19,11 @@ export abstract class BaseListNonPagedComponent<T> implements OnInit {
     protected _loading$ = new BehaviorSubject<boolean>(false);
     protected _pagination$ = new BehaviorSubject<Pagination>({
         page: 1,
-        pageSize: 10,
+        pageSize: 100,
         totalItems: 0,
     });
 
-    pageSizeOptions = [5, 10, 25, 50];
+    pageSizeOptions = [5, 10, 25, 50, 100];
     searchTerm: string = '';
 
     items$: Observable<T[]>;

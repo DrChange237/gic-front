@@ -71,88 +71,107 @@ export class NavigationService {
                 disabled: !this.authSrv.hasPermission(Permission.DASHBOARD_VIEW)
             },
             {
-                name: 'services',
-                type: 'link',
-                icon: 'i-Shop-4',
-                state: 'transactions/services'
-            },
-            {
-                name: 'history',
+                name: 'tasklist',
                 type: 'dropDown',
-                icon: 'i-Money-2',
+                icon: 'i-Folders',
                 sub: [
-                    {icon: 'i-Business-Man', name: 'my_history', state: 'transactions/history/agent', type: 'link'},
                     {
-                        icon: 'i-Business-Mens',
-                        name: 'history_agency',
-                        state: 'transactions/history/agency',
-                        type: 'link',
-                        disabled: !this.authSrv.hasPermission(Permission.HISTORY_AGENCY_VIEW)
+                        icon: 'i-Folder', 
+                        name: 'mytasks', 
+                        state: 'transactions/history/agent', 
+                        type: 'link'
                     },
                     {
+                        icon: 'i-Folder-Cloud',
+                        name: 'alltasks',
+                        state: 'transactions/history/alltasks',
+                        type: 'link',
+                        /*disabled: !this.authSrv.hasPermission(Permission.HISTORY_AGENCY_VIEW)*/
+                    }
+                    /*{
                         icon: 'i-University1',
                         name: 'history_global',
                         state: 'transactions/history/all',
                         type: 'link',
                         disabled: !this.authSrv.hasPermission(Permission.HISTORY_CASHIER_VIEW)
-                    },
+                    },*/
                 ]
             },
             {
+                name: 'services',
+                type: 'link',
+                icon: 'i-Shop-4',
+                state: 'transactions/services'
+            },
+            /*{
                 name: 'reporting',
                 type: 'link',
                 icon: 'i-Statistic',
                 state: 'reporting',
-                disabled: !this.authSrv.hasPermission(Permission.REPORT_VIEW)
-            },
+                //disabled: !this.authSrv.hasPermission(Permission.REPORT_VIEW)
+            },*/
             {
                 name: 'management',
                 type: 'dropDown',
                 icon: 'i-Management',
-                disabled: !this.authSrv.hasAnyPermission([...GROUP_PERMISSIONS.MANAGEMENT]),
+                //disabled: !this.authSrv.hasAnyPermission([...GROUP_PERMISSIONS.MANAGEMENT]),
                 sub: [
+                    {
+                        icon: 'i-University1',
+                        name: 'inscriptions',
+                        state: 'management/inscriptions',
+                        type: 'link',
+                        //disabled: !this.authSrv.hasPermission(Permission.AGENCY_VIEW)
+                    },
+                    {
+                        icon: 'i-University1',
+                        name: 'dossiers',
+                        state: 'management/dossiers',
+                        type: 'link',
+                        //disabled: !this.authSrv.hasPermission(Permission.AGENCY_VIEW)
+                    }/*,
                     {
                         icon: 'i-Token-',
                         name: 'operation_review',
                         state: 'management/operation-review',
                         type: 'link',
-                        disabled: !(this.authSrv.isBankUser && this.authSrv.hasPermission(Permission.FUNDS_TRANSFER_VIEW))
+                        //disabled: !(this.authSrv.isBankUser && this.authSrv.hasPermission(Permission.FUNDS_TRANSFER_VIEW))
                     },
                     {
                         icon: 'i-Financial',
                         name: 'transfer_fund',
                         state: 'management/transfer-fund',
                         type: 'link',
-                        disabled: !(!this.authSrv.isBankUser && this.authSrv.hasPermission(Permission.FUNDS_TRANSFER_VIEW))
+                        //disabled: !(!this.authSrv.isBankUser && this.authSrv.hasPermission(Permission.FUNDS_TRANSFER_VIEW))
                     },
                     {
                         icon: 'i-Business-ManWoman',
                         name: 'agents',
                         state: 'management/agents/all',
                         type: 'link',
-                        disabled: !this.authSrv.hasPermission(Permission.CASHIER_ALL_VIEW)
+                        //disabled: !this.authSrv.hasPermission(Permission.CASHIER_ALL_VIEW)
                     },
                     {
                         icon: 'i-Business-ManWoman',
                         name: 'my_agents',
                         state: 'management/agency/agents',
                         type: 'link',
-                        disabled: !this.authSrv.hasPermission(Permission.CASHIER_VIEW)
+                        //disabled: !this.authSrv.hasPermission(Permission.CASHIER_VIEW)
                     },
                     {
                         icon: 'i-University1',
                         name: 'agencies',
                         state: 'management/agencies',
                         type: 'link',
-                        disabled: !this.authSrv.hasPermission(Permission.AGENCY_VIEW)
+                        //disabled: !this.authSrv.hasPermission(Permission.AGENCY_VIEW)
                     },
                     {
                         icon: 'i-Lock-User',
                         name: 'role_profile',
                         state: 'management/role-and-profile',
                         type: 'link',
-                        disabled: !this.authSrv.hasPermission(Permission.ROLE_VIEW)
-                    },
+                        //disabled: !this.authSrv.hasPermission(Permission.ROLE_VIEW)
+                    },*/
                 ]
             },
         ];

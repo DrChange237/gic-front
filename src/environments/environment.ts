@@ -4,11 +4,11 @@
 
 export const environment = {
   production: false,
-  API_URL: 'https://developer.ccabank-app.com/sandbox/api',
+  API_URL: 'https://light-beds-drop.loca.lt/api',
   // API_URL_DEV: 'https://developer.ccabank-app.com/sandbox/api',
-  API_URL_DEV: 'http://10.4.4.74:2030/api',
+  API_URL_DEV: 'http://localhost:2026/api',
   API_URL_TEST: 'https://applications-dev.cca.ad/api',
-  APP_NAME: 'CCA Bank - Agency Banking',
+  APP_NAME: 'Global Immigration Canada',
 };
 
 /*

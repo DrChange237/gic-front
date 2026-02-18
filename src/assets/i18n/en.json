@@ -92,7 +92,10 @@
     "return": "Return",
     "search": "Search",
     "search_loading": "Search in progress",
-    "update_role_agent": "Update role"
+    "update_role_agent": "Update role",
+    "claim": "Claim",
+    "unclaim": "UnClaim",
+    "start": "Start"
   },
   "dashboard": {
     "last_transaction": "Last transactions",
@@ -178,7 +181,14 @@
     "templates": "Templates",
     "transaction_detail": "Transaction details",
     "transaction_history": "Transaction History",
-    "transfer_fund": "Transfer of funds"
+    "transfer_fund": "Transfer of funds",
+    "tasklist": "Task List",
+    "mytasks": "My Tasks",
+    "mycases": "My Cases",
+    "allcases": "All Cases",
+    "alltasks": "Tasks",
+    "inscriptions": "Registrations",
+    "dossiers": "Folders"
   },
   "reporting": {
     "download_report_failed": "Report download failed",
@@ -293,5 +303,27 @@
     "update_password": "Change Password",
     "update_password_failed": "Update password failed",
     "update_password_successful": "Update password successful"
-  }
+  },
+  "process": {
+    "available": "Process",
+    "init": "Initiate Process",
+    "name": "Process",
+    "duedate": "Due Date",
+    "createdate": "Created Date",
+    "instanceid": "Task ID",
+    "tasklist": "Task List",
+    "taskdetail": "Task Detail",
+    "starttask": "Start Task",
+    "caselist": "Case list",
+    "casedetail": "Case Detail",
+    "assignee": "Assignee"
+  },
+  "module": {
+    "title": "Modules"
+  },
+  "tasklist": "Task List",
+  "task": {
+    "id": "Task ID"
+  },
+  "navigations": {}
 }

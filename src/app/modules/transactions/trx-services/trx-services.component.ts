@@ -10,7 +10,7 @@ import {CommonModule, formatDate} from "@angular/common";
 import {WizardComponent} from "../../../shared/components/form-wizard/wizard/wizard.component";
 import {FormWizardModule} from "../../../shared/components/form-wizard/form-wizard.module";
 import {FactoryService} from "../../../core/services/factory.service";
-import {AccountBalance, InitPaymentResponse, ServiceModel, ServiceType} from "../../../shared/interfaces";
+import {AccountBalance, InitPaymentResponse, ModuleModel, ProcessModel, ProcessStartRequest, ServiceModel, ServiceType} from "../../../shared/interfaces";
 import {CommonService} from "../../../core/services/common.service";
 import {CustomDateAdapter} from "../../../core/utils/date-picker/custom-date-adapter";
 import {
@@ -19,6 +19,9 @@ import {
 import {ActionResultModalComponent} from "../../../shared/components/action-result-modal/action-result-modal.component";
 import {SharedPipesModule} from "../../../shared/pipes/shared-pipes.module";
 import {AuthService} from "../../../core/services/auth.service";
+import { MODULES_ICONS } from 'src/app/core/utils/icons/module';
+import { PROCESS_ICONS } from 'src/app/core/utils/icons/process';
+import { Form, FormResponse } from 'src/app/shared/interfaces/form.interface';
 
 @Component({
   selector: 'app-trx-services',
@@ -37,6 +40,10 @@ export class TrxServicesComponent implements OnInit {
 
   servicesType$: ServiceType[] = [];
   services$: ServiceModel[] = [];
+  processDefinition$: ProcessModel[] = [];
+  processSelected:ProcessModel;
+  processForm: Form;
+  modules$: ModuleModel[] = [];
   currService: ServiceModel;
 
   balanceAccount: AccountBalance;
@@ -44,12 +51,16 @@ export class TrxServicesComponent implements OnInit {
   sizeOfForm: number = 0;
   safeInstructions: SafeHtml = '';
   serviceForm: UntypedFormGroup;
+  initForm: UntypedFormGroup;
+
   optionPayment: { label: string, amount: number, id: string, description: string };
 
   paymentInitiate: InitPaymentResponse;
 
   minDate = { year: 1900, month: 1, day: 1 };
   maxDate: NgbDateStruct;
+
+  
 
   constructor(
       private modalService: NgbModal,
@@ -64,7 +75,15 @@ export class TrxServicesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadServicesType();
+    this.loadModules();
+  }
+
+  moduleImage(key : string): string {
+    return MODULES_ICONS[key] || 'assets/images/default.png';
+  }
+
+  processImage(key : string): string {
+    return PROCESS_ICONS[key] || 'assets/images/default.png';
   }
 
   loadServicesType() {
@@ -84,6 +103,43 @@ export class TrxServicesComponent implements OnInit {
     });
   }
 
+  loadForm(process: ProcessModel) {
+    this.factorySrv.getInitForm(process.key).subscribe({
+      next: res => {
+        this.processForm = res.form;
+        console.log(this.processForm);
+        if(res.form){
+           this.buildForm(res.form);
+        }else{
+           this.buildVoidForm();
+        }
+        this.processSelected = process;
+        this.wizard.next();
+      },
+      error: err => this.commonSrv.errorHandle(err, 'transactions.get_service_failed', 'transactions.service')
+    });
+  }
+
+  loadProcessDefinition(module : string) {
+    this.factorySrv.getProcessDefinition(module).subscribe({
+      next: res => {
+        this.processDefinition$ = res;
+        this.wizard.next();
+      },
+      error: err => this.commonSrv.errorHandle(err, 'transactions.get_service_failed', 'transactions.service')
+    });
+  }
+
+  loadModules() {
+    this.factorySrv.getModules().subscribe({
+      next: res => {
+        this.modules$ = res;
+        //this.wizard.next();
+      },
+      error: err => this.commonSrv.errorHandle(err, 'transactions.get_service_failed', 'transactions.service')
+    });
+  }
+
   loadBalance(service: string) {
     this.factorySrv.getBalanceOperationAccount(this.authSrv.user?.agency?.code, service).subscribe({
       next: res => { this.balanceAccount = res },
@@ -92,7 +148,7 @@ export class TrxServicesComponent implements OnInit {
   }
 
   initializeForm(service: ServiceModel) {
-    this.currService = service;
+    /*this.currService = service;
     this.isFormCompleted = false;
     this.paymentInitiate = null;
 
@@ -101,36 +157,29 @@ export class TrxServicesComponent implements OnInit {
 
     this.buildForm(service);
 
-    this.wizard.next();
+    this.wizard.next();*/
   }
 
-  initPayment() {
+  startProcess() {
     this.isSubmitted = true;
 
-    if (this.serviceForm.invalid) {
+    if (this.initForm.invalid) {
       return this.commonSrv.alert('warning', 'form.required_fields', 'transactions.service');
     }
 
-    const formData = this.serviceForm.getRawValue();
-    const form = this.currService.withForm
-        ? this.currService.initForm.formItems.map(item => ({
-            id: item.id, name: item.name, value: formData[item.name]
-          }))
-        : [];
-    const data = {
-      service: this.currService.code,
-      reference: formData['reference'] + '' || '',
-      amount: +(formData['amount'] || 0),
-      form
-    }
+    const formData = this.initForm.getRawValue();
 
-    this.factorySrv.initPayment(data).subscribe({
+    const data: ProcessStartRequest = {
+      processDefinitionKey: this.processSelected.key,
+      businessKey: `${Date.now()}`,
+      formData: this.initForm.value,
+      initiatorUserId: ''
+    };
+
+    this.factorySrv.startProcess(data).subscribe({
       next: res => {
-        this.paymentInitiate = res
-        if (!this.currService.withOptions) {
-          this.isFormCompleted = true;
-          this.wizard.next();
-        }
+        console.log(res);
+        this.wizard.previous();
       },
       error: err => this.commonSrv.errorHandle(err, 'transactions.init_payment_failed', 'transactions.payment_service')
     });
@@ -212,7 +261,7 @@ export class TrxServicesComponent implements OnInit {
   }
 
   openModal(content: TemplateRef<never>) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true });
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true, size : 'lg' });
   }
 
   get isOddForm(): boolean {
@@ -223,56 +272,31 @@ export class TrxServicesComponent implements OnInit {
     return this.serviceForm.controls;
   }
 
-  private buildForm(service: ServiceModel) {
+  private buildVoidForm() {
     const group: any = {}
     this.sizeOfForm = 0;
     this.isSubmitted = false;
-
-    if (service.withRef) {
-      const validators = service.regex ? [Validators.pattern(service.regex)] : [];
-      group['reference'] = ['', [Validators.required, ...validators]];
-      this.sizeOfForm++;
-    }
-
-    if (service.withAmount) {
-      group['amount'] = [0, Validators.required];
-      this.sizeOfForm++;
-    }
-
-    if (service.withForm && service.initForm?.formItems) {
-      service.initForm.formItems
-          .sort((a, b) => a.position - b.position)
-          .forEach(item => {
-            const validators = [];
-            if (item.required) validators.push(Validators.required);
-            if (item.regex) validators.push(Validators.pattern(item.regex));
-            group[item.name] = ['', validators];
-            this.sizeOfForm++;
-          });
-    }
-
-    this.serviceForm = this.fb.group(group);
+    this.initForm = this.fb.group(group);
   }
 
-  private addStyleOnInstruction(htmlContent: string) {
-    if (!htmlContent) return;
+  private buildForm(form: Form) {
+    const group: any = {}
+    this.sizeOfForm = 0;
+    this.isSubmitted = false;
+    form.components
+        //.sort((a, b) => a.position - b.position)
+        .forEach(item => {
+          const validators = [];
+          if(item.validate){
+             if (item.validate.required) validators.push(Validators.required);
+             if (item.validate.pattern) validators.push(Validators.pattern(item.validate.pattern));
+             if(item.validate.minLength) validators.push(Validators.minLength(item.validate.minLength));
+             if(item.validate.maxLength) validators.push(Validators.minLength(item.validate.maxLength));
 
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlContent;
-
-    tempDiv.querySelectorAll('ol').forEach((el) => {
-      el.classList.add('list-group');
-    });
-    tempDiv.querySelectorAll('ul').forEach((el) => {
-      el.classList.add('list-group');
-    });
-    tempDiv.querySelectorAll('li').forEach((el) => {
-      el.classList.add('list-group-item');
-    });
-    tempDiv.querySelectorAll('img').forEach((el) => {
-      el.classList.add('rounded-md', 'shadow', 'my-4');
-    });
-
-    this.safeInstructions = this.sanitizer.bypassSecurityTrustHtml(tempDiv.innerHTML);
+          }
+          group[item.key] = ['', validators];
+          this.sizeOfForm++;
+        });
+    this.initForm = this.fb.group(group);
   }
 }

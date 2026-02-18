@@ -52,10 +52,10 @@ export class AuthService extends BaseApiService {
     return this.post<AuthResponse>('login', credentials).pipe(
       concatMap(res => {
         this.authenticated = true;
-        this.setUserAndPermission(res.cashier);
+        this.setUserAndPermission(res.user);
 
         return this.store.setSecret(res.token).then(() => {
-          this.store.setItem(KeyStore.USER, res.cashier);
+          this.store.setItem(KeyStore.USER, res.user);
           this.store.setItem(KeyStore.ACCESS_TOKEN, res.token);
         });
       })
@@ -63,7 +63,7 @@ export class AuthService extends BaseApiService {
   }
 
   signOut() {
-    return this.post<AuthResponse>('cashier/logout', {}).pipe(
+    return this.post<AuthResponse>('logout', {}).pipe(
       tap(() => this.signOutLocal())
     )
   }

@@ -132,9 +132,9 @@ export class DashboardAgentComponent implements OnInit {
                 {
                     name: 'Operation',
                     data: data.map(s => s.totalAmount),
-                    label: { show: false, color: '#6E3A96' },
+                    label: { show: false, color: '#3768b0' },
                     type: 'bar',
-                    color: '#6E3A96',
+                    color: '#3768b0',
                     // smooth: true
                 },
                 {
@@ -155,7 +155,7 @@ export class DashboardAgentComponent implements OnInit {
         const colors = [
             // Violet, Vert, Bleu, Orange
             "#8A2EC4", "#A0D92C", "#058EFC", "#FF8E1A",
-            "#6E3A96", "#96C33A", "#3DA7F2", "#F2A03D",
+            "#3768b0", "#96C33A", "#3DA7F2", "#F2A03D",
             "#9C6EC4", "#B0D760", "#6FC1FF", "#FFBE6F",
             "#4E2670",  "#7FA02A", "#1E82C5", "#C77E23",
             "#D9C7EC", "#C9E48A", "#A5DAFF", "#FFD7A5",

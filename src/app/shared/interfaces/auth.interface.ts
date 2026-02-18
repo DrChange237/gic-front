@@ -6,6 +6,6 @@ export interface Credentials {
 }
 
 export interface AuthResponse {
-  cashier: Cashier;
+  user: Cashier;
   token: string;
 }

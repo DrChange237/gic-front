@@ -10,7 +10,7 @@ export abstract class BaseApiService {
   baseUrl: string = '';
 
   protected constructor(protected http: HttpClient) {
-    this.baseUrl = this.resolveBaseUrl() + '/agency-banking';
+    this.baseUrl = this.resolveBaseUrl() + '/gic';
   }
 
   private resolveBaseUrl(): string {

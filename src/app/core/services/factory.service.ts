@@ -3,14 +3,22 @@ import {BaseApiService} from "./base-api.service";
 import {HttpClient} from "@angular/common/http";
 import {
   AccountBalance,
+  CompleteTask,
   InitPaymentData,
   InitPaymentResponse,
   InitTransfertFund,
+  ModuleModel,
+  ProcessModel,
+  ProcessStartRequest,
+  ProcessStartResponse,
   ServiceModel,
   ServiceType,
+  TaskModel,
   Transaction
 } from "../../shared/interfaces";
 import {ListResponse} from "../utils/base-list/base-list.component";
+import { FormResponse } from 'src/app/shared/interfaces/form.interface';
+import { TaskDetailsResponse } from 'src/app/shared/interfaces/task.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +37,62 @@ export class FactoryService extends BaseApiService {
 
   getServices(type: string) {
     return this.get<ServiceModel[]>('bill/billers', { params: { type } });
+  }
+
+  getProcessDefinition(moduleId : string) {
+    return this.get<ProcessModel[]>('process', { params: { moduleId } });
+  }
+
+  getProcesses() {
+    return this.get<ProcessModel[]>('process/all');
+  }
+
+  getModules() {
+    return this.get<ModuleModel[]>('module');
+  }
+
+  getMyTasks() {
+    return this.get<TaskModel[]>('tasks/my');
+  }
+
+  getTasks() {
+    return this.get<TaskModel[]>('tasks/all');
+  }
+
+  searchTasks(businessKey : string) {
+    return this.get<TaskModel[]>('tasks/bykey', { params : { businessKey }});
+  }
+
+  claimTask(taskId : string) {
+    return this.get<boolean>('tasks/claim', { params : { taskId }});
+  }
+
+  unClaimTask(taskId : string) {
+    return this.get<boolean>('tasks/unclaim', { params : { taskId }});
+  }
+
+  detailTask(taskId : string) {
+    return this.get<TaskDetailsResponse>('tasks/full', { params : { taskId }});
+  }
+
+  getInitForm(processKey : string){
+     return this.get<FormResponse>('camunda/forms/start', { params : { processKey }});
+  }
+
+  getTaskForm(taskId : string){
+     return this.get<FormResponse>('camunda/forms/start/task', { params : { taskId }});
+  }
+
+  getTaskVariables(taskId : string){
+     return this.get<FormResponse>('camunda/forms/form-variables', { params : { taskId }});
+  }
+
+  startProcess(request: ProcessStartRequest) {
+    return this.post<ProcessStartResponse>('process/start', request);
+  }
+
+  completeTask(request: CompleteTask) {
+    return this.post<ProcessStartResponse>('tasks/complete', request);
   }
 
   getBalanceOperationAccount(agencyCode: string, billerCode: string) {

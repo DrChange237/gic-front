@@ -92,7 +92,10 @@
     "return": "Retour",
     "search": "Rechercher",
     "search_loading": "Recherche en cours",
-    "update_role_agent": "Mettre à jour le rôle"
+    "update_role_agent": "Mettre à jour le rôle",
+    "claim": "Réclamer",
+    "unclaim": "Libérer",
+    "start": "Démarer"
   },
   "dashboard": {
     "last_transaction": "Dernières transactions",
@@ -178,7 +181,14 @@
     "templates": "Templates",
     "transaction_detail": "Détails de transaction",
     "transaction_history": "Historiques de Transaction",
-    "transfer_fund": "Transfert de fonds"
+    "transfer_fund": "Transfert de fonds",
+    "tasklist": "Liste des tâches",
+    "mytasks": "Mes tâches",
+    "mycases": "Mes cas",
+    "allcases": "Tous les cas",
+    "alltasks": "Tâches en Cours",
+    "inscriptions": "Inscriptions",
+    "dossiers": "Dossiers"
   },
   "reporting": {
     "download_report_failed": "Téléchargement du report échoué",
@@ -293,5 +303,26 @@
     "update_password": "Modification du Mot de Passe",
     "update_password_failed": "Mise à jour du mot de passe échouée",
     "update_password_successful": "Mise à jour du mot de passe réussie"
+  },
+  "process": {
+    "available": "Processus",
+    "init": "Initiation du Processus",
+    "name": "Processus",
+    "duedate": "Date d'échéance",
+    "createdate": "Date de création",
+    "instanceid": "ID de tâche",
+    "tasklist": "Liste des tâches",
+    "taskdetail": "Détail de la tâche",
+    "starttask": "Démarrer la tâche",
+    "caselist": "Liste de cas",
+    "casedetail": "Détail du cas",
+    "assignee": "Assigné à"
+  },
+  "module": {
+    "title": "Modules"
+  },
+  "tasklist": "Mes Tâches",
+  "task": {
+    "id": "ID de tâche"
   }
 }

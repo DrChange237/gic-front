@@ -12,8 +12,9 @@ import {CustomizerComponent} from "./customizer/customizer.component";
 import {BreadcrumbComponent} from "./breadcrumb/breadcrumb.component";
 import {TranslatePipe} from "@ngx-translate/core";
 import {ConfirmActionModalComponent} from "./confirm-action-modal/confirm-action-modal.component";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ActionResultModalComponent} from "./action-result-modal/action-result-modal.component";
+import { FormTaskComponent } from './form-task/form-task.component';
 
 const components = [
   BtnLoadingComponent,
@@ -22,7 +23,7 @@ const components = [
   CustomizerComponent,
   BreadcrumbComponent,
   ConfirmActionModalComponent,
-  ActionResultModalComponent,
+  ActionResultModalComponent
 ];
 
 @NgModule({
@@ -34,7 +35,8 @@ const components = [
     NgScrollbarModule,
     NgbModule,
     TranslatePipe,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: components,
   exports: [components]

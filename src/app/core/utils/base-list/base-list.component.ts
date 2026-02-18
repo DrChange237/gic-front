@@ -46,6 +46,7 @@ export abstract class BaseListComponent<T> implements OnInit {
   loading$ = this._loading$.asObservable();
 
   items$: Observable<T[]>
+  businessKey : string;
 
   protected constructor() {
     this.setupItems$();

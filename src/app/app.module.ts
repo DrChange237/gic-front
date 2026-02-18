@@ -18,6 +18,7 @@ import {LayoutsModule} from "./layouts/layouts.module";
 import {LoadingInterceptor} from "./core/interceptors/loader.interceptor";
 import {AuthInterceptor} from "./core/interceptors/auth.interceptor";
 import {provideGlobalNgbDatepickerConfig} from "./core/utils/date-picker/helper.provider";
+import { FormTaskComponent } from './shared/components/form-task/form-task.component';
 
 let lang = navigator.language.split('-')?.[0];
 lang = Object.values(Language).includes(lang as Language) ? lang : 'fr';

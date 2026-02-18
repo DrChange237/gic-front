@@ -15,7 +15,6 @@ const routes: Routes = [
     path: 'transactions',
     children: [
       { path: '', redirectTo: 'services', pathMatch: 'full' },
-
       {
         path: 'services',
         data: { title: 'navigation.services' },
@@ -23,14 +22,19 @@ const routes: Routes = [
       },
       {
         path: 'history',
-        data: { title: 'navigation.history' },
+        data: { title: 'navigation.tasklist' },
         children: [
           { path: '', redirectTo: 'agent', pathMatch: 'full' },
 
           {
             path: 'agent',
-            data: { title: 'navigation.my_history' },
+            data: { title: 'navigation.mytasks' },
             loadComponent:  () => import('./transactions/trx-history/trx-history.component').then(c => c.TrxHistoryComponent)
+          },
+          {
+            path: 'alltasks',
+            data: { title: 'navigation.alltasks' },
+            loadComponent:  () => import('./transactions/trx-mycases/trx-mycases.component').then(c => c.TrxMyCasesComponent)
           },
           {
             path: 'agent/:data',
@@ -62,8 +66,8 @@ const routes: Routes = [
   },
   {
     path: 'reporting',
-    canActivate: [PermissionGuard],
-    data: { title: 'navigation.reporting', permissions: [Permission.REPORT_VIEW] },
+    //canActivate: [PermissionGuard],
+    data: { title: 'navigation.reporting' /*, permissions: [Permission.REPORT_VIEW]*/ },
     loadComponent: () => import('./reporting/reporting.component').then(c => c.ReportingComponent)
   },
   {
@@ -77,6 +81,18 @@ const routes: Routes = [
         canActivate: [PermissionGuard],
         data: { title: 'navigation.role_profile', permissions: [Permission.ROLE_VIEW] },
         loadComponent: () => import('./management/mgn-role/mgn-role.component').then(c => c.MgnRoleComponent)
+      },
+      {
+        path: 'inscriptions',
+        canActivate: [PermissionGuard],
+        data: { title: 'navigation.inscriptions', permissions: [] },
+        loadComponent: () => import('./management/mgn-inscriptions/mgn-inscriptions.component').then(c => c.MgnInscriptionsComponent)
+      },
+       {
+        path: 'dossiers',
+        canActivate: [PermissionGuard],
+        data: { title: 'navigation.dossiers', permissions: [] },
+        loadComponent: () => import('./management/mgn-dossiers/mgn-dossiers.component').then(c => c.MgnDossiersComponent)
       },
       {
         path: 'agencies',
