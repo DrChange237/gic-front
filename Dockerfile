@@ -1,4 +1,4 @@
-# Étape 1 : Build de l'application Angular
+# Étape 1 : Build
 FROM node:18-alpine AS build
 WORKDIR /app
 COPY package*.json ./
@@ -8,7 +8,7 @@ RUN npm run build --prod
 
 # Étape 2 : Servir avec Nginx
 FROM nginx:alpine
-COPY --from=build /app/dist/gic /usr/share/nginx/html
+COPY --from=build /app/dist/gic/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
