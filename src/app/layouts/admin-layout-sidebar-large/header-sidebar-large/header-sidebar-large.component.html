@@ -98,12 +98,12 @@
         <div class="dropdown-header">
           <i class="i-Administrator me-1"></i> {{ user.username }}
         </div>
-        <button class="dropdown-item border-top border-light-subtle" routerLink="account-settings">
+        <!--button class="dropdown-item border-top border-light-subtle" routerLink="account-settings">
           {{ 'navigation.profile' | translate }}
         </button>
         <button class="dropdown-item border-top border-light-subtle" routerLink="transactions/history">
           {{ 'navigation.transaction_history' | translate }}
-        </button>
+        </button-->
         <button class="dropdown-item border-top border-light-subtle" (click)="signOut()">
           {{ 'sessions.sign_out' | translate }}
         </button>
