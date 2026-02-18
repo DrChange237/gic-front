@@ -1,4 +1,4 @@
-# Agency-Banking
+# Global Immigration Canada - BPM Front-End
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli).
 
