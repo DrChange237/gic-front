@@ -88,22 +88,22 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "agency-banking:build",
+            "buildTarget": "gic:build",
             "disableHostCheck": true
           },
           "configurations": {
             "production": {
-              "buildTarget": "agency-banking:build:production"
+              "buildTarget": "gic:build:production"
             },
             "development": {
-              "buildTarget": "agency-banking:build:development"
+              "buildTarget": "gic:build:development"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "agency-banking:build"
+            "buildTarget": "gic:build"
           }
         },
         "test": {
@@ -129,7 +129,7 @@
         }
       }
     },
-    "agency-banking-e2e": {
+    "gic-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -137,14 +137,14 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "agency-banking:serve"
+            "devServerTarget": "gic:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "agency-banking:serve:production"
+              "devServerTarget": "gic:serve:production"
             },
             "development": {
-              "devServerTarget": "agency-banking:serve:development"
+              "devServerTarget": "gic:serve:development"
             }
           }
         }
