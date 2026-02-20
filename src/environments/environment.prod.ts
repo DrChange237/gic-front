@@ -1,7 +1,8 @@
 export const environment = {
   production: true,
-  API_URL: 'https://developer.ccabank-app.com/sandbox/api',
-  API_URL_DEV: 'http://10.4.4.74:8080/api',
-  API_URL_TEST: 'https://applications-dev.cca.ad/api',
-  APP_NAME: 'CCA Bank - Agency Banking',
+  API_URL: 'http://158.220.104.244:2026/api',
+  // API_URL_DEV: 'https://developer.ccabank-app.com/sandbox/api',
+  API_URL_DEV: 'http://localhost:2026/api',
+  API_URL_TEST: 'http://158.220.104.244:2026/api',
+  APP_NAME: 'Global Immigration Canada',
 };
