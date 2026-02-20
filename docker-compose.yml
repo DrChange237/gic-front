@@ -5,7 +5,7 @@ services:
       target: prod
     container_name: gic-front-prod
     ports:
-      - "80:80"
+      - "3000:80"
     restart: always
 
   gic-front-dev:
@@ -14,5 +14,5 @@ services:
       target: dev
     container_name: gic-front-dev
     ports:
-      - "8080:80"
+      - "4200:80"
     restart: always
