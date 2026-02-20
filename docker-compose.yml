@@ -1,0 +1,18 @@
+services:
+  gic-front-prod:
+    build:
+      context: .
+      target: prod
+    container_name: gic-front-prod
+    ports:
+      - "80:80"
+    restart: always
+
+  gic-front-dev:
+    build:
+      context: .
+      target: dev
+    container_name: gic-front-dev
+    ports:
+      - "8080:80"
+    restart: always

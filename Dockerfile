@@ -14,12 +14,14 @@ RUN npm install
 COPY . .
 RUN npm run build --configuration=development
 
-# Servir avec Nginx
-FROM nginx:alpine
-# Copier la version production à la racine
+# Conteneur Production (port 80)
+FROM nginx:alpine AS prod
 COPY --from=build-prod /app/dist/browser /usr/share/nginx/html
-# Copier la version dev dans /demo
-COPY --from=build-dev /app/dist/browser /usr/share/nginx/html/demo
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+# Conteneur Dev (port 8080)
+FROM nginx:alpine AS dev
+COPY --from=build-dev /app/dist/browser /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 8080
