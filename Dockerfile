@@ -24,4 +24,4 @@ EXPOSE 80
 FROM nginx:alpine AS dev
 COPY --from=build-dev /app/dist/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
+EXPOSE 81
