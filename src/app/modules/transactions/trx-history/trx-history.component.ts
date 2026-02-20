@@ -572,9 +572,16 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
   downloadDocument(doc: DocumentInfo): void {
     //console.log('Téléchargement du document:', doc.name);
     // Implémenter la logique de téléchargement
-    window.open("http://localhost:2026/api/files/" + doc.file.url, '_blank');
-
+    window.open(this.resolveBaseUrl() + "/files/" + doc.file.url, '_blank');
   }
+
+  private resolveBaseUrl(): string {
+    const port = window.location.port;           // "80", "8081", "4200"
+    if (port=='4200') return 'http://158.220.104.244:2025/api';
+    if (port=='3000') return 'http://158.220.104.244:2026/api';
+    return 'http://158.220.104.244:2025/api';
+  }
+
 
   getStatusClass(step: ActivityHistoryInfo): string {
     if(step.endTime != null){
