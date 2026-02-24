@@ -21,6 +21,7 @@ import {SecureDataService} from "../../../core/services/secure-data.service";
 import {MgnAgencyDetailModalComponent} from "../mgn-agency-detail-modal/mgn-agency-detail-modal.component";
 import { Dossier, Inscription } from 'src/app/shared/interfaces/business.interface';
 import { BusinessService } from 'src/app/core/services/business.service';
+import { MgnDossiersMoneyModalComponent } from '../mgn-dossiers-money-modal/mgn-dossiers-money-modal.component';
 
 @Component({
   selector: 'app-mgn-dossiers',
@@ -110,19 +111,22 @@ export class MgnDossiersComponent extends BaseListNonPagedComponent<Dossier> imp
       });
   }
 
-  openModal(agency: Agency) {
-    if (!agency) return;
+  openMoney(dossier: Dossier) {
+    if (!dossier) return;
 
-    /*this.accountSrv.getDetailAgency(agency.id).subscribe({
+    console.log(dossier)
+
+    this.businessSrv.getMoneyDossiers(dossier.reference).subscribe({
       next: res => {
+
         const modalRef = this.modalService.open(
-            MgnAgencyDetailModalComponent, { size: "lg", ariaLabelledBy: 'modal-basic-title', centered: true }
+            MgnDossiersMoneyModalComponent, { size: "lg", ariaLabelledBy: 'modal-basic-title', centered: true }
         );
 
-        modalRef.componentInstance.agency = res;
+        modalRef.componentInstance.dossier = res;
       },
       error: err => {
         console.log(err); this.commonSrv.errorHandle(err, 'transactions.get_detail_transaction_failed', 'account.role') }
-    });*/
+    });
   }
 }

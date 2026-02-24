@@ -18,4 +18,16 @@ export interface Dossier{
   consultation : Consultation;
   reference : string;
   status : string;
+  restTopay : number;
+  equivalenceStatus : string;
+  testExamStatus : string;
+}
+
+export interface Money{
+   id:string;
+   label:string;
+   referennce:string;
+   amount:number;
+   flow : string;
+   creationDate : Date
 }

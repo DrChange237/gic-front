@@ -5,7 +5,7 @@ import {
 
 } from "../../shared/interfaces";
 import {tap} from "rxjs";
-import { Dossier, Inscription } from 'src/app/shared/interfaces/business.interface';
+import { Dossier, Inscription, Money } from 'src/app/shared/interfaces/business.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,11 @@ export class BusinessService extends BaseApiService {
 
   getListDossiers(search: string) {
          return this.get<Dossier[]>(`business/contrat`, { search });
+  }
+
+   getMoneyDossiers(reference: string) {
+         console.log(reference)
+         return this.get<Money[]>(`business/contrat/money?reference=` + reference);
   }
 
  

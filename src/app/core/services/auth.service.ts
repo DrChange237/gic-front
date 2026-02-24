@@ -52,6 +52,7 @@ export class AuthService extends BaseApiService {
       concatMap(res => {
         this.authenticated = true;
         this.setUserAndPermission(res.user);
+      
 
         return this.store.setSecret(res.token).then(() => {
           this.store.setItem(KeyStore.USER, res.user);

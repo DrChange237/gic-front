@@ -20,7 +20,9 @@
                         <tr>
                             <th class="px-3" scope="col" role="button">Référence</th>
                             <th scope="col" role="button">Client</th>
-                            <th scope="col" role="button">Date</th>
+                            <th scope="col" role="button">Equivalence</th>
+                            <th scope="col" role="button">Test de langue</th>
+                            <th scope="col" role="button">Reste à Payer</th>
                             <th class="text-center"  scope="col" role="button">Status</th>
                             <th class="text-center" scope="col" role="button">{{ 'table.action' | translate }}</th>
                         </tr>
@@ -30,7 +32,11 @@
                                 <tr>
                                     <td class="px-3"><ngb-highlight [result]="contrat.reference" [term]="searchTerm" /></td>
                                     <td><ngb-highlight [result]="contrat.consultation.inscription.fullName" [term]="searchTerm" /></td>
-                                    <td>{{(contrat.creationDate | date: 'medium') || 'N/A' }}</td>
+                                    <!--td >{{(contrat.creationDate | date: 'medium') || 'N/A' }}</td-->
+                                    <td class="" text-bg-primary text-white>{{ (contrat.equivalenceStatus  | uppercase) || 'N/A' }}</td>
+                                    <td class="" text-bg-success text-white>{{ (contrat.testExamStatus  | uppercase) || 'N/A' }}</td>
+                                    <td>  {{ contrat.restToPay | currency:'XAF' }}</td>
+
                                     <td class="col-status">
                                         <span class="badge rounded-pill p-2 text-bg-success text-white">
                                             {{ contrat.status  | uppercase }}
@@ -42,16 +48,15 @@
                                         </button>
 
                                         <div ngbDropdownMenu aria-labelledby="actionDropdown">
-                                            <button role="button" class="dropdown-item" (click)="openModal(agency)"
-                                                    *hasPermission="Permission.AGENCY_DETAIL">
+                                            <!--button role="button" class="dropdown-item" (click)="openModal(agency)">
                                                 <i class="i-Information text-14 pe-1"></i>
-                                                {{'btn.detail' | translate}}
-                                            </button>
-                                            <button role="button" class="dropdown-item" (click)="viewHistoryAgency(agency)"
-                                                    *hasPermission="Permission.HISTORY_CASHIER_VIEW">
+                                                Détail
+                                            </button-->
+                                            <button role="button" class="dropdown-item" (click)="openMoney(contrat)">
                                                 <i class="i-Receipt text-14 pe-1"></i>
-                                                {{'btn.agent_history' | translate}}
+                                                Versements
                                             </button>
+
                                             <button role="button" class="dropdown-item" (click)="viewOperationReview(agency)"
                                                     *hasPermission="Permission.AGENCY_OPEN">
                                                 <i class="i-Power-2 text-14 pe-1"></i>
