@@ -44,17 +44,15 @@
                                         </button>
 
                                         <div ngbDropdownMenu aria-labelledby="actionDropdown">
-                                            <button role="button" class="dropdown-item" (click)="openModal(agency)"
-                                                    *hasPermission="Permission.AGENCY_DETAIL">
+                                            <button role="button" class="dropdown-item" (click)="downloadDocument(inscription.reference, 'customer-profile')">
                                                 <i class="i-Information text-14 pe-1"></i>
-                                                {{'btn.detail' | translate}}
+                                                Fiche Client
                                             </button>
-                                            <button role="button" class="dropdown-item" (click)="viewHistoryAgency(agency)"
-                                                    *hasPermission="Permission.HISTORY_CASHIER_VIEW">
+                                            <button *ngIf="inscription.status=='CONSULTED'" role="button" class="dropdown-item" (click)="downloadDocument(inscription.reference, 'consultation-report')">
                                                 <i class="i-Receipt text-14 pe-1"></i>
-                                                {{'btn.agent_history' | translate}}
+                                                Rapport de Consultation
                                             </button>
-                                            <button role="button" class="dropdown-item" (click)="viewOperationReview(agency)"
+                                            <!--button role="button" class="dropdown-item" (click)="viewOperationReview(agency)"
                                                     *hasPermission="Permission.AGENCY_OPEN">
                                                 <i class="i-Power-2 text-14 pe-1"></i>
                                                 {{('btn.agent_available.' + agency.avaibility) | translate}}
@@ -63,7 +61,7 @@
                                                     *hasPermission="Permission.AGENCY_ENABLE">
                                                 <i class="i-Lock-2 text-14 pe-1"></i>
                                                 {{('btn.agency_active.' + !agency.enabled) | translate}}
-                                            </button>
+                                            </button-->
                                         </div>
                                     </td>
                                 </tr>

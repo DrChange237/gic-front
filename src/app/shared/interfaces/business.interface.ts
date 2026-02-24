@@ -31,3 +31,9 @@ export interface Money{
    flow : string;
    creationDate : Date
 }
+
+export interface FileInfo{
+   id:string;
+   name:string;
+   url:string;
+}

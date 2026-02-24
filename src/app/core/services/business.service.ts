@@ -5,7 +5,8 @@ import {
 
 } from "../../shared/interfaces";
 import {tap} from "rxjs";
-import { Dossier, Inscription, Money } from 'src/app/shared/interfaces/business.interface';
+import { Dossier, FileInfo, Inscription, Money } from 'src/app/shared/interfaces/business.interface';
+import { ta } from 'date-fns/locale';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class BusinessService extends BaseApiService {
 
   getListInscriptions(search: string) {
         return this.get<Inscription[]>(`business/inscription`, { search });
+  }
+
+  downloadDocument(reference: string, tag :string) {
+        return this.get<FileInfo>(`business/inscription/download?reference=` + reference + `&tag=` + tag);
   }
 
   getListDossiers(search: string) {
