@@ -14,5 +14,5 @@ services:
       target: dev
     container_name: gic-front-dev
     ports:
-      - "4200:81"
+      - "4200:80"
     restart: always
