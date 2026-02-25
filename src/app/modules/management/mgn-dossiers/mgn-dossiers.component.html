@@ -22,6 +22,8 @@
                             <th scope="col" role="button">Client</th>
                             <th scope="col" role="button">Equivalence</th>
                             <th scope="col" role="button">Test de langue</th>
+                            <th scope="col" role="button">Sélection</th>
+                            <th scope="col" role="button">Résidence Permanente</th>
                             <th scope="col" role="button">Reste à Payer</th>
                             <th class="text-center"  scope="col" role="button">Status</th>
                             <th class="text-center" scope="col" role="button">{{ 'table.action' | translate }}</th>
@@ -35,6 +37,10 @@
                                     <!--td >{{(contrat.creationDate | date: 'medium') || 'N/A' }}</td-->
                                     <td class="px-3"> <ngb-highlight [result]="contrat.equivalenceStatus" [term]="searchTerm" /></td>
                                     <td class="" text-bg-success text-white>{{ (contrat.testExamStatus  | uppercase) || 'N/A' }}</td>
+                                    <td class="px-3"> <ngb-highlight [result]="contrat.selectionStatus" [term]="searchTerm" /></td>
+                                    <td class="px-3"> <ngb-highlight [result]="contrat.permanentStatus" [term]="searchTerm" /></td>
+
+
                                     <td>  {{ contrat.restToPay | currency:'XAF' }}</td>
 
                                     <td class="col-status">

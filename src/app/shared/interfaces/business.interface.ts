@@ -21,6 +21,8 @@ export interface Dossier{
   restTopay : number;
   equivalenceStatus : string;
   testExamStatus : string;
+  selectionStatus : string;
+  permanentStatus : string;
 }
 
 export interface Money{
