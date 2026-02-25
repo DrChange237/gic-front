@@ -33,7 +33,7 @@
                                     <td class="px-3"><ngb-highlight [result]="contrat.reference" [term]="searchTerm" /></td>
                                     <td><ngb-highlight [result]="contrat.consultation.inscription.fullName" [term]="searchTerm" /></td>
                                     <!--td >{{(contrat.creationDate | date: 'medium') || 'N/A' }}</td-->
-                                    <td class="" text-bg-primary text-white>{{ (contrat.equivalenceStatus  | uppercase) || 'N/A' }}</td>
+                                    <td class="px-3"> <ngb-highlight [result]="contrat.equivalenceStatus" [term]="searchTerm" /></td>
                                     <td class="" text-bg-success text-white>{{ (contrat.testExamStatus  | uppercase) || 'N/A' }}</td>
                                     <td>  {{ contrat.restToPay | currency:'XAF' }}</td>
 
@@ -52,6 +52,10 @@
                                                 <i class="i-Information text-14 pe-1"></i>
                                                 Détail
                                             </button-->
+                                             <button role="button" class="dropdown-item" (click)="downloadDocument(contrat.reference, 'contract')">
+                                                <i class="i-Receipt text-14 pe-1"></i>
+                                                Contrat
+                                            </button>
                                             <button role="button" class="dropdown-item" (click)="openMoney(contrat)">
                                                 <i class="i-Receipt text-14 pe-1"></i>
                                                 Versements

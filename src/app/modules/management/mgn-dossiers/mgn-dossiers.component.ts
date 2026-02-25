@@ -57,7 +57,8 @@ export class MgnDossiersComponent extends BaseListNonPagedComponent<Dossier> imp
     const lowerTerm = filter.toLowerCase();
     return items.filter(contrat =>
         contrat.reference?.toLowerCase()?.includes(lowerTerm) ||
-        contrat.status?.toLowerCase()?.includes(lowerTerm) 
+        contrat.status?.toLowerCase()?.includes(lowerTerm) ||
+        contrat.equivalenceStatus?.toLowerCase()?.includes(lowerTerm)
     );
   }
 
@@ -109,6 +110,22 @@ export class MgnDossiersComponent extends BaseListNonPagedComponent<Dossier> imp
         this._allItems$.next(items);
         this.updatePaged();
       });
+  }
+
+  downloadDocument(reference, tag){
+    this.businessSrv.downloadDocument(reference, tag).subscribe({
+      next: res => {
+            window.open(this.resolveBaseUrl() + "/files/" + res.url, '_blank');
+        },
+      error: err => this.commonSrv.errorHandle(err, 'account.update_status_agency_failed', 'account.agent')
+    });
+  }
+
+  private resolveBaseUrl(): string {
+    const port = window.location.port;           // "80", "8081", "4200"
+    if (port=='4200') return 'http://158.220.104.244:2025/api';
+    if (port=='3000') return 'http://158.220.104.244:2026/api';
+    return 'http://158.220.104.244:2025/api';
   }
 
   openMoney(dossier: Dossier) {
