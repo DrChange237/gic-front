@@ -391,7 +391,7 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
   
       const formData = this.initForm.value;
 
-      const data = new FormData();
+      /*const data = new FormData();
 
       Object.keys(formData).forEach(key => {
         if (formData[key] instanceof File) {
@@ -401,15 +401,16 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
         } else {
           data.append(key, formData[key]);
         }
-      });
+      });*/
+      
       //data.append('taskId', this.taskDetail.task.id),
   
-      // const data: CompleteTask = {
-      //   formData: this.initForm.value,
-      //   taskId: this.taskDetail.task.id
-      // };
+       const data: CompleteTask = {
+         formData: this.initForm.value,
+         taskId: this.taskDetail.task.id
+       };
   
-      this.factorySrv.completeTask(this.taskDetail.task.id, data).subscribe({
+      this.factorySrv.completeTask(data).subscribe({
         next: res => {
           console.log(res);
           this.loadMyTasks();
