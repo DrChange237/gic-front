@@ -91,8 +91,8 @@ export class FactoryService extends BaseApiService {
     return this.post<ProcessStartResponse>('process/start', request);
   }
 
-  completeTask(request: FormData) {
-    return this.post<ProcessStartResponse>('tasks/complete', request);
+  completeTask(taskId : string, request: FormData) {
+    return this.post<ProcessStartResponse>('tasks/complete?taskId=' + taskId, request);
   }
 
   getBalanceOperationAccount(agencyCode: string, billerCode: string) {

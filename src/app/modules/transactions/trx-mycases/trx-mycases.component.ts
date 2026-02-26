@@ -406,9 +406,9 @@ export class TrxMyCasesComponent extends BaseListComponent<Transaction> implemen
           data.append(key, formData[key]);
         }
       });
-      data.append('taskId', this.taskDetail.task.id),
+      //data.append('taskId', this.taskDetail.task.id),
   
-      this.factorySrv.completeTask(data).subscribe({
+      this.factorySrv.completeTask(this.taskDetail.task.id,data).subscribe({
         next: res => {
           console.log(res);
           this.loadMyTasks();
