@@ -91,7 +91,7 @@ export class FactoryService extends BaseApiService {
     return this.post<ProcessStartResponse>('process/start', request);
   }
 
-  completeTask(request: CompleteTask) {
+  completeTask(request: FormData) {
     return this.post<ProcessStartResponse>('tasks/complete', request);
   }
 

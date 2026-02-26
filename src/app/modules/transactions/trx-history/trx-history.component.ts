@@ -266,6 +266,7 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
   // Méthodes pour gérer le filepicker
   onFileSelected(event: any, field: FormComponent): void {
     const files: FileList = event.target.files;
+    console.log(files)
     
     if (!files || files.length === 0) return;
 
@@ -388,12 +389,25 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
         return this.commonSrv.alert('warning', 'form.required_fields', 'transactions.service');
       }
   
-      const formData = this.initForm.getRawValue();
+      const formData = this.initForm.value;
+
+      const data = new FormData();
+
+      Object.keys(formData).forEach(key => {
+        if (formData[key] instanceof File) {
+          data.append(`file-${key}`, formData[key]);
+        } else if (typeof formData[key] === 'object') {
+          data.append(key, JSON.stringify(formData[key]));
+        } else {
+          data.append(key, formData[key]);
+        }
+      });
+      data.append('taskId', this.taskDetail.task.id),
   
-      const data: CompleteTask = {
-        formData: this.initForm.value,
-        taskId: this.taskDetail.task.id
-      };
+      // const data: CompleteTask = {
+      //   formData: this.initForm.value,
+      //   taskId: this.taskDetail.task.id
+      // };
   
       this.factorySrv.completeTask(data).subscribe({
         next: res => {
