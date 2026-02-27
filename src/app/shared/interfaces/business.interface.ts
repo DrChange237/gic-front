@@ -20,6 +20,7 @@ export interface Dossier{
   status : string;
   restTopay : number;
   equivalenceStatus : string;
+  diplomaStatus : string;
   testExamStatus : string;
   selectionStatus : string;
   permanentStatus : string;

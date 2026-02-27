@@ -171,7 +171,7 @@
     "history_cashier": "Historique de caisse",
     "history_global": "Historique générale",
     "management": "Management",
-    "my_agents": "Mes agents",
+    "my_agents": "Collaborateurs",
     "my_history": "Mon Historique",
     "operation_review": "Bilan des opérations",
     "profile": "Profil",
@@ -188,7 +188,8 @@
     "allcases": "Tous les cas",
     "alltasks": "Tâches en Cours",
     "inscriptions": "Inscriptions",
-    "dossiers": "Dossiers"
+    "dossiers": "Dossiers en Cours",
+    "archives": "Archives"
   },
   "reporting": {
     "download_report_failed": "Téléchargement du report échoué",

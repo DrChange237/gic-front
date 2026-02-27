@@ -468,12 +468,12 @@
                                         (change)="onFileSelected($event, item)" [disabled]="item.disabled"
                                         class="form-ch custom-file-input" #fileInput>
 
-                                    <button type="button" class="btn-file-select" (click)="fileInput.click()"
+                                    <!--button type="button" class="btn-file-select" (click)="fileInput.click()"
                                         [disabled]="item.disabled">
                                         <span class="file-icon">📎</span>
                                         {{ getUploadedFiles(item).length > 0 ? 'Ajouter un fichier' : 'Choisir un
                                         fichier' }}
-                                    </button>
+                                    </button-->
 
                                     <div *ngIf="getUploadedFiles(item).length > 0" class="uploaded-files">
                                         <div *ngFor="let file of getUploadedFiles(item); let i = index"

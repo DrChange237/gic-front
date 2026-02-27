@@ -179,7 +179,8 @@ export class TrxServicesComponent implements OnInit {
     this.factorySrv.startProcess(data).subscribe({
       next: res => {
         console.log(res);
-        this.wizard.previous();
+        this.commonSrv.router.navigate(['transactions/history/agent'])
+        //this.wizard.previous();
       },
       error: err => this.commonSrv.errorHandle(err, 'transactions.init_payment_failed', 'transactions.payment_service')
     });

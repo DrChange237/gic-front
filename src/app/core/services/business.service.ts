@@ -28,8 +28,12 @@ export class BusinessService extends BaseApiService {
         return this.get<FileInfo>(`business/inscription/download?reference=` + reference + `&tag=` + tag);
   }
 
-  getListDossiers(search: string) {
-         return this.get<Dossier[]>(`business/contrat`, { search });
+  getListDossiers(search: string,  archived : boolean) {
+         return this.get<Dossier[]>(`business/contrat?search=` + search + `&archived=` + archived);
+  }
+
+  archivedDossier(reference: string) {
+         return this.get<Dossier[]>(`business/contrat/archived?reference=` + reference);
   }
 
    getMoneyDossiers(reference: string) {

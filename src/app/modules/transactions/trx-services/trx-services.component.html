@@ -8,13 +8,13 @@
             <wizard-step [title]="'module.title' | translate" [isValid]="">
                 <div class="row my-3">
                     @for (type of modules$; track type.key) {
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <div class="col-sm-4 col-lg-3 col-xl-2">
                         <div class="card card-profile-1 card-zoom mb-4" (click)="loadProcessDefinition(type.id)">
                             <div class="card-body text-center">
                                 <div class="avatar rounded-1 mb-3 border p-1">
                                     <img [src]="moduleImage(type.key)" [alt]="type.name">
                                 </div>
-                                <h5 class="m-0 fw-semibold py-2 text-14 text-truncate">{{ type.name }}</h5>
+                                <span class="m-0 fw-semibold py-2 text-9 text-truncate">{{ type.name }}</span>
                             </div>
                         </div>
                     </div>
@@ -25,14 +25,14 @@
             <wizard-step #serviceStepWizard [title]="'process.available' | translate">
                 <div class="row my-3">
                     @for (service of processDefinition$; track service.key) {
-                    <div class="col-sm-6 col-lg-4 col-xl-3">
+                    <div class="col-sm-4 col-lg-3 col-xl-2">
                         <div class="card card-profile-1 card-zoom mb-4 position-relative" (click)="loadForm(service)">
                             <div class="card-body text-center">
                                 <div class="avatar rounded-1 mb-3 border p-1">
                                     <img [src]="processImage(service.key)" [alt]="service.name">
                                 </div>
-                                <h5 class="m-0 fw-semibold text-14 text-truncate">{{ service.name }}</h5>
-                                <p class="m-0 py-2 fw-medium text-truncate">{{ service.description }}</p>
+                                <span class="m-0 fw-semibold text-9 text-truncate">{{ service.name }}</span>
+                                <!--p class="m-0 py-2 fw-medium text-7 text-truncate">{{ service.description }}</p-->
                             </div>
                         </div>
                     </div>

@@ -58,7 +58,7 @@
                                     <td class="">
 
                                         <span *ngIf="contrat.testExamStatus=='SUCCESS'" class="badge rounded-pill p-2 text-bg-primary text-white">
-                                                OK
+                                            OK
                                         </span>
 
                                         <span *ngIf="contrat.testExamStatus!='SUCCESS'" class="badge rounded-pill p-2 text-bg-danger text-white">
@@ -71,7 +71,7 @@
                                     <td class=""> 
 
                                         <span *ngIf="contrat.selectionStatus=='SUCCESS'" class="badge rounded-pill p-2 text-bg-primary text-white">
-                                                OK
+                                            OK
                                         </span>
 
                                         <span *ngIf="contrat.selectionStatus!='SUCCESS'" class="badge rounded-pill p-2 text-bg-danger text-white">
@@ -105,7 +105,7 @@
 
                                     <td class="col-status">
                                         <span *ngIf="contrat.status=='FINISHED'" class="badge rounded-pill p-2 text-bg-primary text-white">
-                                                OK
+                                           OK
                                         </span>
                                          <span *ngIf="contrat.status!='FINISHED'" class="badge rounded-pill p-2 text-bg-danger text-white">
                                             {{ contrat.status  | uppercase }}
@@ -128,10 +128,6 @@
                                              <button role="button" class="dropdown-item" (click)="downloadDocument(contrat.reference, 'contract')">
                                                 <i class="i-Receipt text-14 pe-1"></i>
                                                 Contrat
-                                            </button>
-                                            <button *ngIf="contrat.status=='FINISHED'" role="button" class="dropdown-item" (click)="archived(contrat.reference)">
-                                                <i class="i-Receipt text-14 pe-1"></i>
-                                                Archiver
                                             </button>
                                            
 

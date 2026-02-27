@@ -103,13 +103,13 @@ export class NavigationService {
                 icon: 'i-Shop-4',
                 state: 'transactions/services'
             },
-            /*{
+            {
                 name: 'reporting',
                 type: 'link',
                 icon: 'i-Statistic',
                 state: 'reporting',
                 //disabled: !this.authSrv.hasPermission(Permission.REPORT_VIEW)
-            },*/
+            },
             {
                 name: 'management',
                 type: 'dropDown',
@@ -127,6 +127,13 @@ export class NavigationService {
                         icon: 'i-University1',
                         name: 'dossiers',
                         state: 'management/dossiers',
+                        type: 'link',
+                        //disabled: !this.authSrv.hasPermission(Permission.AGENCY_VIEW)
+                    },
+                    {
+                        icon: 'i-University1',
+                        name: 'archives',
+                        state: 'management/archives',
                         type: 'link',
                         //disabled: !this.authSrv.hasPermission(Permission.AGENCY_VIEW)
                     }/*,
@@ -150,14 +157,14 @@ export class NavigationService {
                         state: 'management/agents/all',
                         type: 'link',
                         //disabled: !this.authSrv.hasPermission(Permission.CASHIER_ALL_VIEW)
-                    },
+                    }*/,
                     {
                         icon: 'i-Business-ManWoman',
                         name: 'my_agents',
                         state: 'management/agency/agents',
                         type: 'link',
                         //disabled: !this.authSrv.hasPermission(Permission.CASHIER_VIEW)
-                    },
+                    }/*,
                     {
                         icon: 'i-University1',
                         name: 'agencies',

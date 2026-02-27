@@ -24,14 +24,14 @@ import { BusinessService } from 'src/app/core/services/business.service';
 import { MgnDossiersMoneyModalComponent } from '../mgn-dossiers-money-modal/mgn-dossiers-money-modal.component';
 
 @Component({
-  selector: 'app-mgn-dossiers',
-  templateUrl: './mgn-dossiers.component.html',
-  styleUrls: ['./mgn-dossiers.component.scss'],
+  selector: 'app-mgn-archives',
+  templateUrl: './mgn-archives.component.html',
+  styleUrls: ['./mgn-archives.component.scss'],
   imports: [CommonModule, SharedComponentsModule, FormsModule, NgSelectComponent, NgbModule, TranslatePipe, NgScrollbar,
     TableDetailComponent, HasPermissionDirective],
   standalone: true
 })
-export class MgnDossiersComponent extends BaseListNonPagedComponent<Dossier> implements OnInit {
+export class MgnArchivesComponent extends BaseListNonPagedComponent<Dossier> implements OnInit {
 
   protected readonly Permission = Permission;
 
@@ -45,7 +45,7 @@ export class MgnDossiersComponent extends BaseListNonPagedComponent<Dossier> imp
   }
 
   override fetchData() {
-    return this.businessSrv.getListDossiers(this.searchTerm, false).pipe(
+    return this.businessSrv.getListDossiers(this.searchTerm, true).pipe(
         catchError(err => {
           err && this.commonSrv.errorHandle(err, 'account.get_agency_list_failed', 'account.role');
           return of(null);
@@ -116,16 +116,6 @@ export class MgnDossiersComponent extends BaseListNonPagedComponent<Dossier> imp
     this.businessSrv.downloadDocument(reference, tag).subscribe({
       next: res => {
             window.open(this.resolveBaseUrl() + "/files/" + res.url, '_blank');
-        },
-      error: err => this.commonSrv.errorHandle(err, 'account.update_status_agency_failed', 'account.agent')
-    });
-  }
-
-  archived(reference){
-    this.businessSrv.archivedDossier(reference).subscribe({
-      next: () => {
-          this.fetchData()
-          //window.open(this.resolveBaseUrl() + "/files/" + res.url, '_blank');
         },
       error: err => this.commonSrv.errorHandle(err, 'account.update_status_agency_failed', 'account.agent')
     });

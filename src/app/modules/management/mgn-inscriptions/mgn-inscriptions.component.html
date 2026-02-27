@@ -34,7 +34,10 @@
                                     <td><ngb-highlight [result]="inscription.fullNameConjoint" [term]="searchTerm" /></td>
                                     <td>{{(inscription.creationDate | date: 'medium') || 'N/A' }}</td>
                                     <td class="col-status">
-                                        <span class="badge rounded-pill p-2 text-bg-success text-white">
+                                        <span *ngIf="inscription.status=='CONSULTED'" class="badge rounded-pill p-2 text-bg-primary text-white">
+                                            {{ inscription.status  | uppercase }}
+                                        </span>
+                                        <span *ngIf="inscription.status!='CONSULTED'" class="badge rounded-pill p-2 text-bg-danger text-white">
                                             {{ inscription.status  | uppercase }}
                                         </span>
                                     </td>

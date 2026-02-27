@@ -94,6 +94,12 @@ const routes: Routes = [
         data: { title: 'navigation.dossiers', permissions: [] },
         loadComponent: () => import('./management/mgn-dossiers/mgn-dossiers.component').then(c => c.MgnDossiersComponent)
       },
+       {
+        path: 'archives',
+        canActivate: [PermissionGuard],
+        data: { title: 'navigation.archives', permissions: [] },
+        loadComponent: () => import('./management/mgn-archives/mgn-archives.component').then(c => c.MgnArchivesComponent)
+      },
       {
         path: 'agencies',
         canActivate: [PermissionGuard],
@@ -109,7 +115,7 @@ const routes: Routes = [
       {
         path: 'agency/agents',
         canActivate: [PermissionGuard],
-        data: { title: 'navigation.my_agents', permissions: [Permission.CASHIER_VIEW] },
+        data: { title: 'navigation.my_agents'/*, permissions: [Permission.CASHIER_VIEW] */},
         loadComponent: () => import('./management/mgn-agents/mgn-agents.component').then(c => c.MgnAgentsComponent)
       },
       {

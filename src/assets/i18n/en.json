@@ -171,7 +171,7 @@
     "history_cashier": "Case history",
     "history_global": "General history",
     "management": "Management",
-    "my_agents": "My agents",
+    "my_agents": "Users",
     "my_history": "My history",
     "operation_review": "Operations review",
     "profile": "Profile",
@@ -188,7 +188,8 @@
     "allcases": "All Cases",
     "alltasks": "Tasks",
     "inscriptions": "Registrations",
-    "dossiers": "Folders"
+    "dossiers": "Folders In Progress",
+    "archives": "Folders Finished"
   },
   "reporting": {
     "download_report_failed": "Report download failed",
