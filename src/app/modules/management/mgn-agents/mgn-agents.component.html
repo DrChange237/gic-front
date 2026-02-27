@@ -19,10 +19,9 @@
                         <thead>
                         <tr>
                             <th class="px-3" scope="col" role="button">{{ 'table.username' | translate }}</th>
-                            <th scope="col" role="button">{{ 'table.name' | translate }}</th>
+                            <th scope="col" role="button">Email</th>
                             <th scope="col" role="button">{{ 'table.role' | translate }}</th>
                             <th scope="col" role="button">{{ 'table.agency' | translate }}</th>
-                            <th scope="col" role="button">{{ 'table.last_activity' | translate }}</th>
                             <th class="text-center"  scope="col" role="button">{{ 'table.status' | translate }}</th>
                             <th class="text-center" scope="col" role="button">{{ 'table.action' | translate }}</th>
                         </tr>
@@ -31,13 +30,12 @@
                             @for (agent of items$ | async; track agent.id) {
                                 <tr>
                                     <td class="px-3"><ngb-highlight [result]="agent.username" [term]="searchTerm" /></td>
-                                    <td><ngb-highlight [result]="agent.name" [term]="searchTerm" /></td>
+                                    <td><ngb-highlight [result]="agent.email" [term]="searchTerm" /></td>
                                     <td><ngb-highlight [result]="agent.role.name" [term]="searchTerm" /></td>
                                     <td><ngb-highlight [result]="agent.agency.name" [term]="searchTerm" /></td>
-                                    <td>{{(agent.lastActivity | date: 'medium') || 'N/A' }}</td>
                                     <td class="col-status">
                                         <span class="badge rounded-pill p-2 text-bg-{{agent.enabled ? 'success text-white' : 'danger'}}">
-                                            {{ 'badge.status.' + agent.enabled | translate | uppercase }}
+                                            {{agent.enabled}}
                                         </span>
                                     </td>
                                     <td class="col-action" ngbDropdown container="body">
@@ -51,12 +49,12 @@
                                                 {{'btn.agent_history' | translate}}
                                             </button>
                                             <button role="button" class="dropdown-item" (click)="editRoleCashier(modalDetailAgency, agent)"
-                                                    *hasPermission="Permission.CASHIER_ROLE_UPDATE">
+                                                   >
                                                 <i class="i-Lock-User text-14 pe-1"></i>
                                                 {{'btn.update_role_agent' | translate}}
                                             </button>
                                             <button role="button" class="dropdown-item" (click)="openConfirmModal('STATUS', agent)"
-                                                    *hasPermission="Permission.CASHIER_ENABLE">
+                                                    >
                                                 <i class="i-Lock-2 text-14 pe-1"></i>
                                                 {{('btn.agent_active.' + !agent.enabled) | translate}}
                                             </button>

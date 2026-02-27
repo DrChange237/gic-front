@@ -47,7 +47,7 @@ export class AccountService extends BaseApiService {
 
   getListAgents(type: string) {
       const url = type === 'all' ? 'getCashiers' : 'getMyCashiers';
-      return this.get<Cashier[]>(`cashier/${url}`);
+      return this.get<Cashier[]>(`user`);
   }
 
   updateCashierStatus(username: string, enabled: boolean) {

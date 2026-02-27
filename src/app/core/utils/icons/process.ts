@@ -11,5 +11,6 @@ export const PROCESS_ICONS: Record<string, string> = {
   medical_visit: 'assets/images/process/inscription.png',
   received_csq: 'assets/images/modules/arrima.png',
   cashin: 'assets/images/process/inscription.png',
-  back_diploma: 'assets/images/process/inscription.png'
+  back_diploma: 'assets/images/process/inscription.png',
+  new_collaborator : 'assets/images/process/inscription.png'
 };
