@@ -413,7 +413,7 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
             content: base64
           };
         } else if (value !== null && typeof value === 'object') {
-          form[key] = JSON.stringify(value);
+          form[key] = value
         } else {
           form[key] = value;
         }
