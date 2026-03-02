@@ -103,7 +103,8 @@ export interface ProcessStartRequest {
 
 export interface CompleteTask {
   taskId: string;
-  formData: { [key: string]: any };
+  formData: any;
+  files : any;
 }
 
 export interface ProcessStartResponse {

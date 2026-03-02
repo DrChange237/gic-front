@@ -409,6 +409,7 @@ export class TrxMyCasesComponent extends BaseListComponent<Transaction> implemen
       //data.append('taskId', this.taskDetail.task.id),
 
        const data: CompleteTask = {
+         files : null,
          formData: this.initForm.value,
          taskId: this.taskDetail.task.id
        };

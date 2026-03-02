@@ -264,14 +264,20 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
   }
 
   // Méthodes pour gérer le filepicker
-  onFileSelected(event: any, field: FormComponent): void {
-    const files: FileList = event.target.files;
+  onFileSelected(event: any, controlName: string): void {
+   const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0]; // ← vrai objet File
+      this.initForm.get(controlName)?.setValue(file, { emitEvent: false });
+    }
+    /*const files: FileList = event.target.files;
     console.log(files)
     
     if (!files || files.length === 0) return;
 
     const fileArray: File[] = Array.from(files);
     const control = this.initForm.get(field.key);
+    this.initForm.get(field.key)?.setValue(files[0]);
 
     // Validation de la taille des fichiers
     if (field.maxFileSize) {
@@ -324,7 +330,7 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
       this.uploadedFiles.set(field.key, files);
       const fileNames = files.map(f => f.name).join(', ');
       this.initForm.get(field.key)?.setValue(fileNames);
-    }
+    }*/
   }
 
   getUploadedFiles(field: FormComponent): File[] {
@@ -382,7 +388,7 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
     return values.includes(optionValue);
   }
 
-  completeTask() {
+  async completeTask() {
       this.isSubmitted = true;
   
       if (this.initForm.invalid) {
@@ -390,23 +396,34 @@ export class TrxHistoryComponent extends BaseListComponent<Transaction> implemen
       }
   
       const formData = this.initForm.value;
+      const form: { [key: string]: any } = {};
+      const files: { [key: string]: any } = {};
 
-      /*const data = new FormData();
 
-      Object.keys(formData).forEach(key => {
-        if (formData[key] instanceof File) {
-          data.append(`file-${key}`, formData[key]);
-        } else if (typeof formData[key] === 'object') {
-          data.append(key, JSON.stringify(formData[key]));
+      // Traitement asynchrone des fichiers
+      for (const key of Object.keys(formData)) {
+        const value = formData[key];
+
+        if (value instanceof File) {
+          const base64 = await this.convertFileToBase64(value); // ← convertFileToBase64 (singulier)
+          files[key] = {
+            name: value.name,
+            type: value.type,
+            size: value.size,
+            content: base64
+          };
+        } else if (value !== null && typeof value === 'object') {
+          form[key] = JSON.stringify(value);
         } else {
-          data.append(key, formData[key]);
+          form[key] = value;
         }
-      });*/
+      }
       
       //data.append('taskId', this.taskDetail.task.id),
   
        const data: CompleteTask = {
-         formData: this.initForm.value,
+         formData: form,
+         files : files,
          taskId: this.taskDetail.task.id
        };
   

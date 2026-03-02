@@ -463,9 +463,9 @@
                                 }
                                 @if (['filepicker'].includes(item.type.toLowerCase())) {
                                 <div class="custom-file">
-                                    <input type="file" [id]="item.key" [formControlName]="item.key"
+                                    <input type="file" [id]="item.key" 
                                         [accept]="item.accept || '*'" [multiple]="item.multiple || false"
-                                        (change)="onFileSelected($event, item)" [disabled]="item.disabled"
+                                        (change)="onFileSelected($event, item.key)" [disabled]="item.disabled"
                                         class="form-ch custom-file-input" #fileInput>
 
                                     <!--button type="button" class="btn-file-select" (click)="fileInput.click()"
