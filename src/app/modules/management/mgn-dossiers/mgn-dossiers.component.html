@@ -41,7 +41,7 @@
                                             OK
                                         </span>
 
-                                        <span *ngIf="contrat.equivalenceStatus!='COMPLETED'" class="badge rounded-pill p-2 text-bg-danger text-white">
+                                        <span *ngIf="contrat.equivalenceStatus!='COMPLETED'" class="badge rounded-pill p-2 text-danger text-bg-white">
                                             {{ (contrat.equivalenceStatus  | uppercase) || 'N/A' }}
                                         </span>
 
@@ -49,7 +49,7 @@
                                             {{ (contrat.diplomaStatus  | uppercase) || 'N/A' }}
                                         </span>
 
-                                        <span *ngIf="contrat.diplomaStatus!='BACK'" class="badge rounded-pill p-2 text-bg-danger text-white">
+                                        <span *ngIf="contrat.diplomaStatus!='BACK'" class="badge rounded-pill p-2  text-danger text-bg-white">
                                             {{ (contrat.diplomaStatus  | uppercase) || 'N/A' }}
                                         </span>
                                         
@@ -61,7 +61,7 @@
                                                 OK
                                         </span>
 
-                                        <span *ngIf="contrat.testExamStatus!='SUCCESS'" class="badge rounded-pill p-2 text-bg-danger text-white">
+                                        <span *ngIf="contrat.testExamStatus!='SUCCESS'" class="badge rounded-pill p-2  text-danger text-bg-white">
                                             {{ (contrat.testExamStatus  | uppercase) || 'N/A' }}
                                         </span>
 
@@ -74,7 +74,7 @@
                                                 OK
                                         </span>
 
-                                        <span *ngIf="contrat.selectionStatus!='SUCCESS'" class="badge rounded-pill p-2 text-bg-danger text-white">
+                                        <span *ngIf="contrat.selectionStatus!='SUCCESS'" class="badge rounded-pill p-2  text-danger text-bg-white">
                                             {{ (contrat.selectionStatus  | uppercase) || 'N/A' }}
                                         </span>
                                     </td>
@@ -85,7 +85,7 @@
                                             OK
                                         </span>
 
-                                        <span *ngIf="contrat.permanentStatus!='SUCCESS'" class="badge rounded-pill p-2 text-bg-danger text-white">
+                                        <span *ngIf="contrat.permanentStatus!='SUCCESS'" class="badge rounded-pill p-2  text-danger text-bg-white">
                                             {{ (contrat.permanentStatus  | uppercase) || 'N/A' }}
                                         </span>
                                     
@@ -97,7 +97,7 @@
                                             {{ contrat.restToPay | currency:'XAF' }}
                                         </span>
 
-                                        <span *ngIf="contrat.restToPay!=0" class="badge rounded-pill p-2 text-bg-danger text-white">
+                                        <span *ngIf="contrat.restToPay!=0" class="badge rounded-pill p-2  text-danger text-bg-white">
                                             {{ contrat.restToPay | currency:'XAF' }}
                                         </span>
                                         
@@ -107,7 +107,7 @@
                                         <span *ngIf="contrat.status=='FINISHED'" class="badge rounded-pill p-2 text-bg-primary text-white">
                                                 OK
                                         </span>
-                                         <span *ngIf="contrat.status!='FINISHED'" class="badge rounded-pill p-2 text-bg-danger text-white">
+                                         <span *ngIf="contrat.status!='FINISHED'" class="badge rounded-pill p-2  text-danger text-bg-white">
                                             {{ contrat.status  | uppercase }}
                                         </span>
                                     </td>

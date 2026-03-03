@@ -393,7 +393,7 @@
                                 </label>
 
                                 @if (['textfield'].includes(item.type.toLowerCase())) {
-                                <input class="form-control" formControlName="{{item.key}}" type="text" disabled="{{item.disabled}}"
+                                <input class="form-control" formControlName="{{item.key}}" type="{{item.extratype}}" disabled="{{item.disabled}}"
                                     [ngClass]="{ 'is-invalid': isSubmitted && sf?.[item.key]?.invalid}">
                                 <small *ngIf="item.description" class="field-description">{{ item.description }}</small>
                                

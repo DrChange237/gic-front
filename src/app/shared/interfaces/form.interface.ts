@@ -50,6 +50,7 @@ export interface FormComponent {
   multiple : boolean;
   accept: string;
   maxFileSize : number;
+  extratype : string;
 }
 
 export interface FormExporter {

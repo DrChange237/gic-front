@@ -167,7 +167,6 @@ export class TrxServicesComponent implements OnInit {
       return this.commonSrv.alert('warning', 'form.required_fields', 'transactions.service');
     }
 
-    const formData = this.initForm.getRawValue();
 
     const data: ProcessStartRequest = {
       processDefinitionKey: this.processSelected.key,
@@ -270,7 +269,7 @@ export class TrxServicesComponent implements OnInit {
   }
 
   get sf() {
-    return this.serviceForm.controls;
+    return this.initForm?.controls;
   }
 
   private buildVoidForm() {
