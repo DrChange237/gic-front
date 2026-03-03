@@ -48,8 +48,8 @@ export class SigninComponent implements OnInit {
         });
 
         this.signinForm = this.fb.group({
-            email: ['trsorsimo', Validators.required],
-            password: ['12345', Validators.required]
+            email: ['', Validators.required],
+            password: ['', Validators.required]
         });
     }
 
