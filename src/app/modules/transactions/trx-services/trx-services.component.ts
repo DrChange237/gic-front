@@ -1,24 +1,24 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { SharedComponentsModule } from "src/app/shared/components/shared-components.module";
-import {FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
-import {NgbDateAdapter, NgbDateStruct, NgbInputDatepicker, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
-import {NgSelectModule} from "@ng-select/ng-select";
-import {TranslatePipe} from "@ngx-translate/core";
-import {CommonModule, formatDate} from "@angular/common";
+import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
+import { NgbDateAdapter, NgbDateStruct, NgbInputDatepicker, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+import { NgSelectModule } from "@ng-select/ng-select";
+import { TranslatePipe } from "@ngx-translate/core";
+import { CommonModule, formatDate } from "@angular/common";
 //
-import {WizardComponent} from "../../../shared/components/form-wizard/wizard/wizard.component";
-import {FormWizardModule} from "../../../shared/components/form-wizard/form-wizard.module";
-import {FactoryService} from "../../../core/services/factory.service";
-import {AccountBalance, InitPaymentResponse, ModuleModel, ProcessModel, ProcessStartRequest, ServiceModel, ServiceType} from "../../../shared/interfaces";
-import {CommonService} from "../../../core/services/common.service";
-import {CustomDateAdapter} from "../../../core/utils/date-picker/custom-date-adapter";
+import { WizardComponent } from "../../../shared/components/form-wizard/wizard/wizard.component";
+import { FormWizardModule } from "../../../shared/components/form-wizard/form-wizard.module";
+import { FactoryService } from "../../../core/services/factory.service";
+import { AccountBalance, InitPaymentResponse, ModuleModel, ProcessModel, ProcessStartRequest, ServiceModel, ServiceType } from "../../../shared/interfaces";
+import { CommonService } from "../../../core/services/common.service";
+import { CustomDateAdapter } from "../../../core/utils/date-picker/custom-date-adapter";
 import {
   ConfirmActionModalComponent
 } from "../../../shared/components/confirm-action-modal/confirm-action-modal.component";
-import {ActionResultModalComponent} from "../../../shared/components/action-result-modal/action-result-modal.component";
-import {SharedPipesModule} from "../../../shared/pipes/shared-pipes.module";
-import {AuthService} from "../../../core/services/auth.service";
+import { ActionResultModalComponent } from "../../../shared/components/action-result-modal/action-result-modal.component";
+import { SharedPipesModule } from "../../../shared/pipes/shared-pipes.module";
+import { AuthService } from "../../../core/services/auth.service";
 import { MODULES_ICONS } from 'src/app/core/utils/icons/module';
 import { PROCESS_ICONS } from 'src/app/core/utils/icons/process';
 import { Form, FormResponse } from 'src/app/shared/interfaces/form.interface';
@@ -41,7 +41,7 @@ export class TrxServicesComponent implements OnInit {
   servicesType$: ServiceType[] = [];
   services$: ServiceModel[] = [];
   processDefinition$: ProcessModel[] = [];
-  processSelected:ProcessModel;
+  processSelected: ProcessModel;
   processForm: Form;
   modules$: ModuleModel[] = [];
   currService: ServiceModel;
@@ -60,15 +60,15 @@ export class TrxServicesComponent implements OnInit {
   minDate = { year: 1900, month: 1, day: 1 };
   maxDate: NgbDateStruct;
 
-  
+
 
   constructor(
-      private modalService: NgbModal,
-      private fb: UntypedFormBuilder,
-      private commonSrv: CommonService,
-      private factorySrv: FactoryService,
-      private sanitizer: DomSanitizer,
-      public authSrv: AuthService,
+    private modalService: NgbModal,
+    private fb: UntypedFormBuilder,
+    private commonSrv: CommonService,
+    private factorySrv: FactoryService,
+    private sanitizer: DomSanitizer,
+    public authSrv: AuthService,
   ) {
     const today = new Date();
     this.maxDate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
@@ -78,11 +78,11 @@ export class TrxServicesComponent implements OnInit {
     this.loadModules();
   }
 
-  moduleImage(key : string): string {
+  moduleImage(key: string): string {
     return MODULES_ICONS[key] || 'assets/images/default.png';
   }
 
-  processImage(key : string): string {
+  processImage(key: string): string {
     return PROCESS_ICONS[key] || 'assets/images/default.png';
   }
 
@@ -108,10 +108,10 @@ export class TrxServicesComponent implements OnInit {
       next: res => {
         this.processForm = res.form;
         console.log(this.processForm);
-        if(res.form){
-           this.buildForm(res.form);
-        }else{
-           this.buildVoidForm();
+        if (res.form) {
+          this.buildForm(res.form);
+        } else {
+          this.buildVoidForm();
         }
         this.processSelected = process;
         this.wizard.next();
@@ -120,7 +120,7 @@ export class TrxServicesComponent implements OnInit {
     });
   }
 
-  loadProcessDefinition(module : string) {
+  loadProcessDefinition(module: string) {
     this.factorySrv.getProcessDefinition(module).subscribe({
       next: res => {
         this.processDefinition$ = res;
@@ -160,30 +160,62 @@ export class TrxServicesComponent implements OnInit {
     this.wizard.next();*/
   }
 
+  private formatDatesDeep(value: any): any {
+
+    if (Array.isArray(value)) {
+      return value.map(v => this.formatDatesDeep(v));
+    }
+
+    if (value && typeof value === 'object') {
+      const result: any = {};
+      Object.keys(value).forEach(key => {
+        result[key] = this.formatDatesDeep(value[key]);
+      });
+      return result;
+    }
+
+    if (this.isIsoDate(value)) {
+      const [year, month, day] = value.split('-');
+      return `${day}/${month}/${year}`;
+    }
+
+    return value;
+  }
+
+  private isIsoDate(value: any): boolean {
+    return typeof value === 'string' &&
+      /^\d{4}-\d{2}-\d{2}$/.test(value);
+  }
+
   startProcess() {
     this.isSubmitted = true;
 
     if (this.initForm.invalid) {
+      this.isSubmitted = false;
       return this.commonSrv.alert('warning', 'form.required_fields', 'transactions.service');
     }
 
+    // 🔹 On formate ici dynamiquement toutes les dates
+    const formattedFormData = this.formatDatesDeep(this.initForm.value);
 
     const data: ProcessStartRequest = {
       processDefinitionKey: this.processSelected.key,
       businessKey: `${Date.now()}`,
-      formData: this.initForm.value,
+      formData: formattedFormData,
       initiatorUserId: ''
     };
 
     this.factorySrv.startProcess(data).subscribe({
       next: res => {
         console.log(res);
-        this.commonSrv.router.navigate(['transactions/history/agent'])
-        //this.wizard.previous();
+        this.commonSrv.router.navigate(['transactions/history/agent']);
+        this.isSubmitted = false;
       },
-      error: err => this.commonSrv.errorHandle(err, 'transactions.init_payment_failed', 'transactions.payment_service')
+      error: err => {
+        this.commonSrv.errorHandle(err, 'transactions.init_payment_failed', 'transactions.payment_service');
+        this.isSubmitted = false;
+      }
     });
-    this.isSubmitted = false;
   }
 
   choosePaymentOption() {
@@ -261,7 +293,7 @@ export class TrxServicesComponent implements OnInit {
   }
 
   openModal(content: TemplateRef<never>) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true, size : 'lg' });
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', centered: true, size: 'lg' });
   }
 
   get isOddForm(): boolean {
@@ -284,19 +316,19 @@ export class TrxServicesComponent implements OnInit {
     this.sizeOfForm = 0;
     this.isSubmitted = false;
     form.components
-        //.sort((a, b) => a.position - b.position)
-        .forEach(item => {
-          const validators = [];
-          if(item.validate){
-             if (item.validate.required) validators.push(Validators.required);
-             if (item.validate.pattern) validators.push(Validators.pattern(item.validate.pattern));
-             if(item.validate.minLength) validators.push(Validators.minLength(item.validate.minLength));
-             if(item.validate.maxLength) validators.push(Validators.minLength(item.validate.maxLength));
+      //.sort((a, b) => a.position - b.position)
+      .forEach(item => {
+        const validators = [];
+        if (item.validate) {
+          if (item.validate.required) validators.push(Validators.required);
+          if (item.validate.pattern) validators.push(Validators.pattern(item.validate.pattern));
+          if (item.validate.minLength) validators.push(Validators.minLength(item.validate.minLength));
+          if (item.validate.maxLength) validators.push(Validators.minLength(item.validate.maxLength));
 
-          }
-          group[item.key] = ['', validators];
-          this.sizeOfForm++;
-        });
+        }
+        group[item.key] = ['', validators];
+        this.sizeOfForm++;
+      });
     this.initForm = this.fb.group(group);
   }
 }
